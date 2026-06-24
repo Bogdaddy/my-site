@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Богдан — Викладач Unity та Python</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080D;
+  --bg2:#0C0E17;
+  --bg3:#111421;
+  --surface:#161A29;
+  --surface2:#1C2135;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.13);
+  --text:#EDF0FA;
+  --muted:#6B7394;
+  --muted2:#9299B8;
+  --violet:#7C6EFA;
+  --violet2:#9D92FF;
+  --violet-glow:rgba(124,110,250,0.15);
+  --cyan:#22D3EE;
+  --cyan-glow:rgba(34,211,238,0.12);
+  --green:#10E89A;
+  --green-glow:rgba(16,232,154,0.12);
+  --amber:#FBBF24;
+  --font:'Onest',sans-serif;
+  --r:14px;
+  --r2:20px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── NOISE TEXTURE ── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
+
+/* ── LANG SWITCHER ── */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:36px;background:rgba(7,8,13,0.95);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;padding:0 2rem;gap:4px}
+.lang-btn{font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:0.5px;padding:4px 12px;border-radius:6px;border:1px solid transparent;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--muted)}
+.lang-btn.active{background:var(--violet-glow);border-color:rgba(124,110,250,0.35);color:var(--violet2)}
+.lang-btn:hover:not(.active){color:var(--text);border-color:var(--border2)}
+
+/* ── NAV ── */
+nav{position:fixed;top:36px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(7,8,13,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:20px;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-0.8px;display:flex;align-items:center;gap:3px}
+.nav-logo-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan));display:inline-block;margin-bottom:8px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--violet) 0%,#9B6EFA 100%);color:#fff;padding:9px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:opacity 0.2s,transform 0.15s;box-shadow:0 0 20px rgba(124,110,250,0.3)}
+.nav-cta:hover{opacity:0.88;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:160px 2rem 100px;position:relative;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none}
+.hero-orb-1{width:600px;height:600px;top:-100px;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(124,110,250,0.1) 0%,transparent 65%)}
+.hero-orb-2{width:400px;height:400px;bottom:0;right:-100px;background:radial-gradient(circle,rgba(34,211,238,0.07) 0%,transparent 65%)}
+.hero-orb-3{width:300px;height:300px;bottom:0;left:-80px;background:radial-gradient(circle,rgba(16,232,154,0.06) 0%,transparent 65%)}
+
+.hero-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:0.3px;border:1px solid}
+.chip-violet{background:var(--violet-glow);border-color:rgba(124,110,250,0.3);color:var(--violet2)}
+.chip-cyan{background:var(--cyan-glow);border-color:rgba(34,211,238,0.25);color:var(--cyan)}
+.chip-green{background:var(--green-glow);border-color:rgba(16,232,154,0.25);color:var(--green)}
+.chip-dot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero h1{font-size:clamp(2.8rem,6.5vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem;position:relative}
+.hero h1 .line2{display:block;background:linear-gradient(135deg,var(--violet2) 0%,var(--cyan) 60%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.1rem;color:var(--muted2);max-width:540px;margin:0 auto 2.5rem;line-height:1.75;font-weight:400}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--violet) 0%,#9B6EFA 100%);color:#fff;padding:15px 32px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 0 30px rgba(124,110,250,0.35);display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 40px rgba(124,110,250,0.5)}
+.btn-ghost{background:transparent;color:var(--text);padding:15px 32px;border-radius:12px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--border2);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+.btn-ghost:hover{border-color:var(--violet2);background:var(--violet-glow);color:var(--violet2)}
+
+.hero-stats{display:flex;gap:0;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border);position:relative}
+.stat{flex:1;text-align:center;padding:0 2rem;position:relative}
+.stat+.stat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:40px;background:var(--border)}
+.stat-num{font-size:2.2rem;font-weight:800;letter-spacing:-1px;line-height:1}
+.stat-num.v{color:var(--violet2)}
+.stat-num.c{color:var(--cyan)}
+.stat-num.g{color:var(--green)}
+.stat-label{font-size:12px;color:var(--muted);margin-top:6px;font-weight:500}
+
+/* ── SECTIONS ── */
+section{padding:110px 2rem;position:relative}
+.container{max-width:1120px;margin:0 auto}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--violet2);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
+.section-eyebrow::before{content:'';width:20px;height:1px;background:var(--violet2)}
+.section-title{font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:1rem;line-height:1.1}
+.section-sub{font-size:1rem;color:var(--muted2);max-width:560px;line-height:1.7}
+.section-head{margin-bottom:3.5rem}
+
+/* ── COURSES ── */
+#courses{background:var(--bg2)}
+#courses::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent)}
+.courses-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.course-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s}
+.course-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.25s}
+.course-card:hover{transform:translateY(-4px)}
+.course-card.unity{border-top:2px solid var(--violet)}
+.course-card.unity:hover{border-color:var(--violet)}
+.course-card.unity::after{background:radial-gradient(ellipse at top,rgba(124,110,250,0.07) 0%,transparent 60%);opacity:1}
+.course-card.python{border-top:2px solid var(--cyan)}
+.course-card.python:hover{border-color:var(--cyan)}
+.course-card.python::after{background:radial-gradient(ellipse at top,rgba(34,211,238,0.06) 0%,transparent 60%);opacity:1}
+.course-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:1.25rem;position:relative;z-index:1}
+.course-icon-wrap.unity{background:rgba(124,110,250,0.15);border:1px solid rgba(124,110,250,0.2)}
+.course-icon-wrap.python{background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2)}
+.course-card h3{font-size:1.2rem;font-weight:700;margin-bottom:0.6rem;position:relative;z-index:1}
+.course-card p{font-size:14px;color:var(--muted2);line-height:1.65;margin-bottom:1.5rem;position:relative;z-index:1}
+.module-list{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.module-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted2)}
+.module-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--violet2);flex-shrink:0}
+.course-card.python .module-item::before{background:var(--cyan)}
+
+/* ── FORMATS ── */
+#formats{background:var(--bg)}
+.formats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.format-card{border-radius:var(--r2);padding:2rem;border:1px solid var(--border);background:var(--surface);position:relative;overflow:hidden;transition:border-color 0.2s}
+.format-card.featured{border-color:rgba(124,110,250,0.35);background:linear-gradient(145deg,rgba(124,110,250,0.08) 0%,var(--surface) 60%)}
+.format-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan))}
+.format-badge-wrap{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.popular-badge{font-size:11px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:100px;background:linear-gradient(135deg,var(--violet),#9B6EFA);color:#fff}
+.age-badge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted2)}
+.format-card h3{font-size:1.25rem;font-weight:800;margin-bottom:0.4rem}
+.format-price{font-size:2.4rem;font-weight:800;letter-spacing:-1px;line-height:1;margin:1rem 0 0.25rem}
+.format-price.violet{color:var(--violet2)}
+.format-price.cyan{color:var(--cyan)}
+.format-price sub{font-size:1rem;font-weight:500;color:var(--muted);vertical-align:bottom;margin-left:2px}
+.format-per{font-size:13px;color:var(--muted);margin-bottom:1.25rem}
+.format-desc{font-size:14px;color:var(--muted2);line-height:1.65;margin-bottom:1.5rem}
+.format-features{display:flex;flex-direction:column;gap:10px;margin-bottom:1.75rem}
+.ff-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text)}
+.ff-check{width:18px;height:18px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:2px}
+.ff-check.violet{background:rgba(124,110,250,0.2);color:var(--violet2)}
+.ff-check.cyan{background:rgba(34,211,238,0.15);color:var(--cyan)}
+.format-cta{display:block;text-align:center;padding:13px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s;border:1px solid var(--border2);color:var(--text)}
+.format-card.featured .format-cta{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff;box-shadow:0 0 20px rgba(124,110,250,0.3)}
+.format-cta:hover{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff}
+
+/* AGE GROUPS */
+.age-groups{margin-top:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.age-group-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;text-align:center;transition:border-color 0.2s}
+.age-group-card:hover{border-color:var(--border2)}
+.age-emoji{font-size:1.8rem;margin-bottom:0.5rem;display:block}
+.age-range{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.age-label{font-size:12px;color:var(--muted)}
+
+/* ── ABOUT ── */
+#about{background:var(--bg2)}
+#about::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.about-grid{display:grid;grid-template-columns:1fr 1.7fr;gap:5rem;align-items:center}
+.about-photo{aspect-ratio:3/4;border-radius:var(--r2);background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);overflow:hidden;position:relative}
+.about-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(124,110,250,0.08),transparent)}
+.photo-placeholder{font-size:3rem;opacity:0.2}
+.photo-hint-text{font-size:12px;color:var(--muted);opacity:0.5}
+.about-content h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:1.25rem;line-height:1.15}
+.about-content p{font-size:15px;color:var(--muted2);line-height:1.75;margin-bottom:1rem}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
+.exp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem}
+.exp-card-num{font-size:1.6rem;font-weight:800;letter-spacing:-0.5px}
+.exp-card-num.v{color:var(--violet2)}
+.exp-card-num.g{color:var(--green)}
+.exp-card-num.c{color:var(--cyan)}
+.exp-card-num.a{color:var(--amber)}
+.exp-card-label{font-size:12px;color:var(--muted);margin-top:2px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+.skill-pill{padding:6px 14px;border-radius:100px;background:var(--surface2);border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted2)}
+
+/* ── BOOKING ── */
+#booking{background:var(--bg)}
+.booking-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start}
+.booking-info h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:1rem;line-height:1.15}
+.booking-info p{font-size:15px;color:var(--muted2);line-height:1.7;margin-bottom:1.75rem}
+.booking-steps{display:flex;flex-direction:column;gap:0}
+.b-step{display:flex;gap:14px;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--border)}
+.b-step:last-child{border-bottom:none}
+.b-step-num{width:32px;height:32px;border-radius:10px;background:var(--violet-glow);border:1px solid rgba(124,110,250,0.25);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--violet2);flex-shrink:0}
+.b-step-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.b-step-desc{font-size:13px;color:var(--muted)}
+.calendly-box{background:var(--surface);border:1px dashed rgba(124,110,250,0.3);border-radius:var(--r2);padding:3rem 2rem;text-align:center;min-height:450px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;position:relative;overflow:hidden}
+.calendly-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(124,110,250,0.05) 0%,transparent 70%)}
+.cal-icon-big{font-size:3rem;opacity:0.25;position:relative;z-index:1}
+.calendly-box p{font-size:14px;color:var(--muted);max-width:280px;line-height:1.6;position:relative;z-index:1}
+.calendly-box code{font-size:11px;background:var(--bg3);padding:8px 14px;border-radius:8px;color:var(--violet2);border:1px solid var(--border);display:block;margin-top:0.5rem;word-break:break-all;position:relative;z-index:1;text-align:left;line-height:1.6}
+
+/* ── FAQ ── */
+#faq{background:var(--bg2)}
+#faq::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.faq-list{max-width:760px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.25rem 0;cursor:pointer;font-size:15px;font-weight:600;transition:color 0.2s;user-select:none}
+.faq-q:hover{color:var(--violet2)}
+.faq-arrow{width:28px;height:28px;border-radius:8px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);transition:all 0.25s;flex-shrink:0}
+.faq-item.open .faq-arrow{background:var(--violet-glow);border-color:rgba(124,110,250,0.3);color:var(--violet2);transform:rotate(180deg)}
+.faq-a{font-size:14px;color:var(--muted2);max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s;line-height:1.7}
+.faq-item.open .faq-a{max-height:250px;padding-bottom:1.25rem}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 2rem 3rem;text-align:center}
+.footer-logo{font-size:24px;font-weight:800;color:var(--text);display:inline-flex;align-items:center;gap:6px;margin-bottom:0.75rem;text-decoration:none;letter-spacing:-0.8px}
+.footer-logo-dot2{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan))}
+footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
+.footer-nav{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.footer-nav a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-nav a:hover{color:var(--text)}
+.footer-tg{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--violet),#9B6EFA);color:#fff;padding:13px 28px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:opacity 0.2s,transform 0.15s;box-shadow:0 0 24px rgba(124,110,250,0.3)}
+.footer-tg:hover{opacity:0.88;transform:translateY(-2px)}
+.footer-copy{font-size:12px;color:var(--muted);margin-top:2rem;opacity:0.5}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .courses-grid,.formats-grid,.about-grid,.booking-grid{grid-template-columns:1fr}
+  .about-photo{aspect-ratio:16/9}
+  .age-groups{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:640px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  section{padding:80px 1.25rem}
+  .hero{padding:140px 1.25rem 80px}
+  .hero-stats{flex-direction:column;gap:1.5rem;align-items:center}
+  .stat+.stat::before{display:none}
+  .age-groups{grid-template-columns:repeat(2,1fr)}
+  .exp-grid{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">🇺🇦 УКР</button>
+  <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">🇷🇺 РУС</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Богдан<div class="nav-logo-dot"></div></a>
+  <ul class="nav-links">
+    <li><a href="#courses" data-uk="Курси" data-ru="Курсы">Курси</a></li>
+    <li><a href="#formats" data-uk="Формати" data-ru="Форматы">Формати</a></li>
+    <li><a href="#about" data-uk="Про мене" data-ru="Обо мне">Про мене</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta" data-uk="Записатись" data-ru="Записаться">Записатись</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-chips">
+    <span class="chip chip-green"><span class="chip-dot"></span> <span data-uk="Набір відкрито" data-ru="Набор открыт">Набір відкрито</span></span>
+    <span class="chip chip-violet">Unity & Python</span>
+    <span class="chip chip-cyan"><span data-uk="Онлайн" data-ru="Онлайн">Онлайн</span></span>
+  </div>
+
+  <h1>
+    <span data-uk="Програмування —" data-ru="Программирование —">Програмування —</span><br>
+    <span class="line2" data-uk="просто та цікаво" data-ru="просто и интересно">просто та цікаво</span>
+  </h1>
+  <p class="hero-sub" data-uk="Навчаю дітей від 8 років та дорослих Unity і Python. Індивідуально та в групах за віком. 10 років досвіду — тільки практика та реальні проекти." data-ru="Обучаю детей от 8 лет и взрослых Unity и Python. Индивидуально и в группах по возрасту. 10 лет опыта — только практика и реальные проекты.">Навчаю дітей від 8 років та дорослих Unity і Python. Індивідуально та в групах за віком. 10 років досвіду — тільки практика та реальні проекти.</p>
+  <div class="hero-btns">
+    <a href="#booking" class="btn-primary"><span data-uk="Записатись на урок" data-ru="Записаться на урок">Записатись на урок</span> →</a>
+    <a href="#courses" class="btn-ghost"><span data-uk="Дивитись програму" data-ru="Смотреть программу">Дивитись програму</span></a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num v">10</div><div class="stat-label" data-uk="років досвіду" data-ru="лет опыта">років досвіду</div></div>
+    <div class="stat"><div class="stat-num c">100+</div><div class="stat-label" data-uk="учнів навчив" data-ru="учеников обучил">учнів навчив</div></div>
+    <div class="stat"><div class="stat-num g">від 8</div><div class="stat-label" data-uk="років вік учнів" data-ru="лет возраст учеников">років вік учнів</div></div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-uk="Програми" data-ru="Программы">Програми</div>
+      <h2 class="section-title" data-uk="Що будемо вивчати" data-ru="Что будем изучать">Що будемо вивчати</h2>
+      <p class="section-sub" data-uk="Два напрями — кожен веде до конкретного результату: власній грі або автоматизації задач." data-ru="Два направления — каждое ведёт к конкретному результату: собственной игре или автоматизации задач.">Два напрями — кожен веде до конкретного результату: власній грі або автоматизації задач.</p>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card unity reveal">
+        <div class="course-icon-wrap unity">🎮</div>
+        <h3>Unity — <span data-uk="розробка ігор" data-ru="разработка игр">розробка ігор</span></h3>
+        <p data-uk="Створюємо ігри з нуля на C#. Від базових механік до публікації готового проекту." data-ru="Создаём игры с нуля на C#. От базовых механик до публикации готового проекта.">Створюємо ігри з нуля на C#. Від базових механік до публікації готового проекту.</p>
+        <div class="module-list">
+          <div class="module-item" data-uk="C# та ООП з нуля" data-ru="C# и ООП с нуля">C# та ООП з нуля</div>
+          <div class="module-item" data-uk="Фізика, колізії, рух" data-ru="Физика, коллизии, движение">Фізика, колізії, рух</div>
+          <div class="module-item" data-uk="UI, анімація, звуки" data-ru="UI, анимация, звуки">UI, анімація, звуки</div>
+          <div class="module-item">2D / 3D</div>
+          <div class="module-item" data-uk="Публікація гри" data-ru="Публикация игры">Публікація гри</div>
+        </div>
+      </div>
+      <div class="course-card python reveal">
+        <div class="course-icon-wrap python">🐍</div>
+        <h3>Python — <span data-uk="автоматизація та дані" data-ru="автоматизация и данные">автоматизація та дані</span></h3>
+        <p data-uk="Пишемо скрипти, автоматизуємо рутину, розбираємося з даними та основами ML." data-ru="Пишем скрипты, автоматизируем рутину, разбираемся с данными и основами ML.">Пишемо скрипти, автоматизуємо рутину, розбираємося з даними та основами ML.</p>
+        <div class="module-list">
+          <div class="module-item" data-uk="Основи Python" data-ru="Основы Python">Основи Python</div>
+          <div class="module-item" data-uk="Автоматизація задач" data-ru="Автоматизация задач">Автоматизація задач</div>
+          <div class="module-item">Pandas / NumPy</div>
+          <div class="module-item" data-uk="Парсинг сайтів" data-ru="Парсинг сайтов">Парсинг сайтів</div>
+          <div class="module-item" data-uk="Telegram-боти" data-ru="Telegram-боты">Telegram-боти</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATS -->
+<section id="formats">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-uk="Формати" data-ru="Форматы">Формати</div>
+      <h2 class="section-title" data-uk="Оберіть свій формат" data-ru="Выберите свой формат">Оберіть свій формат</h2>
+      <p class="section-sub" data-uk="Індивідуально — максимальний фокус на вас. У групі — спілкування з однолітками та нижча ціна." data-ru="Индивидуально — максимальный фокус на вас. В группе — общение со сверстниками и ниже цена.">Індивідуально — максимальний фокус на вас. У групі — спілкування з однолітками та нижча ціна.</p>
+    </div>
+    <div class="formats-grid">
+      <div class="format-card featured reveal">
+        <div class="format-badge-wrap">
+          <span class="popular-badge" data-uk="Найпопулярніше" data-ru="Самое популярное">Найпопулярніше</span>
+        </div>
+        <h3 data-uk="Індивідуально" data-ru="Индивидуально">Індивідуально</h3>
+        <div class="format-price violet">650 <sub>₴/год</sub></div>
+        <div class="format-per" data-uk="за академічну годину (60 хв)" data-ru="за академический час (60 мин)">за академічну годину (60 хв)</div>
+        <p class="format-desc" data-uk="Програма повністю під вас: темп, задачі та проект обираємо разом." data-ru="Программа полностью под вас: темп, задачи и проект выбираем вместе.">Програма повністю під вас: темп, задачі та проект обираємо разом.</p>
+        <div class="format-features">
+          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Заняття 1 на 1 у зручний час" data-ru="Занятие 1 на 1 в удобное время">Заняття 1 на 1 у зручний час</span></div>
+          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Гнучкий розклад, перенос за 2 год" data-ru="Гибкий расписание, перенос за 2 часа">Гнучкий розклад, перенос за 2 год</span></div>
+          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Домашні завдання та перевірка коду" data-ru="Домашние задания и проверка кода">Домашні завдання та перевірка коду</span></div>
+          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Матеріали після кожного уроку" data-ru="Материалы после каждого урока">Матеріали після кожного уроку</span></div>
+          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Підтримка в Telegram між заняттями" data-ru="Поддержка в Telegram между занятиями">Підтримка в Telegram між заняттями</span></div>
+        </div>
+        <a href="#booking" class="format-cta" data-uk="Записатись" data-ru="Записаться">Записатись</a>
+      </div>
+
+      <div class="format-card reveal">
+        <div class="format-badge-wrap">
+          <span class="age-badge" data-uk="Групи за віком" data-ru="Группы по возрасту">Групи за віком</span>
+        </div>
+        <h3 data-uk="Групові заняття" data-ru="Групповые занятия">Групові заняття</h3>
+        <div class="format-price cyan">500 <sub>₴/год</sub></div>
+        <div class="format-per" data-uk="за академічну годину (60 хв)" data-ru="за академический час (60 мин)">за академічну годину (60 хв)</div>
+        <p class="format-desc" data-uk="Групи до 7 дітей одного віку. Навчаємося разом, розбираємо задачі та проекти одне одного." data-ru="Группы до 7 детей одного возраста. Учимся вместе, разбираем задачи и проекты друг друга.">Групи до 7 дітей одного віку. Навчаємося разом, розбираємо задачі та проекти одне одного.</p>
+        <div class="format-features">
+          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="До 7 учнів одного віку" data-ru="До 7 учеников одного возраста">До 7 учнів одного віку</span></div>
+          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Фіксований розклад" data-ru="Фиксированное расписание">Фіксований розклад</span></div>
+          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Командні міні-проекти" data-ru="Командные мини-проекты">Командні міні-проекти</span></div>
+          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Записи занять" data-ru="Записи занятий">Записи занять</span></div>
+          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Чат групи для запитань" data-ru="Чат группы для вопросов">Чат групи для запитань</span></div>
+        </div>
+        <a href="#booking" class="format-cta" data-uk="Записатись" data-ru="Записаться">Записатись</a>
+      </div>
+    </div>
+
+    <!-- AGE GROUPS -->
+    <div class="section-head reveal" style="margin-top:3rem;margin-bottom:1.5rem">
+      <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.25rem" data-uk="Вікові групи" data-ru="Возрастные группы">Вікові групи</h3>
+      <p style="font-size:14px;color:var(--muted2)" data-uk="Діти навчаються з однолітками — так легше спілкуватися та разом розвиватися." data-ru="Дети учатся со сверстниками — так легче общаться и развиваться вместе.">Діти навчаються з однолітками — так легше спілкуватися та разом розвиватися.</p>
+    </div>
+    <div class="age-groups reveal">
+      <div class="age-group-card">
+        <span class="age-emoji">🌱</span>
+        <div class="age-range" data-uk="8–10 років" data-ru="8–10 лет">8–10 років</div>
+        <div class="age-label" data-uk="Молодша група" data-ru="Младшая группа">Молодша група</div>
+      </div>
+      <div class="age-group-card">
+        <span class="age-emoji">⚡</span>
+        <div class="age-range" data-uk="11–13 років" data-ru="11–13 лет">11–13 років</div>
+        <div class="age-label" data-uk="Середня група" data-ru="Средняя группа">Середня група</div>
+      </div>
+      <div class="age-group-card">
+        <span class="age-emoji">🚀</span>
+        <div class="age-range" data-uk="14–17 років" data-ru="14–17 лет">14–17 років</div>
+        <div class="age-label" data-uk="Старша група" data-ru="Старшая группа">Старша група</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <div class="photo-placeholder">📷</div>
+        <div class="photo-hint-text" data-uk="Вставте своє фото" data-ru="Вставьте своё фото">Вставте своє фото</div>
+      </div>
+      <div class="about-content reveal">
+        <div class="section-eyebrow" data-uk="Про мене" data-ru="Обо мне">Про мене</div>
+        <h2 data-uk="Привіт, я Богдан" data-ru="Привет, я Богдан">Привіт, я Богдан</h2>
+        <p data-uk="Розробляю на Unity та Python вже 10 років. Навчаю дітей та дорослих онлайн — кожен учень отримує реальний проект у портфоліо, а не просто пройдений курс." data-ru="Разрабатываю на Unity и Python уже 10 лет. Обучаю детей и взрослых онлайн — каждый ученик получает реальный проект в портфолио, а не просто пройденный курс.">Розробляю на Unity та Python вже 10 років. Навчаю дітей та дорослих онлайн — кожен учень отримує реальний проект у портфоліо, а не просто пройдений курс.</p>
+        <p data-uk="Працюю з учнями від 8 років. Умію пояснити складне просто — без зайвої теорії, одразу до практики. Заняття в Zoom або Discord." data-ru="Работаю с учениками от 8 лет. Умею объяснить сложное просто — без лишней теории, сразу к практике. Занятия в Zoom или Discord.">Працюю з учнями від 8 років. Умію пояснити складне просто — без зайвої теорії, одразу до практики. Заняття в Zoom або Discord.</p>
+        <div class="exp-grid">
+          <div class="exp-card"><div class="exp-card-num v">10</div><div class="exp-card-label" data-uk="років досвіду" data-ru="лет опыта">років досвіду</div></div>
+          <div class="exp-card"><div class="exp-card-num c">100+</div><div class="exp-card-label" data-uk="учнів навчив" data-ru="учеников обучил">учнів навчив</div></div>
+          <div class="exp-card"><div class="exp-card-num g" data-uk="від 8 р." data-ru="от 8 лет">від 8 р.</div><div class="exp-card-label" data-uk="вік учнів" data-ru="возраст учеников">вік учнів</div></div>
+          <div class="exp-card"><div class="exp-card-num a">до 7</div><div class="exp-card-label" data-uk="у групі" data-ru="в группе">у групі</div></div>
+        </div>
+        <div class="skills-wrap">
+          <span class="skill-pill">Unity</span>
+          <span class="skill-pill">C#</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">Telegram API</span>
+          <span class="skill-pill">Zoom / Discord</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="container">
+    <div class="booking-grid">
+      <div class="booking-info reveal">
+        <div class="section-eyebrow" data-uk="Запис" data-ru="Запись">Запис</div>
+        <h2 data-uk="Оберіть зручний час" data-ru="Выберите удобное время">Оберіть зручний час</h2>
+        <p data-uk="Оберіть тип заняття, знайдіть вільний слот і одразу забронюйте. Після запису ви побачите інструкцію по підготовці та реквізити для оплати." data-ru="Выберите тип занятия, найдите свободный слот и сразу забронируйте. После записи вы увидите инструкцию по подготовке и реквизиты для оплаты.">Оберіть тип заняття, знайдіть вільний слот і одразу забронюйте. Після запису ви побачите інструкцію по підготовці та реквізити для оплати.</p>
+        <div class="booking-steps">
+          <div class="b-step"><div class="b-step-num">1</div><div><div class="b-step-title" data-uk="Оберіть формат" data-ru="Выберите формат">Оберіть формат</div><div class="b-step-desc" data-uk="Індивідуально або груповий за віком" data-ru="Индивидуально или групповое по возрасту">Індивідуально або груповий за віком</div></div></div>
+          <div class="b-step"><div class="b-step-num">2</div><div><div class="b-step-title" data-uk="Знайдіть вільний час" data-ru="Найдите свободное время">Знайдіть вільний час</div><div class="b-step-desc" data-uk="Календар показує реальні вільні слоти" data-ru="Календарь показывает реальные свободные слоты">Календар показує реальні вільні слоти</div></div></div>
+          <div class="b-step"><div class="b-step-num">3</div><div><div class="b-step-title" data-uk="Підтвердження на пошту" data-ru="Подтверждение на почту">Підтвердження на пошту</div><div class="b-step-desc" data-uk="Реквізити та інструкція по ПО — одразу після запису" data-ru="Реквизиты и инструкция по ПО — сразу после записи">Реквізити та інструкція по ПО — одразу після запису</div></div></div>
+          <div class="b-step"><div class="b-step-num">4</div><div><div class="b-step-title" data-uk="Оплата" data-ru="Оплата">Оплата</div><div class="b-step-desc" data-uk="Переказ на карту (ПриватБанк / Монобанк)" data-ru="Перевод на карту (ПриватБанк / Монобанк)">Переказ на карту (ПриватБанк / Монобанк)</div></div></div>
+        </div>
+      </div>
+      <div class="calendly-box reveal" id="cal-embed-wrap" style="min-height:auto;padding:0;display:block;border:1px solid var(--border);background:var(--surface)">
+        <iframe id="cal-iframe"
+          src="https://cal.com/bogdan-bilous-alz10c/individual-lesson-unity?embed=true&theme=dark"
+          style="width:100%;height:700px;border:none;border-radius:20px;display:block"
+          frameborder="0">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-title" data-uk="Часті запитання" data-ru="Частые вопросы">Часті запитання</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-uk="Чи потрібен досвід програмування?" data-ru="Нужен ли опыт программирования?">Чи потрібен досвід програмування?</span>
+          <div class="faq-arrow">↓</div>
+        </div>
+        <div class="faq-a" data-uk="Ні, я працюю з учнями з нуля. Єдине що потрібно — бажання навчатися. На першому занятті розбираємося з рівнем і будуємо план під вас." data-ru="Нет, я работаю с учениками с нуля. Единственное что нужно — желание учиться. На первом занятии разбираемся с уровнем и строим план под вас.">Ні, я працюю з учнями з нуля. Єдине що потрібно — бажання навчатися. На першому занятті розбираємося з рівнем і будуємо план під вас.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-uk="Як проходять заняття?" data-ru="Как проходят занятия?">Як проходять заняття?</span>
+          <div class="faq-arrow">↓</div>
+        </div>
+        <div class="faq-a" data-uk="Онлайн у Zoom або Discord. Я ділюсь екраном, пояснюю матеріал і одразу пишемо код разом. Після уроку — домашнє завдання та запис заняття." data-ru="Онлайн в Zoom или Discord. Я делюсь экраном, объясняю материал и сразу пишем код вместе. После урока — домашнее задание и запись занятия.">Онлайн у Zoom або Discord. Я ділюсь екраном, пояснюю матеріал і одразу пишемо код разом. Після уроку — домашнє завдання та запис заняття.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-uk="Як оплатити урок?" data-ru="Как оплатить урок?">Як оплатити урок?</span>
+          <div class="faq-arrow">↓</div>
+        </div>
+        <div class="faq-a" data-uk="Оплата після запису. Реквізити карти (ПриватБанк або Монобанк) з'являться на сторінці підтвердження одразу після бронювання. Оплата в гривнях." data-ru="Оплата после записи. Реквизиты карты (ПриватБанк или Монобанк) появятся на странице подтверждения сразу после бронирования. Оплата в гривнях.">Оплата після запису. Реквізити карти (ПриватБанк або Монобанк) з'являться на сторінці підтвердження одразу після бронювання. Оплата в гривнях.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-uk="Як формуються вікові групи?" data-ru="Как формируются возрастные группы?">Як формуються вікові групи?</span>
+          <div class="faq-arrow">↓</div>
+        </div>
+        <div class="faq-a" data-uk="Групи: 8–10 років, 11–13 та 14–17. Діти навчаються з однолітками — їм легше спілкуватися, разом розв'язувати задачі та мотивувати одне одного. До 7 людей у групі." data-ru="Группы: 8–10 лет, 11–13 и 14–17. Дети учатся со сверстниками — им легче общаться, вместе решать задачи и мотивировать друг друга. До 7 человек в группе.">Групи: 8–10 років, 11–13 та 14–17. Діти навчаються з однолітками — їм легше спілкуватися, разом розв'язувати задачі та мотивувати одне одного. До 7 людей у групі.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-uk="Що встановити перед першим уроком?" data-ru="Что установить перед первым уроком?">Що встановити перед першим уроком?</span>
+          <div class="faq-arrow">↓</div>
+        </div>
+        <div class="faq-a" data-uk="Unity: Unity Hub + Unity LTS, VS Code або Rider, акаунт Unity ID. Python: Python 3.10+, VS Code + розширення Python, акаунт GitHub. Детальна інструкція надійде після запису." data-ru="Unity: Unity Hub + Unity LTS, VS Code или Rider, аккаунт Unity ID. Python: Python 3.10+, VS Code + расширение Python, аккаунт GitHub. Подробная инструкция придёт после записи.">Unity: Unity Hub + Unity LTS, VS Code або Rider, акаунт Unity ID. Python: Python 3.10+, VS Code + розширення Python, акаунт GitHub. Детальна інструкція надійде після запису.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-uk="Чи можна перенести або скасувати заняття?" data-ru="Можно ли перенести или отменить занятие?">Чи можна перенести або скасувати заняття?</span>
+          <div class="faq-arrow">↓</div>
+        </div>
+        <div class="faq-a" data-uk="Так, без проблем — за 2 години до початку. У листі підтвердження буде посилання для скасування або переносу." data-ru="Да, без проблем — за 2 часа до начала. В письме подтверждения будет ссылка для отмены или переноса.">Так, без проблем — за 2 години до початку. У листі підтвердження буде посилання для скасування або переносу.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Богдан<div class="footer-logo-dot2"></div></a>
+  <p data-uk="Викладач Unity та Python — онлайн-заняття для дітей від 8 років та дорослих" data-ru="Преподаватель Unity и Python — онлайн-занятия для детей от 8 лет и взрослых">Викладач Unity та Python — онлайн-заняття для дітей від 8 років та дорослих</p>
+  <div class="footer-nav">
+    <a href="#courses" data-uk="Курси" data-ru="Курсы">Курси</a>
+    <a href="#formats" data-uk="Формати" data-ru="Форматы">Формати</a>
+    <a href="#about" data-uk="Про мене" data-ru="Обо мне">Про мене</a>
+    <a href="#booking" data-uk="Запис" data-ru="Запись">Запис</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <!-- Замініть @ваш_telegram на ваш реальний нікнейм -->
+  <a href="https://t.me/ваш_telegram" class="footer-tg" target="_blank">
+    ✈️ <span data-uk="Написати в Telegram" data-ru="Написать в Telegram">Написати в Telegram</span>
+  </a>
+  <div class="footer-copy">© 2025 Богдан. <span data-uk="Всі права захищені." data-ru="Все права защищены.">Всі права захищені.</span></div>
+</footer>
+
+<script>
+// ── LANG SYSTEM ──
+let currentLang = 'uk';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
+  document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+  document.documentElement.lang = lang === 'uk' ? 'uk' : 'ru';
+  document.querySelectorAll('[data-uk]').forEach(el => {
+    el.textContent = lang === 'uk' ? el.getAttribute('data-uk') : el.getAttribute('data-ru');
+  });
+}
+
+// ── FAQ ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── SCROLL REVEAL ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

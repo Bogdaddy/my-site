@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дякую за запис! — Богдан</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080D;--bg2:#0C0E17;--bg3:#111421;--surface:#161A29;--surface2:#1C2135;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#EDF0FA;--muted:#6B7394;--muted2:#9299B8;
+  --violet:#7C6EFA;--violet2:#9D92FF;--violet-glow:rgba(124,110,250,0.15);
+  --cyan:#22D3EE;--cyan-glow:rgba(34,211,238,0.12);
+  --green:#10E89A;--green-glow:rgba(16,232,154,0.12);
+  --amber:#FBBF24;--font:'Onest',sans-serif;--r:14px;--r2:20px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* LANG */
+.lang-bar{display:flex;align-items:center;justify-content:flex-end;padding:10px 2rem;gap:4px;border-bottom:1px solid var(--border);background:rgba(7,8,13,0.95)}
+.lang-btn{font-family:var(--font);font-size:12px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid transparent;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--muted)}
+.lang-btn.active{background:var(--violet-glow);border-color:rgba(124,110,250,0.35);color:var(--violet2)}
+.lang-btn:hover:not(.active){color:var(--text);border-color:var(--border2)}
+
+/* HERO CONFIRM */
+.confirm-hero{text-align:center;padding:60px 2rem 40px;position:relative;overflow:hidden}
+.confirm-hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(16,232,154,0.08) 0%,transparent 65%);pointer-events:none}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--green-glow);border:2px solid rgba(16,232,154,0.3);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1.5rem;position:relative;z-index:1;animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.confirm-hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:0.75rem;position:relative;z-index:1}
+.confirm-hero h1 span{background:linear-gradient(135deg,var(--green) 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.confirm-hero p{font-size:1rem;color:var(--muted2);max-width:480px;margin:0 auto;line-height:1.7;position:relative;z-index:1}
+
+/* MAIN GRID */
+.page-wrap{max-width:1000px;margin:0 auto;padding:0 2rem 80px;display:flex;flex-direction:column;gap:1.5rem}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;position:relative;overflow:hidden}
+.card-top-line{position:absolute;top:0;left:0;right:0;height:2px}
+.card-top-line.green{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.card-top-line.violet{background:linear-gradient(90deg,var(--violet),#9B6EFA)}
+.card-top-line.amber{background:linear-gradient(90deg,var(--amber),#F87171)}
+.card-top-line.cyan{background:linear-gradient(90deg,var(--cyan),var(--violet))}
+.card-eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
+.card-eyebrow.green{color:var(--green)}
+.card-eyebrow.green::before{content:'';width:16px;height:1px;background:var(--green)}
+.card-eyebrow.violet{color:var(--violet2)}
+.card-eyebrow.violet::before{content:'';width:16px;height:1px;background:var(--violet2)}
+.card-eyebrow.amber{color:var(--amber)}
+.card-eyebrow.amber::before{content:'';width:16px;height:1px;background:var(--amber)}
+.card-eyebrow.cyan{color:var(--cyan)}
+.card-eyebrow.cyan::before{content:'';width:16px;height:1px;background:var(--cyan)}
+.card h2{font-size:1.3rem;font-weight:700;letter-spacing:-0.4px;margin-bottom:0.5rem}
+.card>p{font-size:14px;color:var(--muted2);line-height:1.65;margin-bottom:1.5rem}
+
+/* PAYMENT */
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pay-block{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem}
+.pay-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.pay-value{font-size:15px;font-weight:600;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.copy-btn{background:transparent;border:1px solid var(--border2);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--muted2);cursor:pointer;transition:all 0.2s;font-family:var(--font)}
+.copy-btn:hover{border-color:var(--violet2);color:var(--violet2);background:var(--violet-glow)}
+.copy-btn.copied{border-color:var(--green);color:var(--green);background:var(--green-glow)}
+.price-row{display:flex;gap:1rem;margin-top:1rem}
+.price-chip{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1rem;text-align:center}
+.price-chip-num{font-size:1.5rem;font-weight:800;letter-spacing:-0.5px}
+.price-chip-num.v{color:var(--violet2)}
+.price-chip-num.c{color:var(--cyan)}
+.price-chip-label{font-size:12px;color:var(--muted);margin-top:3px}
+.pay-note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);border-left:3px solid var(--amber)}
+
+/* SOFTWARE */
+.sw-tabs{display:flex;gap:8px;margin-bottom:1.5rem}
+.sw-tab{padding:8px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--muted);transition:all 0.2s;font-family:var(--font)}
+.sw-tab.active-unity{background:rgba(124,110,250,0.15);border-color:rgba(124,110,250,0.35);color:var(--violet2)}
+.sw-tab.active-python{background:var(--cyan-glow);border-color:rgba(34,211,238,0.3);color:var(--cyan)}
+.sw-panel{display:none;flex-direction:column;gap:0.75rem}
+.sw-panel.active{display:flex}
+.sw-item{display:flex;align-items:flex-start;gap:14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;transition:border-color 0.2s}
+.sw-item:hover{border-color:var(--border2)}
+.sw-num{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.sw-num.v{background:rgba(124,110,250,0.15);color:var(--violet2)}
+.sw-num.c{background:var(--cyan-glow);color:var(--cyan)}
+.sw-info{flex:1}
+.sw-name{font-size:14px;font-weight:600;margin-bottom:3px}
+.sw-desc{font-size:13px;color:var(--muted2);line-height:1.5}
+.sw-link{font-size:12px;color:var(--violet2);text-decoration:none;margin-top:4px;display:inline-flex;align-items:center;gap:4px}
+.sw-link.cyan{color:var(--cyan)}
+.sw-link:hover{text-decoration:underline}
+.sw-free{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--green-glow);border:1px solid rgba(16,232,154,0.2);color:var(--green);margin-left:6px;vertical-align:middle}
+
+/* WHAT TO EXPECT */
+.expect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.expect-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;text-align:center}
+.expect-icon{font-size:1.75rem;margin-bottom:0.75rem;display:block}
+.expect-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.expect-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* CONTACTS */
+.contacts-row{display:flex;gap:1rem;flex-wrap:wrap}
+.contact-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:1px solid var(--border2);color:var(--text);transition:all 0.2s;background:var(--bg3)}
+.contact-chip:hover{border-color:var(--violet2);color:var(--violet2);background:var(--violet-glow)}
+.contact-chip.tg{background:linear-gradient(135deg,rgba(124,110,250,0.15),rgba(34,211,238,0.1));border-color:rgba(124,110,250,0.3)}
+.contact-chip.tg:hover{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff}
+
+/* BACK */
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:2rem;transition:color 0.2s}
+.back-link:hover{color:var(--text)}
+
+@media(max-width:640px){
+  .payment-grid{grid-template-columns:1fr}
+  .price-row{flex-direction:column}
+  .expect-grid{grid-template-columns:1fr 1fr}
+  .confirm-hero{padding:40px 1.25rem 30px}
+  .page-wrap{padding:0 1.25rem 60px}
+  .card{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">🇺🇦 УКР</button>
+  <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">🇷🇺 РУС</button>
+</div>
+
+<!-- HERO CONFIRM -->
+<div class="confirm-hero">
+  <div class="success-icon">✓</div>
+  <h1><span data-uk="Ви записані!" data-ru="Вы записаны!">Ви записані!</span></h1>
+  <p data-uk="Чудово! Підтвердження та посилання на зустріч вже летять на вашу пошту. Нижче — все, що потрібно для першого уроку." data-ru="Отлично! Подтверждение и ссылка на встречу уже летят на вашу почту. Ниже — всё, что нужно для первого урока.">Чудово! Підтвердження та посилання на зустріч вже летять на вашу пошту. Нижче — все, що потрібно для першого уроку.</p>
+</div>
+
+<div class="page-wrap">
+  <a href="index.html" class="back-link">← <span data-uk="Повернутись на головну" data-ru="Вернуться на главную">Повернутись на головну</span></a>
+
+  <!-- PAYMENT -->
+  <div class="card">
+    <div class="card-top-line amber"></div>
+    <div class="card-eyebrow amber" data-uk="Оплата" data-ru="Оплата">Оплата</div>
+    <h2 data-uk="Оплатіть урок до початку" data-ru="Оплатите урок до начала">Оплатіть урок до початку</h2>
+    <p data-uk="Переказ на картку. Після оплати напишіть мені в Telegram — підтверджу отримання." data-ru="Перевод на карту. После оплаты напишите мне в Telegram — подтвержу получение.">Переказ на картку. Після оплати напишіть мені в Telegram — підтверджу отримання.</p>
+
+    <div class="payment-grid">
+      <div class="pay-block">
+        <div class="pay-label" data-uk="Номер картки" data-ru="Номер карты">Номер картки</div>
+        <div class="pay-value">
+          <span id="card-num">5375 4141 XXXX XXXX</span>
+          <button class="copy-btn" onclick="copyText('card-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+        </div>
+      </div>
+      <div class="pay-block">
+        <div class="pay-label" data-uk="Отримувач" data-ru="Получатель">Отримувач</div>
+        <div class="pay-value">
+          <span id="card-name">Богдан **..</span>
+          <button class="copy-btn" onclick="copyText('card-name', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+        </div>
+      </div>
+      <div class="pay-block">
+        <div class="pay-label">ПриватБанк</div>
+        <div class="pay-value">
+          <span id="phone-num">+380 9X XXX XX XX</span>
+          <button class="copy-btn" onclick="copyText('phone-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+        </div>
+      </div>
+      <div class="pay-block">
+        <div class="pay-label">Monobank</div>
+        <div class="pay-value">
+          <span id="mono-num">send.monobank.ua/...</span>
+          <button class="copy-btn" onclick="copyText('mono-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-row">
+      <div class="price-chip">
+        <div class="price-chip-num v">650 ₴</div>
+        <div class="price-chip-label" data-uk="Індивідуальний урок" data-ru="Индивидуальный урок">Індивідуальний урок</div>
+      </div>
+      <div class="price-chip">
+        <div class="price-chip-num c">500 ₴</div>
+        <div class="price-chip-label" data-uk="Груповий урок" data-ru="Групповой урок">Груповий урок</div>
+      </div>
+    </div>
+
+    <div class="pay-note">
+      💡 <span data-uk="У призначенні платежу напишіть своє ім'я та дату уроку. Наприклад: «Іван, урок 25.07»" data-ru="В назначении платежа напишите своё имя и дату урока. Например: «Иван, урок 25.07»">У призначенні платежу напишіть своє ім'я та дату уроку. Наприклад: «Іван, урок 25.07»</span>
+    </div>
+  </div>
+
+  <!-- SOFTWARE -->
+  <div class="card">
+    <div class="card-top-line violet"></div>
+    <div class="card-eyebrow violet" data-uk="Підготовка" data-ru="Подготовка">Підготовка</div>
+    <h2 data-uk="Встановіть ПЗ до першого уроку" data-ru="Установите ПО до первого урока">Встановіть ПЗ до першого уроку</h2>
+    <p data-uk="Оберіть свій напрямок і встановіть всі програми заздалегідь — на уроці відразу почнемо писати код." data-ru="Выберите своё направление и установите все программы заранее — на уроке сразу начнём писать код.">Оберіть свій напрямок і встановіть всі програми заздалегідь — на уроці відразу почнемо писати код.</p>
+
+    <div class="sw-tabs">
+      <button class="sw-tab active-unity" id="tab-unity" onclick="switchSW('unity')">🎮 Unity</button>
+      <button class="sw-tab" id="tab-python" onclick="switchSW('python')">🐍 Python</button>
+    </div>
+
+    <div class="sw-panel active" id="panel-unity">
+      <div class="sw-item">
+        <div class="sw-num v">1</div>
+        <div class="sw-info">
+          <div class="sw-name">Unity Hub <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Менеджер для встановлення Unity. Завантажте спочатку його." data-ru="Менеджер для установки Unity. Скачайте сначала его.">Менеджер для встановлення Unity. Завантажте спочатку його.</div>
+          <a href="https://unity.com/download" target="_blank" class="sw-link">↗ unity.com/download</a>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num v">2</div>
+        <div class="sw-info">
+          <div class="sw-name">Unity LTS <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Через Unity Hub встановіть версію Unity LTS (Long Term Support). Шукайте мітку LTS." data-ru="Через Unity Hub установите версию Unity LTS (Long Term Support). Ищите метку LTS.">Через Unity Hub встановіть версію Unity LTS (Long Term Support). Шукайте мітку LTS.</div>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num v">3</div>
+        <div class="sw-info">
+          <div class="sw-name">VS Code <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Редактор коду. Після встановлення додайте розширення C# від Microsoft." data-ru="Редактор кода. После установки добавьте расширение C# от Microsoft.">Редактор коду. Після встановлення додайте розширення C# від Microsoft.</div>
+          <a href="https://code.visualstudio.com" target="_blank" class="sw-link">↗ code.visualstudio.com</a>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num v">4</div>
+        <div class="sw-info">
+          <div class="sw-name">Unity ID <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Зареєструйтесь на unity.com — без цього Unity не запуститься." data-ru="Зарегистрируйтесь на unity.com — без этого Unity не запустится.">Зареєструйтесь на unity.com — без цього Unity не запуститься.</div>
+          <a href="https://id.unity.com" target="_blank" class="sw-link">↗ id.unity.com</a>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num v">5</div>
+        <div class="sw-info">
+          <div class="sw-name">Zoom <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Для проведення уроку онлайн. Встановіть додаток (не веб-версію)." data-ru="Для проведения урока онлайн. Установите приложение (не веб-версию).">Для проведення уроку онлайн. Встановіть додаток (не веб-версію).</div>
+          <a href="https://zoom.us/download" target="_blank" class="sw-link">↗ zoom.us/download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sw-panel" id="panel-python">
+      <div class="sw-item">
+        <div class="sw-num c">1</div>
+        <div class="sw-info">
+          <div class="sw-name">Python 3.10+ <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Завантажте з офіційного сайту. При встановленні обов'язково поставте галочку «Add to PATH»." data-ru="Скачайте с официального сайта. При установке обязательно поставьте галочку «Add to PATH».">Завантажте з офіційного сайту. При встановленні обов'язково поставте галочку «Add to PATH».</div>
+          <a href="https://python.org/downloads" target="_blank" class="sw-link cyan">↗ python.org/downloads</a>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num c">2</div>
+        <div class="sw-info">
+          <div class="sw-name">VS Code <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Редактор коду. Після встановлення додайте розширення «Python» від Microsoft." data-ru="Редактор кода. После установки добавьте расширение «Python» от Microsoft.">Редактор коду. Після встановлення додайте розширення «Python» від Microsoft.</div>
+          <a href="https://code.visualstudio.com" target="_blank" class="sw-link cyan">↗ code.visualstudio.com</a>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num c">3</div>
+        <div class="sw-info">
+          <div class="sw-name">GitHub <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Зареєструйтесь — зберігатимемо тут ваш код та домашні завдання." data-ru="Зарегистрируйтесь — будем хранить здесь ваш код и домашние задания.">Зареєструйтесь — зберігатимемо тут ваш код та домашні завдання.</div>
+          <a href="https://github.com" target="_blank" class="sw-link cyan">↗ github.com</a>
+        </div>
+      </div>
+      <div class="sw-item">
+        <div class="sw-num c">4</div>
+        <div class="sw-info">
+          <div class="sw-name">Zoom <span class="sw-free" data-uk="Безкоштовно" data-ru="Бесплатно">Безкоштовно</span></div>
+          <div class="sw-desc" data-uk="Для проведення уроку онлайн. Встановіть додаток (не веб-версію)." data-ru="Для проведения урока онлайн. Установите приложение (не веб-версию).">Для проведення уроку онлайн. Встановіть додаток (не веб-версію).</div>
+          <a href="https://zoom.us/download" target="_blank" class="sw-link cyan">↗ zoom.us/download</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT TO EXPECT -->
+  <div class="card">
+    <div class="card-top-line cyan"></div>
+    <div class="card-eyebrow cyan" data-uk="Що далі" data-ru="Что дальше">Що далі</div>
+    <h2 data-uk="Що буде після оплати" data-ru="Что будет после оплаты">Що буде після оплати</h2>
+    <div class="expect-grid">
+      <div class="expect-item">
+        <span class="expect-icon">📧</span>
+        <div class="expect-title" data-uk="Лист на пошту" data-ru="Письмо на почту">Лист на пошту</div>
+        <div class="expect-desc" data-uk="Підтвердження та посилання на зустріч" data-ru="Подтверждение и ссылка на встречу">Підтвердження та посилання на зустріч</div>
+      </div>
+      <div class="expect-item">
+        <span class="expect-icon">🔔</span>
+        <div class="expect-title" data-uk="Нагадування" data-ru="Напоминание">Нагадування</div>
+        <div class="expect-desc" data-uk="За 24 год і за 1 год до уроку" data-ru="За 24 ч и за 1 ч до урока">За 24 год і за 1 год до уроку</div>
+      </div>
+      <div class="expect-item">
+        <span class="expect-icon">💬</span>
+        <div class="expect-title" data-uk="Напишіть мені" data-ru="Напишите мне">Напишіть мені</div>
+        <div class="expect-desc" data-uk="Підтвердіть оплату в Telegram" data-ru="Подтвердите оплату в Telegram">Підтвердіть оплату в Telegram</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="card">
+    <div class="card-top-line green"></div>
+    <div class="card-eyebrow green" data-uk="Контакти" data-ru="Контакты">Контакти</div>
+    <h2 data-uk="Є запитання?" data-ru="Есть вопросы?">Є запитання?</h2>
+    <p data-uk="Напишіть мені — відповім протягом кількох годин." data-ru="Напишите мне — отвечу в течение нескольких часов.">Напишіть мені — відповім протягом кількох годин.</p>
+    <div class="contacts-row">
+      <!-- Замініть @ваш_telegram на ваш нікнейм -->
+      <a href="https://t.me/ваш_telegram" class="contact-chip tg" target="_blank">
+        ✈️ Telegram
+      </a>
+      <a href="mailto:вашa@пошта.com" class="contact-chip">
+        ✉️ Email
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// LANG
+function setLang(lang) {
+  document.getElementById('btn-uk').classList.toggle('active', lang==='uk');
+  document.getElementById('btn-ru').classList.toggle('active', lang==='ru');
+  document.documentElement.lang = lang==='uk'?'uk':'ru';
+  document.querySelectorAll('[data-uk]').forEach(el=>{
+    el.textContent = lang==='uk' ? el.getAttribute('data-uk') : el.getAttribute('data-ru');
+  });
+}
+
+// SOFTWARE TABS
+function switchSW(type) {
+  document.getElementById('panel-unity').classList.toggle('active', type==='unity');
+  document.getElementById('panel-python').classList.toggle('active', type==='python');
+  document.getElementById('tab-unity').className = 'sw-tab' + (type==='unity' ? ' active-unity' : '');
+  document.getElementById('tab-python').className = 'sw-tab' + (type==='python' ? ' active-python' : '');
+}
+
+// COPY
+function copyText(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
