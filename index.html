@@ -189,6 +189,13 @@ section{padding:110px 2rem;position:relative}
 .calendly-box p{font-size:14px;color:var(--muted);max-width:280px;line-height:1.6;position:relative;z-index:1}
 .calendly-box code{font-size:11px;background:var(--bg3);padding:8px 14px;border-radius:8px;color:var(--violet2);border:1px solid var(--border);display:block;margin-top:0.5rem;word-break:break-all;position:relative;z-index:1;text-align:left;line-height:1.6}
 
+/* ── LESSON TABS ── */
+.lesson-tabs{display:flex;gap:6px;padding:14px;background:var(--surface2);border-radius:20px 20px 0 0;flex-wrap:wrap}
+.lesson-tab{flex:1;min-width:120px;padding:10px 12px;border-radius:10px;font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.lesson-tab:hover{border-color:var(--violet2);color:var(--text)}
+.lesson-tab.active{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(124,110,250,0.3)}
+@media(max-width:640px){.lesson-tab{min-width:45%;font-size:12px}}
+
 /* ── AFTER BOOKING CARD ── */
 .after-booking-card{margin-top:2rem;background:linear-gradient(135deg,rgba(16,232,154,0.08) 0%,var(--surface) 70%);border:1px solid rgba(16,232,154,0.25);border-radius:var(--r2);padding:1.75rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .ab-icon{width:48px;height:48px;border-radius:14px;background:var(--green-glow);border:1px solid rgba(16,232,154,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
@@ -454,11 +461,25 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
         </div>
       </div>
       <div class="calendly-box reveal" id="cal-embed-wrap" style="min-height:auto;padding:0;display:block;border:1px solid var(--border);background:var(--surface)">
-        <iframe id="cal-iframe"
-          src="https://cal.com/bogdan-bilous-alz10c/individual-lesson-unity?embed=true&theme=dark"
-          style="width:100%;height:700px;border:none;border-radius:20px;display:block"
-          frameborder="0">
-        </iframe>
+
+        <!-- LESSON TYPE TABS -->
+        <div class="lesson-tabs">
+          <button class="lesson-tab active" onclick="switchLesson('ind-unity', this)">
+            🎮 <span data-uk="Інд. Unity" data-ru="Инд. Unity">Інд. Unity</span>
+          </button>
+          <button class="lesson-tab" onclick="switchLesson('ind-python', this)">
+            🐍 <span data-uk="Інд. Python" data-ru="Инд. Python">Інд. Python</span>
+          </button>
+          <button class="lesson-tab" onclick="switchLesson('group-unity', this)">
+            🎮 <span data-uk="Група Unity" data-ru="Группа Unity">Група Unity</span>
+          </button>
+          <button class="lesson-tab" onclick="switchLesson('group-python', this)">
+            🐍 <span data-uk="Група Python" data-ru="Группа Python">Група Python</span>
+          </button>
+        </div>
+
+        <!-- Замініть ВАШ_НІКНЕЙМ та назви подій на свої реальні з Cal.com -->
+        <div id="my-cal-inline" style="width:100%;height:700px;overflow:scroll;border-radius:0 0 20px 20px"></div>
       </div>
     </div>
 
@@ -570,6 +591,73 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
+// ── CAL.COM OFFICIAL EMBED SCRIPT ──
+// Замініть ВАШ_НІКНЕЙМ на свій реальний юзернейм з Cal.com (без https://, без cal.com/)
+(function (C, A, L) {
+  let p = function (a, ar) { a.q.push(ar); };
+  let d = C.document;
+  C.Cal = C.Cal || function () {
+    let cal = C.Cal;
+    let ar = arguments;
+    if (!cal.loaded) {
+      cal.ns = {};
+      cal.q = cal.q || [];
+      d.head.appendChild(d.createElement("script")).src = A;
+      cal.loaded = true;
+    }
+    if (ar[0] === L) {
+      const api = function () { p(api, arguments); };
+      const namespace = ar[1];
+      api.q = api.q || [];
+      if (typeof namespace === "string") {
+        cal.ns[namespace] = cal.ns[namespace] || api;
+        p(cal.ns[namespace], ar);
+        p(cal, ["initNamespace", namespace]);
+      } else p(cal, ar);
+      return;
+    }
+    p(cal, ar);
+  };
+})(window, "https://app.cal.com/embed/embed.js", "init");
+
+Cal("init", { origin: "https://cal.com" });
+
+Cal("inline", {
+  elementOrSelector: "#my-cal-inline",
+  calLink: "bogdan-bilous-alz10c/individual-lesson-unity",
+  layout: "month_view"
+});
+
+Cal("ui", {
+  theme: "dark",
+  styles: { branding: { brandColor: "#7C6EFA" } }
+});
+
+// ── LESSON TYPE TABS ──
+// Замініть ВАШ_НІКНЕЙМ та slug подій на свої реальні з Cal.com
+const lessonLinks = {
+  'ind-unity':    'bogdan-bilous-alz10c/individual-lesson-unity',
+  'ind-python':   'bogdan-bilous-alz10c/individual-lessons-python',
+  'group-unity':  'bogdan-bilous-alz10c/group-lesson-unity',
+  'group-python': 'bogdan-bilous-alz10c/group-lesson'
+};
+
+function switchLesson(key, btn) {
+  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  // Очищаємо контейнер і перемальовуємо віджет для нового типу заняття
+  document.getElementById('my-cal-inline').innerHTML = '';
+  Cal("inline", {
+    elementOrSelector: "#my-cal-inline",
+    calLink: lessonLinks[key],
+    layout: "month_view"
+  });
+  Cal("ui", {
+    theme: "dark",
+    styles: { branding: { brandColor: "#7C6EFA" } }
+  });
+}
+
 // ── SCROLL REVEAL ──
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
@@ -584,3 +672,4 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
 </body>
 </html>
+
