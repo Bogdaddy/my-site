@@ -98,7 +98,8 @@ section{padding:110px 2rem;position:relative}
 /* ── COURSES ── */
 #courses{background:var(--bg2)}
 #courses::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent)}
-.courses-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.courses-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start}
+@media(max-width:1024px){.courses-grid{grid-template-columns:1fr}}
 .course-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s}
 .course-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.25s}
 .course-card:hover{transform:translateY(-4px)}
@@ -188,6 +189,16 @@ section{padding:110px 2rem;position:relative}
 .cal-icon-big{font-size:3rem;opacity:0.25;position:relative;z-index:1}
 .calendly-box p{font-size:14px;color:var(--muted);max-width:280px;line-height:1.6;position:relative;z-index:1}
 .calendly-box code{font-size:11px;background:var(--bg3);padding:8px 14px;border-radius:8px;color:var(--violet2);border:1px solid var(--border);display:block;margin-top:0.5rem;word-break:break-all;position:relative;z-index:1;text-align:left;line-height:1.6}
+
+/* ── GAMES LIST ── */
+.games-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--violet2);margin:1.5rem 0 0.75rem;display:flex;align-items:center;gap:8px}
+.games-label::before{content:'';width:16px;height:1px;background:var(--violet2)}
+.games-list{display:flex;flex-direction:column;gap:10px}
+.game-item{display:flex;gap:12px;align-items:flex-start;background:rgba(124,110,250,0.06);border:1px solid rgba(124,110,250,0.12);border-radius:10px;padding:10px 12px;transition:border-color 0.2s}
+.game-item:hover{border-color:rgba(124,110,250,0.25)}
+.game-num{font-size:11px;font-weight:800;color:var(--violet2);opacity:0.5;flex-shrink:0;width:18px;margin-top:2px;letter-spacing:0.5px}
+.game-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.game-desc{font-size:12px;color:var(--muted);line-height:1.5}
 
 /* ── LESSON TABS ── */
 .lesson-tabs{display:flex;gap:6px;padding:14px;background:var(--surface2);border-radius:20px 20px 0 0;flex-wrap:wrap}
@@ -324,17 +335,97 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
           <div class="module-item">2D / 3D</div>
           <div class="module-item" data-uk="Публікація гри" data-ru="Публикация игры">Публікація гри</div>
         </div>
+
+        <!-- 5 GAMES EXPANDED -->
+        <div class="games-label" data-uk="5 ігор у програмі курсу:" data-ru="5 игр в программе курса:">5 ігор у програмі курсу:</div>
+        <div class="games-list">
+          <div class="game-item">
+            <div class="game-num">01</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🌱 Перша гра — 3D пригода з нуля" data-ru="🌱 Первая игра — 3D приключение с нуля">🌱 Перша гра — 3D пригода з нуля</div>
+              <div class="game-desc" data-uk="Одразу в 3D — герой рухається, камера слідкує, є рівні та перемога. Жодного досвіду не потрібно: за кілька занять з порожнього проекту виростає справжня гра. Саме тут з'являється відчуття «я можу робити ігри»." data-ru="Сразу в 3D — герой двигается, камера следит, есть уровни и победа. Никакого опыта не нужно: за несколько занятий из пустого проекта вырастает настоящая игра. Именно здесь появляется ощущение «я могу делать игры».">Одразу в 3D — герой рухається, камера слідкує, є рівні та перемога. Жодного досвіду не потрібно: за кілька занять з порожнього проекту виростає справжня гра. Саме тут з'являється відчуття «я можу робити ігри».</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num">02</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="⚡ 3D пригода — герой оживає" data-ru="⚡ 3D приключение — герой оживает">⚡ 3D пригода — герой оживає</div>
+              <div class="game-desc" data-uk="Перший 3D світ, де персонаж бігає з плавними анімаціями. Вчимо blend trees та Animator — після цього будь-який персонаж у ваших руках рухатиметься як живий." data-ru="Первый 3D мир, где персонаж бегает с плавными анимациями. Изучаем blend trees и Animator — после этого любой персонаж в ваших руках будет двигаться как живой.">Перший 3D світ, де персонаж бігає з плавними анімаціями. Вчимо blend trees та Animator — після цього будь-який персонаж у ваших руках рухатиметься як живий.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num">03</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🌀 2.5D платформер — між двох світів" data-ru="🌀 2.5D платформер — между двух миров">🌀 2.5D платформер — між двох світів</div>
+              <div class="game-desc" data-uk="Гра виглядає як 3D, але грається як 2D. Паралаксні фони, глибина, кінематографічна камера. Саме такий жанр відрізняє початківця від того, хто справді розуміє движок." data-ru="Игра выглядит как 3D, но играется как 2D. Параллаксные фоны, глубина, кинематографическая камера. Именно такой жанр отличает новичка от того, кто по-настоящему понимает движок.">Гра виглядає як 3D, але грається як 2D. Паралаксні фони, глибина, кінематографічна камера. Саме такий жанр відрізняє початківця від того, хто справді розуміє движок.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num">04</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="⚔️ 2D RPG — власний ігровий світ" data-ru="⚔️ 2D RPG — собственный игровой мир">⚔️ 2D RPG — власний ігровий світ</div>
+              <div class="game-desc" data-uk="Інвентар, квести, NPC з діалогами, система бою. Найамбітніший соло-проект курсу — саме таку гру не соромно показати у портфоліо або навіть викласти в App Store." data-ru="Инвентарь, квесты, NPC с диалогами, система боя. Самый амбициозный соло-проект курса — именно такую игру не стыдно показать в портфолио или даже выложить в App Store.">Інвентар, квести, NPC з діалогами, система бою. Найамбітніший соло-проект курсу — саме таку гру не соромно показати у портфоліо або навіть викласти в App Store.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num">05</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🍳 Онлайн кулінарна гра — Overcooked своїми руками" data-ru="🍳 Онлайн кулинарная игра — Overcooked своими руками">🍳 Онлайн кулінарна гра — Overcooked своїми руками</div>
+              <div class="game-desc" data-uk="4 гравці в реальному часі готують разом та створюють хаос на кухні. Справжній мережевий мультиплеєр через Netcode — фінальний проект, який хочеться запустити з друзями одразу після уроку." data-ru="4 игрока в реальном времени готовят вместе и создают хаос на кухне. Настоящий сетевой мультиплеер через Netcode — финальный проект, который хочется запустить с друзьями сразу после урока.">4 гравці в реальному часі готують разом та створюють хаос на кухні. Справжній мережевий мультиплеєр через Netcode — фінальний проект, який хочеться запустити з друзьями одразу після уроку.</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="course-card python reveal">
         <div class="course-icon-wrap python">🐍</div>
-        <h3>Python — <span data-uk="автоматизація та дані" data-ru="автоматизация и данные">автоматизація та дані</span></h3>
-        <p data-uk="Пишемо скрипти, автоматизуємо рутину, розбираємося з даними та основами ML." data-ru="Пишем скрипты, автоматизируем рутину, разбираемся с данными и основами ML.">Пишемо скрипти, автоматизуємо рутину, розбираємося з даними та основами ML.</p>
+        <h3>Python — <span data-uk="боти, ШІ та автоматизація" data-ru="боты, ИИ и автоматизация">боти, ШІ та автоматизація</span></h3>
+        <p data-uk="Пишемо реальні проекти з першого уроку — від малювання черепахою до бота, який впізнає обличчя." data-ru="Пишем реальные проекты с первого урока — от рисования черепахой до бота, который распознаёт лица.">Пишемо реальні проекти з першого уроку — від малювання черепахою до бота, який впізнає обличчя.</p>
         <div class="module-list">
-          <div class="module-item" data-uk="Основи Python" data-ru="Основы Python">Основи Python</div>
-          <div class="module-item" data-uk="Автоматизація задач" data-ru="Автоматизация задач">Автоматизація задач</div>
-          <div class="module-item">Pandas / NumPy</div>
-          <div class="module-item" data-uk="Парсинг сайтів" data-ru="Парсинг сайтов">Парсинг сайтів</div>
-          <div class="module-item" data-uk="Telegram-боти" data-ru="Telegram-боты">Telegram-боти</div>
+          <div class="module-item" data-uk="Основи Python та логіка" data-ru="Основы Python и логика">Основи Python та логіка</div>
+          <div class="module-item" data-uk="Telegram Bot API" data-ru="Telegram Bot API">Telegram Bot API</div>
+          <div class="module-item" data-uk="Комп'ютерний зір (OpenCV)" data-ru="Компьютерное зрение (OpenCV)">Комп'ютерний зір (OpenCV)</div>
+          <div class="module-item" data-uk="Голосові технології" data-ru="Голосовые технологии">Голосові технології</div>
+          <div class="module-item" data-uk="Ігрові та розважальні боти" data-ru="Игровые и развлекательные боты">Ігрові та розважальні боти</div>
+        </div>
+
+        <!-- PYTHON PROJECTS -->
+        <div class="games-label" data-uk="Проекти у програмі курсу:" data-ru="Проекты в программе курса:">Проекти у програмі курсу:</div>
+        <div class="games-list">
+          <div class="game-item">
+            <div class="game-num" style="color:var(--cyan)">01</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🐢 Turtle — малювання кодом" data-ru="🐢 Turtle — рисование кодом">🐢 Turtle — малювання кодом</div>
+              <div class="game-desc" data-uk="Для наймолодших — черепашка малює зірки, спіралі та цілі картини за командами. Перший «вау-ефект»: написав три рядки — на екрані з'явилося мистецтво." data-ru="Для самых маленьких — черепашка рисует звёзды, спирали и целые картины по командам. Первый «вау-эффект»: написал три строчки — на экране появилось искусство.">Для наймолодших — черепашка малює зірки, спіралі та цілі картини за командами. Перший «вау-ефект»: написав три рядки — на екрані з'явилося мистецтво.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num" style="color:var(--cyan)">02</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🎮 Ігровий Telegram-бот" data-ru="🎮 Игровой Telegram-бот">🎮 Ігровий Telegram-бот</div>
+              <div class="game-desc" data-uk="Бот-вікторина, бот з рандомними квестами або текстовий RPG прямо в Telegram. Показуєш другу — він грає, не знаючи, що це твій код." data-ru="Бот-викторина, бот с рандомными квестами или текстовый RPG прямо в Telegram. Показываешь другу — он играет, не зная, что это твой код.">Бот-вікторина, бот з рандомними квестами або текстовий RPG прямо в Telegram. Показуєш другу — він грає, не знаючи, що це твій код.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num" style="color:var(--cyan)">03</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🎙️ Голосовий бот" data-ru="🎙️ Голосовой бот">🎙️ Голосовий бот</div>
+              <div class="game-desc" data-uk="Говориш у мікрофон — бот тебе чує, розуміє і відповідає. Підключаємо SpeechRecognition та синтез мови. Виглядає як магія, але це 40 рядків Python." data-ru="Говоришь в микрофон — бот тебя слышит, понимает и отвечает. Подключаем SpeechRecognition и синтез речи. Выглядит как магия, но это 40 строк Python.">Говориш у мікрофон — бот тебе чує, розуміє і відповідає. Підключаємо SpeechRecognition та синтез мови. Виглядає як магія, але це 40 рядків Python.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num" style="color:var(--cyan)">04</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="👁️ Бот з розпізнаванням обличчя" data-ru="👁️ Бот с распознаванием лица">👁️ Бот з розпізнаванням обличчя</div>
+              <div class="game-desc" data-uk="Камера бачить обличчя — бот вітає тебе по імені. Або розпізнає предмети на фото. OpenCV + нейромережа: ваш перший проект зі справжнім штучним інтелектом." data-ru="Камера видит лицо — бот приветствует тебя по имени. Или распознаёт предметы на фото. OpenCV + нейросеть: ваш первый проект с настоящим искусственным интеллектом.">Камера бачить обличчя — бот вітає тебе по імені. Або розпізнає предмети на фото. OpenCV + нейромережа: ваш перший проект зі справжнім штучним інтелектом.</div>
+            </div>
+          </div>
+          <div class="game-item">
+            <div class="game-num" style="color:var(--cyan)">05</div>
+            <div class="game-info">
+              <div class="game-title" data-uk="🤖 Розумний асистент-бот" data-ru="🤖 Умный ассистент-бот">🤖 Розумний асистент-бот</div>
+              <div class="game-desc" data-uk="Фінальний проект: бот-помічник, який нагадує про справи, відповідає на питання і автоматизує рутину. Те, чим ви користуватиметесь самі кожен день." data-ru="Финальный проект: бот-помощник, который напоминает о делах, отвечает на вопросы и автоматизирует рутину. То, чем вы будете пользоваться сами каждый день.">Фінальний проект: бот-помічник, який нагадує про справи, відповідає на питання і автоматизує рутину. Те, чим ви користуватиметесь самі кожен день.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -478,8 +569,11 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
           </button>
         </div>
 
-        <!-- Замініть ВАШ_НІКНЕЙМ та назви подій на свої реальні з Cal.com -->
-        <div id="my-cal-inline" style="width:100%;height:700px;overflow:scroll;border-radius:0 0 20px 20px"></div>
+        <!-- 4 окремі контейнери — один для кожної вкладки -->
+        <div id="cal-ind-unity"   class="cal-panel active-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px"></div>
+        <div id="cal-ind-python"  class="cal-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px;display:none"></div>
+        <div id="cal-group-unity" class="cal-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px;display:none"></div>
+        <div id="cal-group-python"class="cal-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px;display:none"></div>
       </div>
     </div>
 
@@ -562,8 +656,7 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
     <a href="#booking" data-uk="Запис" data-ru="Запись">Запис</a>
     <a href="#faq">FAQ</a>
   </div>
-  <!-- Замініть @ваш_telegram на ваш реальний нікнейм -->
-  <a href="https://t.me/ваш_telegram" class="footer-tg" target="_blank">
+  <a href="https://t.me/Bogdaddy_usa" class="footer-tg" target="_blank">
     ✈️ <span data-uk="Написати в Telegram" data-ru="Написать в Telegram">Написати в Telegram</span>
   </a>
   <div class="footer-copy">© 2025 Богдан. <span data-uk="Всі права захищені." data-ru="Все права защищены.">Всі права захищені.</span></div>
@@ -592,7 +685,6 @@ function toggleFaq(el) {
 }
 
 // ── CAL.COM OFFICIAL EMBED SCRIPT ──
-// Замініть ВАШ_НІКНЕЙМ на свій реальний юзернейм з Cal.com (без https://, без cal.com/)
 (function (C, A, L) {
   let p = function (a, ar) { a.q.push(ar); };
   let d = C.document;
@@ -620,42 +712,33 @@ function toggleFaq(el) {
   };
 })(window, "https://app.cal.com/embed/embed.js", "init");
 
-Cal("init", { origin: "https://cal.com" });
+// Ініціалізуємо кожну вкладку в окремому namespace
+const calConfig = [
+  { ns: 'ind-unity',    link: 'bogdan-bilous-alz10c/individual-lesson-unity',    el: '#cal-ind-unity'   },
+  { ns: 'ind-python',   link: 'bogdan-bilous-alz10c/individual-lessons-python',   el: '#cal-ind-python'  },
+  { ns: 'group-unity',  link: 'bogdan-bilous-alz10c/group-lesson-unity',          el: '#cal-group-unity' },
+  { ns: 'group-python', link: 'bogdan-bilous-alz10c/group-lesson',                el: '#cal-group-python'}
+];
 
-Cal("inline", {
-  elementOrSelector: "#my-cal-inline",
-  calLink: "bogdan-bilous-alz10c/individual-lesson-unity",
-  layout: "month_view"
-});
-
-Cal("ui", {
-  theme: "dark",
-  styles: { branding: { brandColor: "#7C6EFA" } }
+calConfig.forEach(function(cfg) {
+  Cal("init", cfg.ns, { origin: "https://cal.com" });
+  Cal.ns[cfg.ns]("inline", { elementOrSelector: cfg.el, calLink: cfg.link, layout: "month_view" });
+  Cal.ns[cfg.ns]("ui", { theme: "dark", styles: { branding: { brandColor: "#7C6EFA" } } });
 });
 
 // ── LESSON TYPE TABS ──
-// Замініть ВАШ_НІКНЕЙМ та slug подій на свої реальні з Cal.com
-const lessonLinks = {
-  'ind-unity':    'bogdan-bilous-alz10c/individual-lesson-unity',
-  'ind-python':   'bogdan-bilous-alz10c/individual-lessons-python',
-  'group-unity':  'bogdan-bilous-alz10c/group-lesson-unity',
-  'group-python': 'bogdan-bilous-alz10c/group-lesson'
+const tabMap = {
+  'ind-unity':    'cal-ind-unity',
+  'ind-python':   'cal-ind-python',
+  'group-unity':  'cal-group-unity',
+  'group-python': 'cal-group-python'
 };
 
 function switchLesson(key, btn) {
   document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  // Очищаємо контейнер і перемальовуємо віджет для нового типу заняття
-  document.getElementById('my-cal-inline').innerHTML = '';
-  Cal("inline", {
-    elementOrSelector: "#my-cal-inline",
-    calLink: lessonLinks[key],
-    layout: "month_view"
-  });
-  Cal("ui", {
-    theme: "dark",
-    styles: { branding: { brandColor: "#7C6EFA" } }
-  });
+  document.querySelectorAll('.cal-panel').forEach(p => p.style.display = 'none');
+  document.getElementById(tabMap[key]).style.display = 'block';
 }
 
 // ── SCROLL REVEAL ──
@@ -672,4 +755,3 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
 </body>
 </html>
-
