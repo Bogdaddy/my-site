@@ -3,273 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Богдан — Викладач Unity та Python</title>
+<title>Богдан — Навчання Unity та Python | Онлайн уроки програмування</title>
+<meta name="description" content="Навчання Unity та Python онлайн. Індивідуально та в групах, від 7 років. 10 років досвіду, 100+ учнів. Записатись на пробний урок.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0A0F'/%3E%3Ctext x='50' y='68' font-size='58' font-weight='900' fill='%23C8FF00' text-anchor='middle' font-family='Arial'%3EB%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Богдан — Навчання Unity та Python">
+<meta property="og:description" content="Онлайн уроки програмування від 7 років. Unity, Python, індивідуально та в групах. 10 років досвіду.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#07080D;
-  --bg2:#0C0E17;
-  --bg3:#111421;
-  --surface:#161A29;
-  --surface2:#1C2135;
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.13);
-  --text:#EDF0FA;
-  --muted:#6B7394;
-  --muted2:#9299B8;
-  --violet:#7C6EFA;
-  --violet2:#9D92FF;
-  --violet-glow:rgba(124,110,250,0.15);
-  --cyan:#22D3EE;
-  --cyan-glow:rgba(34,211,238,0.12);
-  --green:#10E89A;
-  --green-glow:rgba(16,232,154,0.12);
-  --amber:#FBBF24;
-  --font:'Onest',sans-serif;
-  --r:14px;
-  --r2:20px;
+  --ink:#0A0A0F;--ink2:#13131C;--ink3:#1C1C28;--surface:#242434;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
+  --text:#F0F0FA;--muted:#7878A0;--muted2:#A0A0C0;
+  --lime:#C8FF00;--lime-glow:rgba(200,255,0,0.12);
+  --violet:#6B5BFF;--violet2:#8B7FFF;--cyan:#00D4FF;
+  --font:'Cabinet Grotesk',sans-serif;--body:'Inter',sans-serif;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--ink);color:var(--text);font-family:var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-/* ── NOISE TEXTURE ── */
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
-
-/* ── LANG SWITCHER ── */
-.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:36px;background:rgba(7,8,13,0.95);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;padding:0 2rem;gap:4px}
-.lang-btn{font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:0.5px;padding:4px 12px;border-radius:6px;border:1px solid transparent;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--muted)}
-.lang-btn.active{background:var(--violet-glow);border-color:rgba(124,110,250,0.35);color:var(--violet2)}
-.lang-btn:hover:not(.active){color:var(--text);border-color:var(--border2)}
+/* ── LANG ── */
+.lang-bar{display:flex;justify-content:flex-end;align-items:center;padding:7px 2rem;gap:4px;background:var(--ink2);border-bottom:1px solid var(--border)}
+.lang-btn{font-family:var(--font);font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;border:1px solid transparent;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.15s}
+.lang-btn.active{background:var(--lime-glow);border-color:rgba(200,255,0,0.3);color:var(--lime)}
 
 /* ── NAV ── */
-nav{position:fixed;top:36px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(7,8,13,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-logo{font-size:20px;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-0.8px;display:flex;align-items:center;gap:3px}
-.nav-logo-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan));display:inline-block;margin-bottom:8px}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;background:rgba(10,10,15,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--font);font-size:18px;font-weight:900;color:var(--text);text-decoration:none;letter-spacing:-0.5px}
+.logo-acc{color:var(--lime)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:color 0.15s}
 .nav-links a:hover{color:var(--text)}
-.nav-cta{background:linear-gradient(135deg,var(--violet) 0%,#9B6EFA 100%);color:#fff;padding:9px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:opacity 0.2s,transform 0.15s;box-shadow:0 0 20px rgba(124,110,250,0.3)}
+.nav-cta{background:var(--lime);color:var(--ink);padding:8px 20px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:800;text-decoration:none;transition:opacity 0.15s,transform 0.15s}
 .nav-cta:hover{opacity:0.88;transform:translateY(-1px)}
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:160px 2rem 100px;position:relative;overflow:hidden}
-.hero-orb{position:absolute;border-radius:50%;pointer-events:none}
-.hero-orb-1{width:600px;height:600px;top:-100px;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(124,110,250,0.1) 0%,transparent 65%)}
-.hero-orb-2{width:400px;height:400px;bottom:0;right:-100px;background:radial-gradient(circle,rgba(34,211,238,0.07) 0%,transparent 65%)}
-.hero-orb-3{width:300px;height:300px;bottom:0;left:-80px;background:radial-gradient(circle,rgba(16,232,154,0.06) 0%,transparent 65%)}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 80px);position:relative;overflow:hidden}
+.hero-left{padding:4rem 3rem 3rem;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.hero-right{position:relative;overflow:hidden}
+.hero-photo{width:100%;height:100%;object-fit:cover;opacity:0.65;filter:saturate(0.85);transition:opacity 2s ease}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--ink) 0%,transparent 50%),linear-gradient(to top,var(--ink) 0%,transparent 25%)}
 
-.hero-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:0.3px;border:1px solid}
-.chip-violet{background:var(--violet-glow);border-color:rgba(124,110,250,0.3);color:var(--violet2)}
-.chip-cyan{background:var(--cyan-glow);border-color:rgba(34,211,238,0.25);color:var(--cyan)}
-.chip-green{background:var(--green-glow);border-color:rgba(16,232,154,0.25);color:var(--green)}
-.chip-dot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+/* floating particles */
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.particle{position:absolute;border-radius:50%;animation:float-up linear infinite;opacity:0}
+@keyframes float-up{0%{transform:translateY(100%) translateX(0);opacity:0}10%{opacity:1}90%{opacity:0.3}100%{transform:translateY(-100px) translateX(var(--dx));opacity:0}}
 
-.hero h1{font-size:clamp(2.8rem,6.5vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem;position:relative}
-.hero h1 .line2{display:block;background:linear-gradient(135deg,var(--violet2) 0%,var(--cyan) 60%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:1.1rem;color:var(--muted2);max-width:540px;margin:0 auto 2.5rem;line-height:1.75;font-weight:400}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:linear-gradient(135deg,var(--violet) 0%,#9B6EFA 100%);color:#fff;padding:15px 32px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 0 30px rgba(124,110,250,0.35);display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 40px rgba(124,110,250,0.5)}
-.btn-ghost{background:transparent;color:var(--text);padding:15px 32px;border-radius:12px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--border2);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
-.btn-ghost:hover{border-color:var(--violet2);background:var(--violet-glow);color:var(--violet2)}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:1.5rem}
+.hero-tag::before{content:'';width:24px;height:2px;background:var(--lime)}
+.hero h1{font-family:var(--font);font-size:clamp(3rem,5.5vw,5.8rem);font-weight:900;line-height:0.92;letter-spacing:-3px;margin-bottom:1.5rem}
+.h1-outline{-webkit-text-stroke:1.5px var(--text);color:transparent}
+.h1-lime{color:var(--lime);display:block}
+.h1-white{display:block;color:var(--text)}
+.hero-sub{font-size:15px;color:var(--muted2);line-height:1.7;max-width:400px;margin-bottom:2.5rem}
+.hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-lime{background:var(--lime);color:var(--ink);padding:14px 28px;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 0 30px rgba(200,255,0,0.2)}
+.btn-lime:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(200,255,0,0.4)}
+.btn-ghost{color:var(--muted2);font-size:14px;text-decoration:none;font-family:var(--font);font-weight:600;display:flex;align-items:center;gap:6px;transition:color 0.15s}
+.btn-ghost:hover{color:var(--lime)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.hs-num{font-family:var(--font);font-size:2rem;font-weight:900;letter-spacing:-1px;line-height:1}
+.hs-label{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
 
-.hero-stats{display:flex;gap:0;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border);position:relative}
-.stat{flex:1;text-align:center;padding:0 2rem;position:relative}
-.stat+.stat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:40px;background:var(--border)}
-.stat-num{font-size:2.2rem;font-weight:800;letter-spacing:-1px;line-height:1}
-.stat-num.v{color:var(--violet2)}
-.stat-num.c{color:var(--cyan)}
-.stat-num.g{color:var(--green)}
-.stat-label{font-size:12px;color:var(--muted);margin-top:6px;font-weight:500}
+/* typing cursor */
+.typing-cursor{display:inline-block;width:3px;height:0.85em;background:var(--lime);margin-left:4px;vertical-align:middle;animation:blink-cur 0.8s step-end infinite}
+@keyframes blink-cur{50%{opacity:0}}
 
-/* ── SECTIONS ── */
-section{padding:110px 2rem;position:relative}
-.container{max-width:1120px;margin:0 auto}
-.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--violet2);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
-.section-eyebrow::before{content:'';width:20px;height:1px;background:var(--violet2)}
-.section-title{font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:1rem;line-height:1.1}
-.section-sub{font-size:1rem;color:var(--muted2);max-width:560px;line-height:1.7}
-.section-head{margin-bottom:3.5rem}
+/* ── MARQUEE ── */
+.marquee-wrap{overflow:hidden;background:var(--lime);padding:11px 0}
+.marquee-track{display:flex;width:max-content;animation:marquee 20s linear infinite}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.marquee-item{font-family:var(--font);font-size:12px;font-weight:800;color:var(--ink);white-space:nowrap;padding:0 1.5rem;display:flex;align-items:center;gap:1.2rem;letter-spacing:0.3px}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:rgba(0,0,0,0.25);flex-shrink:0}
+
+/* ── SECTION COMMON ── */
+section{padding:80px 2rem}
+.container{max-width:1140px;margin:0 auto}
+.sec-eye{font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lime);display:flex;align-items:center;gap:8px;margin-bottom:0.75rem}
+.sec-eye::before{content:'';width:20px;height:2px;background:var(--lime)}
+.sec-h{font-family:var(--font);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;letter-spacing:-1px;margin-bottom:0.75rem;line-height:1.1}
+.sec-sub{font-size:14px;color:var(--muted2);line-height:1.65;max-width:520px;margin-bottom:2.5rem}
 
 /* ── COURSES ── */
-#courses{background:var(--bg2)}
-#courses::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent)}
-.courses-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start}
-@media(max-width:1024px){.courses-grid{grid-template-columns:1fr}}
-.course-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:2rem;position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s}
-.course-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.25s}
-.course-card:hover{transform:translateY(-4px)}
-.course-card.unity{border-top:2px solid var(--violet)}
-.course-card.unity:hover{border-color:var(--violet)}
-.course-card.unity::after{background:radial-gradient(ellipse at top,rgba(124,110,250,0.07) 0%,transparent 60%);opacity:1}
-.course-card.python{border-top:2px solid var(--cyan)}
-.course-card.python:hover{border-color:var(--cyan)}
-.course-card.python::after{background:radial-gradient(ellipse at top,rgba(34,211,238,0.06) 0%,transparent 60%);opacity:1}
-.course-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:1.25rem;position:relative;z-index:1}
-.course-icon-wrap.unity{background:rgba(124,110,250,0.15);border:1px solid rgba(124,110,250,0.2)}
-.course-icon-wrap.python{background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2)}
-.course-card h3{font-size:1.2rem;font-weight:700;margin-bottom:0.6rem;position:relative;z-index:1}
-.course-card p{font-size:14px;color:var(--muted2);line-height:1.65;margin-bottom:1.5rem;position:relative;z-index:1}
-.module-list{display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
-.module-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted2)}
-.module-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--violet2);flex-shrink:0}
-.course-card.python .module-item::before{background:var(--cyan)}
+#courses{background:var(--ink2);position:relative;overflow:hidden}
+#courses::before{content:'';position:absolute;top:-200px;right:-200px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,0,0.04) 0%,transparent 70%);pointer-events:none}
+
+/* course switcher */
+.course-switcher{display:flex;gap:8px;margin-bottom:2rem}
+.cs-btn{font-family:var(--font);font-size:13px;font-weight:700;padding:10px 24px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--muted2);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+.cs-btn.active-unity{background:rgba(200,255,0,0.12);border-color:rgba(200,255,0,0.3);color:var(--lime)}
+.cs-btn.active-python{background:rgba(0,212,255,0.1);border-color:rgba(0,212,255,0.25);color:var(--cyan)}
+.cs-btn:hover:not(.active-unity):not(.active-python){color:var(--text);border-color:var(--border2)}
+
+.course-panel{display:none}
+.course-panel.active{display:block}
+
+/* big course card */
+.course-big{border-radius:20px;overflow:hidden;position:relative;min-height:420px;display:flex;flex-direction:column;justify-content:flex-end;margin-bottom:1.5rem}
+.course-big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;transition:opacity 0.4s,transform 0.6s}
+.course-big:hover img{opacity:0.62;transform:scale(1.03)}
+.cb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,15,0.97) 0%,rgba(10,10,15,0.2) 70%,transparent 100%)}
+.cb-content{position:relative;z-index:2;padding:2rem;display:flex;gap:2rem;align-items:flex-end;flex-wrap:wrap}
+.cb-left{flex:1}
+.cb-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:6px;margin-bottom:1rem}
+.chip-lime{background:rgba(200,255,0,0.15);color:var(--lime);border:1px solid rgba(200,255,0,0.25)}
+.chip-cyan{background:rgba(0,212,255,0.12);color:var(--cyan);border:1px solid rgba(0,212,255,0.2)}
+.cb-content h3{font-family:var(--font);font-size:2rem;font-weight:900;letter-spacing:-0.8px;margin-bottom:0.6rem;line-height:1.1}
+.cb-content p{font-size:14px;color:var(--muted2);line-height:1.6;max-width:460px;margin-bottom:1.25rem}
+.ctags{display:flex;flex-wrap:wrap;gap:6px}
+.ctag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,0.07);color:var(--muted2);border:1px solid var(--border)}
+
+/* projects grid */
+.projects-label{font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lime);display:flex;align-items:center;gap:8px;margin-bottom:1rem}
+.projects-label::before{content:'';width:16px;height:2px;background:var(--lime)}
+.projects-label.cyan-label{color:var(--cyan)}
+.projects-label.cyan-label::before{background:var(--cyan)}
+
+.games-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.game-card{background:var(--ink3);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1rem;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;cursor:default}
+.game-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--lime),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease}
+.game-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4);border-color:rgba(200,255,0,0.2)}
+.game-card:hover::after{transform:scaleX(1)}
+.game-card.cyan-hover:hover{border-color:rgba(0,212,255,0.2);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.game-card.cyan-hover::after{background:linear-gradient(90deg,var(--cyan),transparent)}
+.gn{font-family:var(--font);font-size:10px;font-weight:800;color:var(--lime);opacity:0.5;margin-bottom:8px;letter-spacing:1px}
+.gn.cyan{color:var(--cyan)}
+.ge{font-size:1.6rem;margin-bottom:8px;display:block;transition:transform 0.2s}
+.game-card:hover .ge{transform:scale(1.15)}
+.gt{font-family:var(--font);font-size:13px;font-weight:700;margin-bottom:4px;line-height:1.3}
+.gd{font-size:11px;color:var(--muted);line-height:1.5}
 
 /* ── FORMATS ── */
-#formats{background:var(--bg)}
+#formats{background:var(--ink);position:relative;overflow:hidden}
+#formats::before{content:'';position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.04) 0%,transparent 70%);pointer-events:none}
 .formats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.format-card{border-radius:var(--r2);padding:2rem;border:1px solid var(--border);background:var(--surface);position:relative;overflow:hidden;transition:border-color 0.2s}
-.format-card.featured{border-color:rgba(124,110,250,0.35);background:linear-gradient(145deg,rgba(124,110,250,0.08) 0%,var(--surface) 60%)}
-.format-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan))}
-.format-badge-wrap{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.popular-badge{font-size:11px;font-weight:700;letter-spacing:0.5px;padding:4px 12px;border-radius:100px;background:linear-gradient(135deg,var(--violet),#9B6EFA);color:#fff}
-.age-badge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;background:var(--surface2);border:1px solid var(--border2);color:var(--muted2)}
-.format-card h3{font-size:1.25rem;font-weight:800;margin-bottom:0.4rem}
-.format-price{font-size:2.4rem;font-weight:800;letter-spacing:-1px;line-height:1;margin:1rem 0 0.25rem}
-.format-price.violet{color:var(--violet2)}
-.format-price.cyan{color:var(--cyan)}
-.format-price sub{font-size:1rem;font-weight:500;color:var(--muted);vertical-align:bottom;margin-left:2px}
-.format-per{font-size:13px;color:var(--muted);margin-bottom:1.25rem}
-.format-desc{font-size:14px;color:var(--muted2);line-height:1.65;margin-bottom:1.5rem}
-.format-features{display:flex;flex-direction:column;gap:10px;margin-bottom:1.75rem}
-.ff-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text)}
-.ff-check{width:18px;height:18px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:2px}
-.ff-check.violet{background:rgba(124,110,250,0.2);color:var(--violet2)}
-.ff-check.cyan{background:rgba(34,211,238,0.15);color:var(--cyan)}
-.format-cta{display:block;text-align:center;padding:13px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s;border:1px solid var(--border2);color:var(--text)}
-.format-card.featured .format-cta{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff;box-shadow:0 0 20px rgba(124,110,250,0.3)}
-.format-cta:hover{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff}
+.format-card{border-radius:20px;border:1px solid var(--border);background:var(--ink2);overflow:hidden;transition:border-color 0.25s,transform 0.25s}
+.format-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.fc-img{height:200px;overflow:hidden;position:relative}
+.fc-img img{width:100%;height:100%;object-fit:cover;opacity:0.6;transition:opacity 0.35s,transform 0.5s}
+.format-card:hover .fc-img img{opacity:0.75;transform:scale(1.05)}
+.fc-img-fade{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--ink2) 100%)}
+.fc-body{padding:1.75rem}
+.fc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem}
+.fc-name{font-family:var(--font);font-size:1.4rem;font-weight:900;letter-spacing:-0.4px}
+.fc-price-wrap{text-align:right}
+.fc-price{font-family:var(--font);font-size:1.6rem;font-weight:900;line-height:1}
+.fc-price.lime{color:var(--lime)}
+.fc-price.cyan{color:var(--cyan)}
+.fc-per{font-size:11px;color:var(--muted);margin-top:2px}
+.fc-desc{font-size:14px;color:var(--muted2);line-height:1.65;margin-bottom:1.25rem}
+.age-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.age-pill{padding:5px 12px;border-radius:100px;font-family:var(--font);font-size:11px;font-weight:700;background:var(--ink3);border:1px solid var(--border);color:var(--muted2)}
+.fc-features{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.fc-feat{display:flex;gap:10px;font-size:13px;color:var(--text);align-items:flex-start}
+.fc-feat-check{font-weight:700;flex-shrink:0;margin-top:1px}
+.fc-feat-check.lime{color:var(--lime)}
+.fc-feat-check.cyan{color:var(--cyan)}
+.fc-btn{display:block;text-align:center;padding:13px;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:800;text-decoration:none;transition:all 0.2s}
+.fc-btn.filled{background:var(--lime);color:var(--ink)}
+.fc-btn.filled:hover{box-shadow:0 0 30px rgba(200,255,0,0.35);transform:translateY(-1px)}
+.fc-btn.outline{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.fc-btn.outline:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,0.07)}
 
-/* AGE GROUPS */
-.age-groups{margin-top:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.age-group-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;text-align:center;transition:border-color 0.2s}
-.age-group-card:hover{border-color:var(--border2)}
-.age-emoji{font-size:1.8rem;margin-bottom:0.5rem;display:block}
-.age-range{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
-.age-label{font-size:12px;color:var(--muted)}
+/* ── RATING SUMMARY BADGE ── */
+.rating-summary{display:flex;align-items:center;gap:10px;background:var(--ink3);border:1px solid var(--border);border-radius:14px;padding:10px 18px}
+.rating-summary-stars{color:var(--lime);font-size:16px;letter-spacing:2px;animation:star-twinkle 3s ease-in-out infinite}
+@keyframes star-twinkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.4) drop-shadow(0 0 6px rgba(200,255,0,0.5))}}
+.rating-summary-text{font-size:12px;color:var(--muted2);display:flex;flex-direction:column;line-height:1.3}
+.rating-num{font-family:var(--font);font-size:16px;font-weight:900;color:var(--text)}
+
+/* ── TEST CARD ANIMATIONS ── */
+.test-card{transition:transform 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.2s,box-shadow 0.25s}
+.test-card:hover{box-shadow:0 16px 50px rgba(0,0,0,0.35);border-color:rgba(200,255,0,0.25)}
+.test-stars{transition:letter-spacing 0.2s}
+.test-card:hover .test-stars{letter-spacing:4px}
+.test-av{transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1)}
+.test-card:hover .test-av{transform:scale(1.15) rotate(-6deg)}
+#testimonials{background:var(--ink2);padding:80px 2rem 90px}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.test-card{background:var(--ink3);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s}
+.test-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.test-stars{color:var(--lime);font-size:13px;margin-bottom:0.75rem;letter-spacing:2px}
+.test-text{font-size:13.5px;color:var(--muted2);line-height:1.7;margin-bottom:1rem;font-style:italic}
+.test-author{display:flex;align-items:center;gap:10px}
+.test-av{width:34px;height:34px;border-radius:50%;background:var(--lime-glow);border:1px solid rgba(200,255,0,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:12px;font-weight:800;color:var(--lime);flex-shrink:0}
+.test-name{font-family:var(--font);font-size:13px;font-weight:700}
+.test-meta{font-size:11px;color:var(--muted)}
 
 /* ── ABOUT ── */
-#about{background:var(--bg2)}
-#about::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
-.about-grid{display:grid;grid-template-columns:1fr 1.7fr;gap:5rem;align-items:center}
-.about-photo{aspect-ratio:3/4;border-radius:var(--r2);background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);overflow:hidden;position:relative}
-.about-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(124,110,250,0.08),transparent)}
-.photo-placeholder{font-size:3rem;opacity:0.2}
-.photo-hint-text{font-size:12px;color:var(--muted);opacity:0.5}
-.about-content h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:1.25rem;line-height:1.15}
-.about-content p{font-size:15px;color:var(--muted2);line-height:1.75;margin-bottom:1rem}
-.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.75rem 0}
-.exp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem}
-.exp-card-num{font-size:1.6rem;font-weight:800;letter-spacing:-0.5px}
-.exp-card-num.v{color:var(--violet2)}
-.exp-card-num.g{color:var(--green)}
-.exp-card-num.c{color:var(--cyan)}
-.exp-card-num.a{color:var(--amber)}
-.exp-card-label{font-size:12px;color:var(--muted);margin-top:2px}
-.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
-.skill-pill{padding:6px 14px;border-radius:100px;background:var(--surface2);border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted2)}
+#about{background:var(--ink);position:relative;overflow:hidden}
+#about::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(107,91,255,0.04) 0%,transparent 70%);pointer-events:none}
+.about-grid{display:grid;grid-template-columns:1fr 1.8fr;gap:3.5rem;align-items:center}
+
+/* ── ABOUT V2 — GAME SHOWCASE + EXPANDED TEXT ── */
+.about-grid-v2{display:grid;grid-template-columns:1fr 1.55fr;gap:3.5rem;align-items:start}
+.about-showcase{position:sticky;top:90px}
+.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem}
+.showcase-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--ink3);transition:transform 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.25s,box-shadow 0.25s}
+.showcase-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,0.5);border-color:var(--border2)}
+.sc-scene{height:140px;position:relative;overflow:hidden}
+.sc-label{font-size:11px;font-weight:700;padding:8px 10px;color:var(--muted2);background:var(--ink3);display:flex;align-items:center;gap:5px}
+.sc-vignette{position:absolute;inset:0;box-shadow:inset 0 0 40px 6px rgba(0,0,0,0.55);pointer-events:none;z-index:5}
+.sc-scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.02) 0px,transparent 1px,transparent 2px);pointer-events:none;z-index:6}
+.sc-hud-corner{position:absolute;top:6px;left:7px;font-size:8px;font-weight:800;letter-spacing:0.5px;color:rgba(255,255,255,0.35);z-index:4;font-family:var(--font)}
+
+/* sc-1: 3D adventure — mountain valley at sunset */
+.sc-1 .sc-scene{background:linear-gradient(180deg,#2d1b3d 0%,#1a2e35 45%,#0d1a12 100%)}
+.sc-sky-glow{position:absolute;top:-30px;right:-20px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,0,0.35) 0%,rgba(255,180,80,0.15) 40%,transparent 70%);filter:blur(2px)}
+.sc-mountains{position:absolute;bottom:30%;left:0;right:0;height:45%}
+.sc-mtn{position:absolute;bottom:0;width:0;height:0;border-style:solid}
+.sc-mtn-1{left:-10%;border-width:0 55px 60px 55px;border-color:transparent transparent rgba(20,35,25,0.9) transparent}
+.sc-mtn-2{left:25%;border-width:0 70px 85px 70px;border-color:transparent transparent rgba(15,28,20,0.95) transparent}
+.sc-mtn-3{left:60%;border-width:0 60px 50px 60px;border-color:transparent transparent rgba(25,40,28,0.85) transparent}
+.sc-ground{position:absolute;bottom:0;left:0;right:0;height:32%;background:linear-gradient(180deg,#16321a 0%,#0a1a0d 100%)}
+.sc-ground::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:rgba(200,255,0,0.4);box-shadow:0 0 8px rgba(200,255,0,0.6)}
+.sc-char{position:absolute;bottom:26%;border-radius:4px 4px 2px 2px;z-index:3}
+.sc-char-1{left:42%;width:11px;height:20px;background:linear-gradient(180deg,var(--lime),#8fb800);box-shadow:0 0 14px rgba(200,255,0,0.6),0 4px 8px rgba(0,0,0,0.4);animation:sc-hop 1.6s ease-in-out infinite}
+.sc-char-1::after{content:'';position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:16px;height:4px;background:radial-gradient(ellipse,rgba(0,0,0,0.4),transparent 70%);border-radius:50%}
+@keyframes sc-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* sc-2: character animation — dojo/studio with rim light */
+.sc-2 .sc-scene{background:radial-gradient(ellipse at 60% 30%,#3a2a5a 0%,#1a1030 55%,#0a0614 100%)}
+.sc-rim-light{position:absolute;top:0;right:15%;width:2px;height:100%;background:linear-gradient(180deg,transparent,rgba(139,127,255,0.6),transparent);filter:blur(3px)}
+.sc-grid-floor{position:absolute;bottom:0;left:-30%;right:-30%;height:45%;background-image:linear-gradient(rgba(139,127,255,0.2) 1px,transparent 1px),linear-gradient(90deg,rgba(139,127,255,0.2) 1px,transparent 1px);background-size:16px 16px;transform:perspective(90px) rotateX(58deg);mask-image:linear-gradient(180deg,transparent,black 40%)}
+.sc-char-2{left:46%;bottom:22%;width:11px;height:26px;background:linear-gradient(180deg,#c4bcff,var(--violet2));border-radius:5px 5px 3px 3px;box-shadow:0 0 18px rgba(139,127,255,0.7),0 4px 10px rgba(0,0,0,0.5);animation:sc-run 0.45s ease-in-out infinite alternate;z-index:3}
+@keyframes sc-run{from{transform:rotate(-10deg) translateX(-2px)}to{transform:rotate(10deg) translateX(2px)}}
+.sc-motion-trail{position:absolute;left:40%;bottom:22%;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,rgba(139,127,255,0.25),transparent 70%);animation:sc-trail 0.45s ease-in-out infinite alternate}
+@keyframes sc-trail{from{opacity:0.6;left:38%}to{opacity:0.1;left:48%}}
+
+/* sc-3: 2.5D platformer — layered parallax forest */
+.sc-3 .sc-scene{background:linear-gradient(180deg,#0d3540 0%,#082228 55%,#03100f 100%)}
+.sc-layer{position:absolute;bottom:0;left:-10%;right:-10%}
+.sc-layer-back{height:50%;background:linear-gradient(180deg,rgba(0,212,255,0.1),transparent);clip-path:polygon(0% 100%,0% 40%,10% 55%,20% 30%,32% 50%,45% 20%,58% 45%,70% 25%,82% 48%,92% 30%,100% 42%,100% 100%);animation:sc-drift 7s ease-in-out infinite}
+.sc-layer-mid{height:32%;background:linear-gradient(180deg,rgba(0,212,255,0.22),transparent);clip-path:polygon(0% 100%,0% 55%,15% 70%,28% 45%,40% 65%,55% 35%,68% 60%,80% 40%,100% 58%,100% 100%);animation:sc-drift 4.5s ease-in-out infinite reverse}
+@keyframes sc-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+.sc-char-3{left:48%;bottom:18%;width:9px;height:18px;background:linear-gradient(180deg,#5eead4,var(--cyan));border-radius:4px;box-shadow:0 0 14px rgba(0,212,255,0.7);z-index:3;animation:sc-hop2 1.3s ease-in-out infinite}
+@keyframes sc-hop2{0%,100%{transform:translateY(0)}45%{transform:translateY(-8px)}}
+.sc-coin{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FBBF24,#d97706);box-shadow:0 0 6px rgba(251,191,36,0.7);animation:sc-spin-coin 1.5s linear infinite}
+.sc-coin-1{top:35%;left:65%}
+.sc-coin-2{top:25%;left:78%}
+@keyframes sc-spin-coin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(0.2)}}
+
+/* sc-4: RPG — inventory HUD with parchment glow */
+.sc-4 .sc-scene{background:linear-gradient(160deg,#3a2a12 0%,#1f150a 55%,#100a04 100%);padding:10px;display:flex;flex-direction:column;justify-content:space-between}
+.sc-torch-glow{position:absolute;top:-10px;left:-10px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,0.3),transparent 70%)}
+.sc-rpg-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.sc-hp-bar{flex:1;height:7px;background:rgba(0,0,0,0.4);border:1px solid rgba(251,191,36,0.25);border-radius:100px;overflow:hidden;margin-right:6px}
+.sc-hp-fill{width:72%;height:100%;background:linear-gradient(90deg,#F87171,#FBBF24);border-radius:100px;box-shadow:0 0 8px rgba(251,191,36,0.5);animation:sc-hp-pulse 2s ease-in-out infinite}
+@keyframes sc-hp-pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+.sc-lvl-badge{font-size:8px;font-weight:800;color:#FBBF24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.3);border-radius:5px;padding:2px 6px;font-family:var(--font)}
+.sc-inv-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;position:relative;z-index:2}
+.sc-inv-grid span{aspect-ratio:1;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);border-radius:4px;position:relative}
+.sc-inv-grid span:nth-child(1){background:rgba(251,191,36,0.4);box-shadow:0 0 8px rgba(251,191,36,0.4)}
+.sc-inv-grid span:nth-child(3){background:rgba(139,127,255,0.3)}
+.sc-inv-grid span:nth-child(4)::after{content:'';position:absolute;inset:3px;background:rgba(0,212,255,0.35);border-radius:2px}
+
+/* sc-5: multiplayer split-screen with player tags */
+.sc-5 .sc-scene{background:#050508;padding:0}
+.sc-split{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;height:100%;position:relative}
+.sc-split span{position:relative;overflow:hidden}
+.sc-split span:nth-child(1){background:radial-gradient(circle at 30% 30%,rgba(200,255,0,0.25),rgba(200,255,0,0.02) 70%)}
+.sc-split span:nth-child(2){background:radial-gradient(circle at 70% 30%,rgba(0,212,255,0.25),rgba(0,212,255,0.02) 70%)}
+.sc-split span:nth-child(3){background:radial-gradient(circle at 30% 70%,rgba(139,127,255,0.25),rgba(139,127,255,0.02) 70%)}
+.sc-split span:nth-child(4){background:radial-gradient(circle at 70% 70%,rgba(251,191,36,0.25),rgba(251,191,36,0.02) 70%)}
+.sc-split span::after{content:'';position:absolute;bottom:20%;left:50%;transform:translateX(-50%);width:8px;height:14px;border-radius:3px;background:currentColor;opacity:0.8}
+.sc-split span:nth-child(1)::after{color:var(--lime);box-shadow:0 0 8px var(--lime)}
+.sc-split span:nth-child(2)::after{color:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.sc-split span:nth-child(3)::after{color:var(--violet2);box-shadow:0 0 8px var(--violet2)}
+.sc-split span:nth-child(4)::after{color:#FBBF24;box-shadow:0 0 8px #FBBF24}
+.sc-split-divider-h{position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,0.15);z-index:2}
+.sc-split-divider-v{position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(255,255,255,0.15);z-index:2}
+.sc-p-tag{position:absolute;top:5px;left:5px;font-size:6px;font-weight:800;color:rgba(255,255,255,0.5);font-family:var(--font);z-index:3}
+
+/* sc-6: python bot — terminal + chat interface */
+.sc-6 .sc-scene{background:linear-gradient(160deg,#0a1f26 0%,#04121a 60%,#020a0e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:10px}
+.sc-term-glow{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:100px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.2),transparent 70%)}
+.sc-chat-row{display:flex;align-items:center;gap:8px;position:relative;z-index:2}
+.sc-chat-bubble{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,255,0.25),rgba(0,212,255,0.05));border:1px solid rgba(0,212,255,0.4);display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 16px rgba(0,212,255,0.3);animation:sc-bounce 2.2s ease-in-out infinite}
+@keyframes sc-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.sc-msg-box{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:8px 8px 8px 2px;padding:4px 7px}
+.sc-code-lines{display:flex;flex-direction:column;gap:3px;width:75%;position:relative;z-index:2}
+.sc-code-lines span{height:3px;border-radius:2px;background:linear-gradient(90deg,rgba(0,212,255,0.5),rgba(0,212,255,0.1))}
+.sc-code-lines span:nth-child(1){width:100%}
+.sc-code-lines span:nth-child(2){width:65%;background:linear-gradient(90deg,rgba(200,255,0,0.4),rgba(200,255,0,0.1))}
+.sc-code-lines span:nth-child(3){width:82%}
+.sc-cursor-blink{display:inline-block;width:4px;height:8px;background:var(--lime);animation:sc-blink 1s step-end infinite;margin-left:2px}
+@keyframes sc-blink{50%{opacity:0}}
+
+.showcase-caption{font-size:12px;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.5}
+
+.about-text-v2{max-width:none}
+.about-text-v2 h2{font-family:var(--font);font-size:clamp(2rem,3.2vw,2.9rem);font-weight:900;letter-spacing:-1.2px;line-height:1.1;margin-bottom:1.5rem}
+.about-lead{font-size:17px !important;color:var(--text) !important;font-weight:500;line-height:1.7 !important;margin-bottom:1.5rem !important;padding:1.1rem 1.3rem;background:linear-gradient(135deg,rgba(200,255,0,0.06),transparent);border-left:2px solid var(--lime);border-radius:0 12px 12px 0}
+.about-text-v2 p{font-size:15px;color:var(--muted2);line-height:1.8;margin-bottom:1.15rem}
+
+@media(max-width:960px){
+  .about-grid-v2{grid-template-columns:1fr}
+  .about-showcase{position:static}
+  .showcase-grid{max-width:420px;margin:0 auto}
+}
+@media(max-width:480px){
+  .showcase-grid{grid-template-columns:1fr 1fr}
+  .sc-scene{height:80px}
+}
+.about-img-wrap{border-radius:20px;overflow:hidden;aspect-ratio:3/4;background:var(--surface);position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--muted)}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:0.85}
+.about-img-glow{position:absolute;inset:0;background:linear-gradient(135deg,rgba(107,91,255,0.12) 0%,transparent 60%)}
+.about-ph-txt{font-size:12px;opacity:0.4;position:relative;z-index:1}
+.about-ph-ico{font-size:3rem;opacity:0.15;position:relative;z-index:1}
+
+/* ── MONOGRAM SCENE (photo placeholder) ── */
+.monogram-scene{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:1}
+.mono-letter{font-family:var(--font);font-size:5.5rem;font-weight:900;background:linear-gradient(135deg,var(--lime) 0%,var(--cyan) 55%,var(--violet2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:3;filter:drop-shadow(0 0 30px rgba(200,255,0,0.25))}
+.mono-ring{position:absolute;border-radius:50%;border:1px solid rgba(200,255,0,0.15);top:50%;left:50%}
+.mono-ring-1{width:180px;height:180px;margin:-90px 0 0 -90px;animation:mono-spin 20s linear infinite}
+.mono-ring-2{width:240px;height:240px;margin:-120px 0 0 -120px;border-color:rgba(0,212,255,0.1);animation:mono-spin-rev 28s linear infinite}
+@keyframes mono-spin{to{transform:rotate(360deg)}}
+@keyframes mono-spin-rev{to{transform:rotate(-360deg)}}
+.mono-orbit{position:absolute;font-size:1.4rem;top:50%;left:50%;z-index:2;filter:drop-shadow(0 0 8px rgba(0,0,0,0.4))}
+.mono-orbit-1{animation:orbit-1 9s linear infinite}
+.mono-orbit-2{animation:orbit-2 12s linear infinite}
+.mono-orbit-3{animation:orbit-3 7s linear infinite}
+.mono-orbit-4{font-family:var(--font);font-weight:800;font-size:1rem;color:var(--violet2);animation:orbit-4 15s linear infinite}
+@keyframes orbit-1{from{transform:rotate(0deg) translateX(105px) rotate(0deg)}to{transform:rotate(360deg) translateX(105px) rotate(-360deg)}}
+@keyframes orbit-2{from{transform:rotate(120deg) translateX(105px) rotate(-120deg)}to{transform:rotate(480deg) translateX(105px) rotate(-480deg)}}
+@keyframes orbit-3{from{transform:rotate(240deg) translateX(105px) rotate(-240deg)}to{transform:rotate(600deg) translateX(105px) rotate(-600deg)}}
+@keyframes orbit-4{from{transform:rotate(60deg) translateX(130px) rotate(-60deg)}to{transform:rotate(420deg) translateX(130px) rotate(-420deg)}}
+@media(max-width:640px){
+  .mono-letter{font-size:4rem}
+  .mono-ring-1{width:130px;height:130px;margin:-65px 0 0 -65px}
+  .mono-ring-2{width:175px;height:175px;margin:-87px 0 0 -87px}
+  .mono-orbit-1,.mono-orbit-2,.mono-orbit-3{animation-name:none;font-size:1.1rem}
+}
+.about-text .sec-eye{margin-bottom:0.75rem}
+.about-text h2{font-family:var(--font);font-size:clamp(1.9rem,3vw,2.8rem);font-weight:900;letter-spacing:-1.2px;margin-bottom:1.25rem;line-height:1.1}
+.about-text p{font-size:15px;color:var(--muted2);line-height:1.75;margin-bottom:1rem}
+.exp-boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1.75rem 0}
+.exp-box{background:var(--ink2);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;transition:border-color 0.2s}
+.exp-box:hover{border-color:var(--border2)}
+.exp-num{font-family:var(--font);font-size:1.5rem;font-weight:900;letter-spacing:-0.5px;line-height:1}
+.exp-lbl{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:0.5px;text-transform:uppercase}
+.skill-cloud{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.25rem}
+.skill-tag{padding:5px 12px;border-radius:6px;background:var(--surface);border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--muted2);transition:all 0.15s}
+.skill-tag:hover{border-color:rgba(200,255,0,0.3);color:var(--lime)}
 
 /* ── BOOKING ── */
-#booking{background:var(--bg)}
-.booking-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start}
-.booking-info h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:1rem;line-height:1.15}
-.booking-info p{font-size:15px;color:var(--muted2);line-height:1.7;margin-bottom:1.75rem}
-.booking-steps{display:flex;flex-direction:column;gap:0}
-.b-step{display:flex;gap:14px;align-items:flex-start;padding:1rem 0;border-bottom:1px solid var(--border)}
-.b-step:last-child{border-bottom:none}
-.b-step-num{width:32px;height:32px;border-radius:10px;background:var(--violet-glow);border:1px solid rgba(124,110,250,0.25);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--violet2);flex-shrink:0}
-.b-step-title{font-size:14px;font-weight:600;margin-bottom:2px}
-.b-step-desc{font-size:13px;color:var(--muted)}
-.calendly-box{background:var(--surface);border:1px dashed rgba(124,110,250,0.3);border-radius:var(--r2);padding:3rem 2rem;text-align:center;min-height:450px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;position:relative;overflow:hidden}
-.calendly-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(124,110,250,0.05) 0%,transparent 70%)}
-.cal-icon-big{font-size:3rem;opacity:0.25;position:relative;z-index:1}
-.calendly-box p{font-size:14px;color:var(--muted);max-width:280px;line-height:1.6;position:relative;z-index:1}
-.calendly-box code{font-size:11px;background:var(--bg3);padding:8px 14px;border-radius:8px;color:var(--violet2);border:1px solid var(--border);display:block;margin-top:0.5rem;word-break:break-all;position:relative;z-index:1;text-align:left;line-height:1.6}
+#booking{background:var(--ink2);position:relative;overflow:hidden}
+.booking-layout{display:grid;grid-template-columns:340px 1fr;gap:3rem;align-items:start}
+.bl-left h2{font-family:var(--font);font-size:clamp(1.8rem,2.5vw,2.5rem);font-weight:900;letter-spacing:-1px;margin-bottom:1rem;line-height:1.1}
+.bl-left p{font-size:14px;color:var(--muted2);line-height:1.7;margin-bottom:1.75rem}
+.b-steps{display:flex;flex-direction:column;gap:0}
+.b-step{display:flex;gap:12px;padding:1rem 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.b-step:last-child{border:none}
+.b-dot{width:28px;height:28px;border-radius:8px;background:var(--lime-glow);border:1px solid rgba(200,255,0,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:11px;font-weight:800;color:var(--lime);flex-shrink:0}
+.b-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.b-desc{font-size:12px;color:var(--muted)}
 
-/* ── GAMES LIST ── */
-.games-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--violet2);margin:1.5rem 0 0.75rem;display:flex;align-items:center;gap:8px}
-.games-label::before{content:'';width:16px;height:1px;background:var(--violet2)}
-.games-list{display:flex;flex-direction:column;gap:10px}
-.game-item{display:flex;gap:12px;align-items:flex-start;background:rgba(124,110,250,0.06);border:1px solid rgba(124,110,250,0.12);border-radius:10px;padding:10px 12px;transition:border-color 0.2s}
-.game-item:hover{border-color:rgba(124,110,250,0.25)}
-.game-num{font-size:11px;font-weight:800;color:var(--violet2);opacity:0.5;flex-shrink:0;width:18px;margin-top:2px;letter-spacing:0.5px}
-.game-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
-.game-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.cal-tabs{display:flex;gap:6px;padding:12px;background:var(--ink3);border-radius:16px 16px 0 0;flex-wrap:wrap}
+.cal-tab{flex:1;min-width:110px;padding:9px 10px;border-radius:8px;font-family:var(--font);font-size:11.5px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted2);transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:5px}
+.cal-tab:hover{color:var(--text);border-color:var(--border2)}
+.cal-tab.active{background:var(--lime);border-color:transparent;color:var(--ink)}
+.cal-panels{background:var(--ink2);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;overflow:hidden}
+.cal-panel-item{display:none;width:100%;height:680px}
+.cal-panel-item.active{display:block}
+.after-book{margin-top:1rem;background:linear-gradient(135deg,rgba(200,255,0,0.07),var(--ink2));border:1px solid rgba(200,255,0,0.2);border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.ab-ico{width:38px;height:38px;border-radius:10px;background:rgba(200,255,0,0.1);border:1px solid rgba(200,255,0,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ab-txt{flex:1;min-width:160px}
+.ab-txt strong{font-family:var(--font);font-size:13px;font-weight:700;display:block;margin-bottom:2px}
+.ab-txt span{font-size:12px;color:var(--muted2)}
+.ab-cta{flex-shrink:0;background:var(--lime);color:var(--ink);padding:10px 20px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:800;text-decoration:none;white-space:nowrap;transition:opacity 0.15s}
+.ab-cta:hover{opacity:0.88}
 
-/* ── LESSON TABS ── */
-.lesson-tabs{display:flex;gap:6px;padding:14px;background:var(--surface2);border-radius:20px 20px 0 0;flex-wrap:wrap}
-.lesson-tab{flex:1;min-width:120px;padding:10px 12px;border-radius:10px;font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--muted2);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
-.lesson-tab:hover{border-color:var(--violet2);color:var(--text)}
-.lesson-tab.active{background:linear-gradient(135deg,var(--violet),#9B6EFA);border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(124,110,250,0.3)}
-@media(max-width:640px){.lesson-tab{min-width:45%;font-size:12px}}
+/* ── FAQ CARDS ── */
+.faq-cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.faq-card{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden}
+.faq-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--lime),transparent);transform:scaleX(0);transform-origin:left;transition:transform 0.3s ease}
+.faq-card:hover{border-color:rgba(200,255,0,0.2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.faq-card:hover::after{transform:scaleX(1)}
+.faq-card-cta{background:linear-gradient(135deg,rgba(200,255,0,0.07),var(--ink2));border-color:rgba(200,255,0,0.2)}
+.faq-card-cta::after{transform:scaleX(1);opacity:0.7}
+.faq-card-icon{font-size:1.75rem;margin-bottom:0.75rem;display:block;transition:transform 0.2s}
+.faq-card:hover .faq-card-icon{transform:scale(1.15)}
+.faq-card-title{font-family:var(--font);font-size:14px;font-weight:800;margin-bottom:0.6rem;line-height:1.3;color:var(--text)}
+.faq-card-text{font-size:12.5px;color:var(--muted2);line-height:1.65}
+@media(max-width:960px){.faq-cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.faq-cards-grid{grid-template-columns:1fr}}
 
-/* ── AFTER BOOKING CARD ── */
-.after-booking-card{margin-top:2rem;background:linear-gradient(135deg,rgba(16,232,154,0.08) 0%,var(--surface) 70%);border:1px solid rgba(16,232,154,0.25);border-radius:var(--r2);padding:1.75rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
-.ab-icon{width:48px;height:48px;border-radius:14px;background:var(--green-glow);border:1px solid rgba(16,232,154,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.ab-content{flex:1;min-width:200px}
-.ab-content h3{font-size:1.05rem;font-weight:700;margin-bottom:0.3rem}
-.ab-content p{font-size:13.5px;color:var(--muted2);line-height:1.55}
-.ab-cta{flex-shrink:0;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--green),var(--cyan));color:#06231A;padding:13px 26px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 0 24px rgba(16,232,154,0.25)}
-.ab-cta:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(16,232,154,0.4)}
-@media(max-width:640px){
-  .after-booking-card{flex-direction:column;text-align:center;padding:1.5rem}
-  .ab-cta{width:100%;justify-content:center}
-}
+/* ── FAQ old styles kept for compatibility ── */
+.faq-layout{display:grid;grid-template-columns:280px 1fr;gap:4rem;align-items:start}
 
-/* ── FAQ ── */
-#faq{background:var(--bg2)}
-#faq::before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
-.faq-list{max-width:760px}
+
+.faq-list{display:flex;flex-direction:column}
 .faq-item{border-bottom:1px solid var(--border)}
-.faq-q{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.25rem 0;cursor:pointer;font-size:15px;font-weight:600;transition:color 0.2s;user-select:none}
-.faq-q:hover{color:var(--violet2)}
-.faq-arrow{width:28px;height:28px;border-radius:8px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);transition:all 0.25s;flex-shrink:0}
-.faq-item.open .faq-arrow{background:var(--violet-glow);border-color:rgba(124,110,250,0.3);color:var(--violet2);transform:rotate(180deg)}
-.faq-a{font-size:14px;color:var(--muted2);max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s;line-height:1.7}
-.faq-item.open .faq-a{max-height:250px;padding-bottom:1.25rem}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 0;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:700;transition:color 0.15s;user-select:none}
+.faq-q:hover{color:var(--lime)}
+.faq-arr{width:24px;height:24px;border-radius:6px;background:var(--ink3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);flex-shrink:0;transition:all 0.2s}
+.faq-item.open .faq-arr{background:var(--lime-glow);border-color:rgba(200,255,0,0.3);color:var(--lime);transform:rotate(180deg)}
+.faq-a{font-size:13px;color:var(--muted2);max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s;line-height:1.7}
+.faq-item.open .faq-a{max-height:250px;padding-bottom:1rem}
 
 /* ── FOOTER ── */
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 2rem 3rem;text-align:center}
-.footer-logo{font-size:24px;font-weight:800;color:var(--text);display:inline-flex;align-items:center;gap:6px;margin-bottom:0.75rem;text-decoration:none;letter-spacing:-0.8px}
-.footer-logo-dot2{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan))}
-footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
-.footer-nav{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
-.footer-nav a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
-.footer-nav a:hover{color:var(--text)}
-.footer-tg{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--violet),#9B6EFA);color:#fff;padding:13px 28px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:opacity 0.2s,transform 0.15s;box-shadow:0 0 24px rgba(124,110,250,0.3)}
-.footer-tg:hover{opacity:0.88;transform:translateY(-2px)}
-.footer-copy{font-size:12px;color:var(--muted);margin-top:2rem;opacity:0.5}
+footer{background:var(--ink2);border-top:1px solid var(--border);padding:2.5rem 2rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
+.fl-logo{font-family:var(--font);font-size:18px;font-weight:900;color:var(--text);text-decoration:none;letter-spacing:-0.5px;display:inline-flex;align-items:center;gap:3px;margin-bottom:4px}
+.fl-sub{font-size:13px;color:var(--muted)}
+.fr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fr-link{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.15s}
+.fr-link:hover{color:var(--text)}
+.fr-tg{background:var(--lime);color:var(--ink);padding:10px 22px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:800;text-decoration:none;display:flex;align-items:center;gap:6px;transition:opacity 0.15s}
+.fr-tg:hover{opacity:0.88}
 
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .courses-grid,.formats-grid,.about-grid,.booking-grid{grid-template-columns:1fr}
-  .about-photo{aspect-ratio:16/9}
-  .age-groups{grid-template-columns:repeat(3,1fr)}
-}
-@media(max-width:640px){
-  nav{padding:0 1.25rem}
-  .nav-links{display:none}
-  section{padding:80px 1.25rem}
-  .hero{padding:140px 1.25rem 80px}
-  .hero-stats{flex-direction:column;gap:1.5rem;align-items:center}
-  .stat+.stat::before{display:none}
-  .age-groups{grid-template-columns:repeat(2,1fr)}
-  .exp-grid{grid-template-columns:1fr 1fr}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ── PAGE TRANSITION ── */
+body{animation:page-in 0.5s ease both}
+@keyframes page-in{from{opacity:0}to{opacity:1}}
 
 /* ── SCROLL REVEAL ── */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-delay-1{transition-delay:0.12s}
+.rv-delay-2{transition-delay:0.22s}
+.rv-delay-3{transition-delay:0.32s}
+.rv-left{opacity:0;transform:translateX(-28px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+.rv-left.in{opacity:1;transform:translateX(0)}
+.rv-right{opacity:0;transform:translateX(28px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+.rv-right.in{opacity:1;transform:translateX(0)}
+.rv-scale{opacity:0;transform:scale(0.92);transition:opacity 0.55s ease,transform 0.55s cubic-bezier(0.16,1,0.3,1)}
+.rv-scale.in{opacity:1;transform:scale(1)}
+
+/* ── SECTION DIVIDERS ── */
+section{position:relative}
+.s-divider{position:absolute;top:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
+
+/* ── GLOW PULSE ── */
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 20px rgba(200,255,0,0.1)}50%{box-shadow:0 0 40px rgba(200,255,0,0.28)}}
+.game-card:nth-child(2){animation:glow-pulse 3.5s ease-in-out infinite}
+
+/* ── NAV LINK UNDERLINE ── */
+.nav-links a{position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--lime);transition:width 0.25s ease}
+.nav-links a:hover::after{width:100%}
+.nav-links a:hover{color:var(--lime)}
+
+/* ── HERO ANIMATED BADGE ── */
+.hero-tag{animation:slide-in-left 0.7s cubic-bezier(0.16,1,0.3,1) both;animation-delay:0.2s}
+.hero h1{animation:slide-in-left 0.7s cubic-bezier(0.16,1,0.3,1) both;animation-delay:0.35s}
+.hero-sub{animation:slide-in-left 0.7s cubic-bezier(0.16,1,0.3,1) both;animation-delay:0.48s}
+.hero-actions{animation:slide-in-left 0.7s cubic-bezier(0.16,1,0.3,1) both;animation-delay:0.58s}
+.hero-stats{animation:fade-up 0.7s ease both;animation-delay:0.7s}
+@keyframes slide-in-left{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── RIPPLE BUTTON ── */
+.btn-lime,.fc-btn.filled,.nav-cta,.fr-tg,.ab-cta{position:relative;overflow:hidden}
+.btn-lime::before,.fc-btn.filled::before,.nav-cta::before,.fr-tg::before,.ab-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);opacity:0;transition:opacity 0.2s}
+.btn-lime:hover::before,.fc-btn.filled:hover::before,.nav-cta:hover::before,.fr-tg:hover::before,.ab-cta:hover::before{opacity:1}
+
+/* ── STAT COUNTER ── */
+.hs-num{transition:color 0.3s}
+.counter-done{animation:pop-num 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes pop-num{0%{transform:scale(0.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+/* ── SKILL TAG HOVER ── */
+.skill-tag{transition:all 0.18s;cursor:default}
+.skill-tag:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(200,255,0,0.12)}
+
+/* ── TESTIMONIAL QUOTE ── */
+.test-card{position:relative}
+.test-card::before{content:'"';position:absolute;top:0.75rem;right:1.25rem;font-size:4rem;font-family:var(--font);font-weight:900;color:var(--lime);opacity:0.07;line-height:1;pointer-events:none}
+
+/* ── FORMAT CARD PRICE ANIMATE ── */
+.fc-price{transition:letter-spacing 0.2s}
+.format-card:hover .fc-price{letter-spacing:-1px}
+
+/* ── ABOUT PHOTO GLOW PULSE ── */
+@keyframes about-glow{0%,100%{box-shadow:0 0 0 0 rgba(107,91,255,0)}50%{box-shadow:0 0 40px 10px rgba(107,91,255,0.08)}}
+.about-img-wrap{animation:about-glow 4s ease-in-out infinite}
+
+/* ── BOOKING STEP HOVER ── */
+.b-step{transition:background 0.15s;border-radius:8px;padding-left:0;padding-right:0}
+.b-step:hover{background:rgba(200,255,0,0.03);padding-left:6px;padding-right:6px}
+
+/* ── CAL TAB INDICATOR ── */
+.cal-tab{position:relative}
+.cal-tab.active::after{content:'';position:absolute;bottom:-1px;left:12px;right:12px;height:2px;background:var(--ink);border-radius:2px 2px 0 0}
+
+/* ── FAQ ITEM HOVER ── */
+.faq-q{transition:color 0.15s,padding-left 0.2s}
+.faq-item.open .faq-q{padding-left:4px;color:var(--lime)}
+
+/* ── FOOTER GLOW ── */
+.fr-tg{box-shadow:0 0 0 rgba(200,255,0,0);transition:opacity 0.15s,box-shadow 0.25s}
+.fr-tg:hover{box-shadow:0 0 24px rgba(200,255,0,0.25)}
+
+/* ── SCROLL PROGRESS BAR ── */
+#progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--lime),var(--cyan));width:0%;z-index:999;transition:width 0.1s linear}
+
+/* ── GAME CARD STAGGER ── */
+.games-grid .game-card{opacity:0;transform:translateY(20px);transition:opacity 0.4s ease,transform 0.4s ease,border-color 0.2s,box-shadow 0.2s}
+.games-grid.revealed .game-card{opacity:1;transform:translateY(0)}
+.games-grid.revealed .game-card:nth-child(1){transition-delay:0.05s}
+.games-grid.revealed .game-card:nth-child(2){transition-delay:0.1s}
+.games-grid.revealed .game-card:nth-child(3){transition-delay:0.15s}
+.games-grid.revealed .game-card:nth-child(4){transition-delay:0.2s}
+.games-grid.revealed .game-card:nth-child(5){transition-delay:0.25s}
+
+/* ── COURSE PANEL TRANSITION ── */
+.course-panel{opacity:0;transform:translateY(12px);transition:opacity 0.4s cubic-bezier(0.16,1,0.3,1),transform 0.4s cubic-bezier(0.16,1,0.3,1);pointer-events:none;height:0;overflow:hidden}
+.course-panel.active{opacity:1;transform:translateY(0);pointer-events:auto;height:auto;overflow:visible}
+
+/* ── MARQUEE HOVER PAUSE ── */
+.marquee-wrap:hover .marquee-track{animation-play-state:paused}
+.marquee-item{transition:opacity 0.15s;cursor:default}
+.marquee-item:hover{opacity:0.7}
+
+/* ── HERO PHOTO FADE ── */
+.hero-photo{animation:hero-photo-in 1.2s ease both;animation-delay:0.3s}
+@keyframes hero-photo-in{from{opacity:0;transform:scale(1.05)}to{opacity:0.65;transform:scale(1)}}
+
+/* ── AFTER-BOOK PULSE ── */
+@keyframes ab-pulse{0%,100%{border-color:rgba(200,255,0,0.2)}50%{border-color:rgba(200,255,0,0.5)}}
+.after-book{animation:ab-pulse 2.5s ease-in-out infinite}
+
+/* ── PARALLAX HERO ── */
+.hero-right{will-change:transform}
+.hero-photo{will-change:transform}
+
+/* ── FLOATING TECH ICONS ── */
+#float-icons{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.float-icon{position:absolute;font-size:1.4rem;opacity:0;animation:float-icon linear infinite;filter:blur(0px)}
+@keyframes float-icon{
+  0%{transform:translateY(110vh) rotate(0deg) scale(0.6);opacity:0}
+  5%{opacity:0.18}
+  90%{opacity:0.1}
+  100%{transform:translateY(-10vh) rotate(360deg) scale(1.1);opacity:0}
+}
+
+/* ── HORIZONTAL SCROLL GAMES ── */
+.games-scroll-wrap{overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:grab;user-select:none;margin:0 -2rem;padding:0 2rem 1rem}
+.games-scroll-wrap::-webkit-scrollbar{display:none}
+.games-scroll-wrap.grabbing{cursor:grabbing}
+.games-scroll-inner{display:flex;gap:1rem;width:max-content;padding-bottom:4px}
+.games-scroll-inner .game-card{width:220px;flex-shrink:0;opacity:1;transform:none}
+
+/* ── SCROLL SNAP SECTIONS ── */
+.snap-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fade-snap 1s ease 1.5s forwards}
+@keyframes fade-snap{to{opacity:0.5}}
+.snap-hint-arrow{width:18px;height:18px;border-right:2px solid var(--lime);border-bottom:2px solid var(--lime);transform:rotate(45deg);animation:bounce-down 1.2s ease-in-out infinite}
+@keyframes bounce-down{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+.snap-hint-text{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--lime)}
+
+/* ── SKEW ON SCROLL sections ── */
+.skew-section{transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+
+/* ── TILT CARDS ── */
+.tilt-card{transform-style:preserve-3d;transform:perspective(800px)}
+
+/* ── STAT BAR ANIMATION ── */
+.stat-bars{display:flex;flex-direction:column;gap:12px;margin-top:1.5rem}
+.stat-bar-item{display:flex;flex-direction:column;gap:6px}
+.stat-bar-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600}
+.stat-bar-label span:first-child{color:var(--muted2)}
+.stat-bar-label span:last-child{color:var(--lime)}
+.stat-bar-track{height:4px;background:var(--surface);border-radius:100px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.2s cubic-bezier(0.16,1,0.3,1);background:linear-gradient(90deg,var(--lime),var(--cyan))}
+
+/* ── REVEAL LINE ── */
+.reveal-line{overflow:hidden;display:block}
+.reveal-line-inner{display:block;transform:translateY(110%);transition:transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal-line.in .reveal-line-inner{transform:translateY(0)}
+
+/* ── SCROLL TRAIL ── */
+#scroll-trail{position:fixed;top:0;left:0;width:4px;background:linear-gradient(to bottom,var(--lime),var(--cyan),var(--violet));height:0%;z-index:998;opacity:0.6;transition:height 0.1s linear;border-radius:0 4px 4px 0}
+
+/* ── SECTION ENTRANCE — subtle only via JS box-shadow ── */
+
+/* ── TESTIMONIAL MARQUEE ── */
+.test-marquee-wrap{overflow:hidden;margin:0 -2rem}
+.test-marquee-track{display:flex;gap:1.25rem;width:max-content;animation:test-marquee 25s linear infinite}
+.test-marquee-track:hover{animation-play-state:paused}
+.test-marquee-track .test-card{width:320px;flex-shrink:0}
+@keyframes test-marquee{to{transform:translateX(-50%)}}
+@keyframes test-marquee-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.test-marquee-reverse{animation-name:test-marquee-rev}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero,.formats-grid,.about-grid,.booking-layout,.faq-layout{grid-template-columns:1fr}
+  .hero-right{height:280px}
+  .games-grid{grid-template-columns:repeat(3,1fr)}
+  .test-grid{grid-template-columns:1fr 1fr}
+  .exp-boxes{grid-template-columns:1fr 1fr}
+  footer{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  section{padding:60px 1.25rem}
+  .games-grid{grid-template-columns:repeat(2,1fr)}
+  .test-grid{grid-template-columns:1fr}
+  .hero-left{padding:3rem 1.5rem 2rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- LANG BAR -->
+<div id="progress-bar"></div>
+
+<!-- LANG -->
 <div class="lang-bar">
   <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">🇺🇦 УКР</button>
   <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">🇷🇺 РУС</button>
@@ -277,154 +620,172 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Богдан<div class="nav-logo-dot"></div></a>
+  <a href="#" class="nav-logo">Богдан<span class="logo-acc">.</span></a>
   <ul class="nav-links">
     <li><a href="#courses" data-uk="Курси" data-ru="Курсы">Курси</a></li>
     <li><a href="#formats" data-uk="Формати" data-ru="Форматы">Формати</a></li>
     <li><a href="#about" data-uk="Про мене" data-ru="Обо мне">Про мене</a></li>
-    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#booking" data-uk="Запис" data-ru="Запись">Запис</a></li>
   </ul>
   <a href="#booking" class="nav-cta" data-uk="Записатись" data-ru="Записаться">Записатись</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-orb hero-orb-1"></div>
-  <div class="hero-orb hero-orb-2"></div>
-  <div class="hero-orb hero-orb-3"></div>
-
-  <div class="hero-chips">
-    <span class="chip chip-green"><span class="chip-dot"></span> <span data-uk="Набір відкрито" data-ru="Набор открыт">Набір відкрито</span></span>
-    <span class="chip chip-violet">Unity & Python</span>
-    <span class="chip chip-cyan"><span data-uk="Онлайн" data-ru="Онлайн">Онлайн</span></span>
+  <div class="particles" id="particles"></div>
+  <div class="hero-left">
+    <div class="hero-tag" data-uk="Навчання програмування онлайн" data-ru="Обучение программированию онлайн">Навчання програмування онлайн</div>
+    <h1>
+      <span class="h1-outline" data-uk="Роби" data-ru="Делай">Роби</span>
+      <span class="h1-lime" id="typing-word">ігри</span>
+    </h1>
+    <p class="hero-sub" data-uk="10 років досвіду. Від 8 років. Unity, Python — з нуля до реального проекту в портфоліо." data-ru="10 лет опыта. От 8 лет. Unity, Python — с нуля до реального проекта в портфолио.">10 років досвіду. Від 8 років. Unity, Python — з нуля до реального проекту в портфоліо.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-lime"><span data-uk="Обрати час" data-ru="Выбрать время">Обрати час</span> →</a>
+      <a href="#courses" class="btn-ghost"><span data-uk="Дивитись курси" data-ru="Смотреть курсы">Дивитись курси</span> ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hs-num" style="color:var(--lime)" data-count="10" data-suffix="">10</div><div class="hs-label" data-uk="Років досвіду" data-ru="Лет опыта">Років досвіду</div></div>
+      <div><div class="hs-num" style="color:var(--cyan)" data-count="100" data-suffix="+">100+</div><div class="hs-label" data-uk="Учнів" data-ru="Учеников">Учнів</div></div>
+      <div><div class="hs-num" style="color:var(--violet2)">від 8</div><div class="hs-label" data-uk="Років вік" data-ru="Лет возраст">Років вік</div></div>
+      <div><div class="hs-num" style="color:var(--muted2)">до 7</div><div class="hs-label" data-uk="У групі" data-ru="В группе">У групі</div></div>
+    </div>
   </div>
-
-  <h1>
-    <span data-uk="Програмування —" data-ru="Программирование —">Програмування —</span><br>
-    <span class="line2" data-uk="просто та цікаво" data-ru="просто и интересно">просто та цікаво</span>
-  </h1>
-  <p class="hero-sub" data-uk="Навчаю дітей від 8 років та дорослих Unity і Python. Індивідуально та в групах за віком. 10 років досвіду — тільки практика та реальні проекти." data-ru="Обучаю детей от 8 лет и взрослых Unity и Python. Индивидуально и в группах по возрасту. 10 лет опыта — только практика и реальные проекты.">Навчаю дітей від 8 років та дорослих Unity і Python. Індивідуально та в групах за віком. 10 років досвіду — тільки практика та реальні проекти.</p>
-  <div class="hero-btns">
-    <a href="#booking" class="btn-primary"><span data-uk="Записатись на урок" data-ru="Записаться на урок">Записатись на урок</span> →</a>
-    <a href="#courses" class="btn-ghost"><span data-uk="Дивитись програму" data-ru="Смотреть программу">Дивитись програму</span></a>
-  </div>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num v">10</div><div class="stat-label" data-uk="років досвіду" data-ru="лет опыта">років досвіду</div></div>
-    <div class="stat"><div class="stat-num c">100+</div><div class="stat-label" data-uk="учнів навчив" data-ru="учеников обучил">учнів навчив</div></div>
-    <div class="stat"><div class="stat-num g">від 8</div><div class="stat-label" data-uk="років вік учнів" data-ru="лет возраст учеников">років вік учнів</div></div>
+  <div class="hero-right">
+    <img class="hero-photo" src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=900&auto=format&fit=crop&q=80" alt="Programming">
+    <div class="hero-overlay"></div>
   </div>
 </section>
 
-<!-- COURSES -->
-<section id="courses">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="section-eyebrow" data-uk="Програми" data-ru="Программы">Програми</div>
-      <h2 class="section-title" data-uk="Що будемо вивчати" data-ru="Что будем изучать">Що будемо вивчати</h2>
-      <p class="section-sub" data-uk="Два напрями — кожен веде до конкретного результату: власній грі або автоматизації задач." data-ru="Два направления — каждое ведёт к конкретному результату: собственной игре или автоматизации задач.">Два напрями — кожен веде до конкретного результату: власній грі або автоматизації задач.</p>
-    </div>
-    <div class="courses-grid">
-      <div class="course-card unity reveal">
-        <div class="course-icon-wrap unity">🎮</div>
-        <h3>Unity — <span data-uk="розробка ігор" data-ru="разработка игр">розробка ігор</span></h3>
-        <p data-uk="Створюємо ігри з нуля на C#. Від базових механік до публікації готового проекту." data-ru="Создаём игры с нуля на C#. От базовых механик до публикации готового проекта.">Створюємо ігри з нуля на C#. Від базових механік до публікації готового проекту.</p>
-        <div class="module-list">
-          <div class="module-item" data-uk="C# та ООП з нуля" data-ru="C# и ООП с нуля">C# та ООП з нуля</div>
-          <div class="module-item" data-uk="Фізика, колізії, рух" data-ru="Физика, коллизии, движение">Фізика, колізії, рух</div>
-          <div class="module-item" data-uk="UI, анімація, звуки" data-ru="UI, анимация, звуки">UI, анімація, звуки</div>
-          <div class="module-item">2D / 3D</div>
-          <div class="module-item" data-uk="Публікація гри" data-ru="Публикация игры">Публікація гри</div>
-        </div>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">🎮 Unity<div class="marquee-dot"></div></div>
+    <div class="marquee-item">🐍 Python<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Ігри та боти" data-ru="Игры и боты">Ігри та боти<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Від 8 років" data-ru="От 8 лет">Від 8 років<div class="marquee-dot"></div></div>
+    <div class="marquee-item">C# • Python<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Онлайн заняття" data-ru="Онлайн занятия">Онлайн заняття<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Discord — уроки" data-ru="Discord — уроки">Discord — уроки<div class="marquee-dot"></div></div>
+    <div class="marquee-item">650 ₴ / 500 ₴<div class="marquee-dot"></div></div>
+    <div class="marquee-item">🎮 Unity<div class="marquee-dot"></div></div>
+    <div class="marquee-item">🐍 Python<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Ігри та боти" data-ru="Игры и боты">Ігри та боти<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Від 8 років" data-ru="От 8 лет">Від 8 років<div class="marquee-dot"></div></div>
+    <div class="marquee-item">C# • Python<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Онлайн заняття" data-ru="Онлайн занятия">Онлайн заняття<div class="marquee-dot"></div></div>
+    <div class="marquee-item" data-uk="Discord — уроки" data-ru="Discord — уроки">Discord — уроки<div class="marquee-dot"></div></div>
+    <div class="marquee-item">650 ₴ / 500 ₴<div class="marquee-dot"></div></div>
+  </div>
+</div>
 
-        <!-- 5 GAMES EXPANDED -->
-        <div class="games-label" data-uk="5 ігор у програмі курсу:" data-ru="5 игр в программе курса:">5 ігор у програмі курсу:</div>
-        <div class="games-list">
-          <div class="game-item">
-            <div class="game-num">01</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🌱 Перша гра — 3D пригода з нуля" data-ru="🌱 Первая игра — 3D приключение с нуля">🌱 Перша гра — 3D пригода з нуля</div>
-              <div class="game-desc" data-uk="Одразу в 3D — герой рухається, камера слідкує, є рівні та перемога. Жодного досвіду не потрібно: за кілька занять з порожнього проекту виростає справжня гра. Саме тут з'являється відчуття «я можу робити ігри»." data-ru="Сразу в 3D — герой двигается, камера следит, есть уровни и победа. Никакого опыта не нужно: за несколько занятий из пустого проекта вырастает настоящая игра. Именно здесь появляется ощущение «я могу делать игры».">Одразу в 3D — герой рухається, камера слідкує, є рівні та перемога. Жодного досвіду не потрібно: за кілька занять з порожнього проекту виростає справжня гра. Саме тут з'являється відчуття «я можу робити ігри».</div>
-            </div>
-          </div>
-          <div class="game-item">
-            <div class="game-num">02</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="⚡ 3D пригода — герой оживає" data-ru="⚡ 3D приключение — герой оживает">⚡ 3D пригода — герой оживає</div>
-              <div class="game-desc" data-uk="Перший 3D світ, де персонаж бігає з плавними анімаціями. Вчимо blend trees та Animator — після цього будь-який персонаж у ваших руках рухатиметься як живий." data-ru="Первый 3D мир, где персонаж бегает с плавными анимациями. Изучаем blend trees и Animator — после этого любой персонаж в ваших руках будет двигаться как живой.">Перший 3D світ, де персонаж бігає з плавними анімаціями. Вчимо blend trees та Animator — після цього будь-який персонаж у ваших руках рухатиметься як живий.</div>
-            </div>
-          </div>
-          <div class="game-item">
-            <div class="game-num">03</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🌀 2.5D платформер — між двох світів" data-ru="🌀 2.5D платформер — между двух миров">🌀 2.5D платформер — між двох світів</div>
-              <div class="game-desc" data-uk="Гра виглядає як 3D, але грається як 2D. Паралаксні фони, глибина, кінематографічна камера. Саме такий жанр відрізняє початківця від того, хто справді розуміє движок." data-ru="Игра выглядит как 3D, но играется как 2D. Параллаксные фоны, глубина, кинематографическая камера. Именно такой жанр отличает новичка от того, кто по-настоящему понимает движок.">Гра виглядає як 3D, але грається як 2D. Паралаксні фони, глибина, кінематографічна камера. Саме такий жанр відрізняє початківця від того, хто справді розуміє движок.</div>
-            </div>
-          </div>
-          <div class="game-item">
-            <div class="game-num">04</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="⚔️ 2D RPG — власний ігровий світ" data-ru="⚔️ 2D RPG — собственный игровой мир">⚔️ 2D RPG — власний ігровий світ</div>
-              <div class="game-desc" data-uk="Інвентар, квести, NPC з діалогами, система бою. Найамбітніший соло-проект курсу — саме таку гру не соромно показати у портфоліо або навіть викласти в App Store." data-ru="Инвентарь, квесты, NPC с диалогами, система боя. Самый амбициозный соло-проект курса — именно такую игру не стыдно показать в портфолио или даже выложить в App Store.">Інвентар, квести, NPC з діалогами, система бою. Найамбітніший соло-проект курсу — саме таку гру не соромно показати у портфоліо або навіть викласти в App Store.</div>
-            </div>
-          </div>
-          <div class="game-item">
-            <div class="game-num">05</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🍳 Онлайн кулінарна гра — Overcooked своїми руками" data-ru="🍳 Онлайн кулинарная игра — Overcooked своими руками">🍳 Онлайн кулінарна гра — Overcooked своїми руками</div>
-              <div class="game-desc" data-uk="4 гравці в реальному часі готують разом та створюють хаос на кухні. Справжній мережевий мультиплеєр через Netcode — фінальний проект, який хочеться запустити з друзями одразу після уроку." data-ru="4 игрока в реальном времени готовят вместе и создают хаос на кухне. Настоящий сетевой мультиплеер через Netcode — финальный проект, который хочется запустить с друзьями сразу после урока.">4 гравці в реальному часі готують разом та створюють хаос на кухні. Справжній мережевий мультиплеєр через Netcode — фінальний проект, який хочеться запустити з друзьями одразу після уроку.</div>
+<!-- COURSES -->
+<section id="courses"><div class="s-divider"></div>
+  <div class="container">
+    <div class="rv">
+      <div class="sec-eye" data-uk="Програми" data-ru="Программы">Програми</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+        <h2 class="sec-h" style="margin:0" data-uk="Що будемо робити" data-ru="Что будем делать">Що будемо робити</h2>
+        <div class="course-switcher">
+          <button class="cs-btn active-unity" id="cs-unity" onclick="switchCourse('unity',this)">🎮 Unity</button>
+          <button class="cs-btn" id="cs-python" onclick="switchCourse('python',this)">🐍 Python</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNITY PANEL -->
+    <div class="course-panel active" id="panel-unity">
+      <div class="course-big rv">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200&auto=format&fit=crop&q=80" alt="Unity game development">
+        <div class="cb-overlay"></div>
+        <div class="cb-content">
+          <div class="cb-left">
+            <div class="cb-chip chip-lime">🎮 Unity — <span data-uk="Розробка ігор" data-ru="Разработка игр">Розробка ігор</span></div>
+            <h3 data-uk="5 ігор — від першого 3D до мультиплеєру" data-ru="5 игр — от первого 3D до мультиплеера">5 ігор — від першого 3D до мультиплеєру</h3>
+            <p data-uk="C# з нуля, Unity Engine, Animator, Netcode. Кожен проект — це реальна гра, яку можна запустити і показати друзям." data-ru="C# с нуля, Unity Engine, Animator, Netcode. Каждый проект — это реальная игра, которую можно запустить и показать друзьям.">C# з нуля, Unity Engine, Animator, Netcode. Кожен проект — це реальна гра, яку можна запустити і показати друзям.</p>
+            <div class="ctags">
+              <span class="ctag">C# з нуля</span><span class="ctag">2D / 3D / 2.5D</span><span class="ctag">Анімації</span><span class="ctag">UI та звуки</span><span class="ctag">RPG-системи</span><span class="ctag">Multiplayer</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="course-card python reveal">
-        <div class="course-icon-wrap python">🐍</div>
-        <h3>Python — <span data-uk="боти, ШІ та автоматизація" data-ru="боты, ИИ и автоматизация">боти, ШІ та автоматизація</span></h3>
-        <p data-uk="Пишемо реальні проекти з першого уроку — від малювання черепахою до бота, який впізнає обличчя." data-ru="Пишем реальные проекты с первого урока — от рисования черепахой до бота, который распознаёт лица.">Пишемо реальні проекти з першого уроку — від малювання черепахою до бота, який впізнає обличчя.</p>
-        <div class="module-list">
-          <div class="module-item" data-uk="Основи Python та логіка" data-ru="Основы Python и логика">Основи Python та логіка</div>
-          <div class="module-item" data-uk="Telegram Bot API" data-ru="Telegram Bot API">Telegram Bot API</div>
-          <div class="module-item" data-uk="Комп'ютерний зір (OpenCV)" data-ru="Компьютерное зрение (OpenCV)">Комп'ютерний зір (OpenCV)</div>
-          <div class="module-item" data-uk="Голосові технології" data-ru="Голосовые технологии">Голосові технології</div>
-          <div class="module-item" data-uk="Ігрові та розважальні боти" data-ru="Игровые и развлекательные боты">Ігрові та розважальні боти</div>
-        </div>
 
-        <!-- PYTHON PROJECTS -->
-        <div class="games-label" data-uk="Проекти у програмі курсу:" data-ru="Проекты в программе курса:">Проекти у програмі курсу:</div>
-        <div class="games-list">
-          <div class="game-item">
-            <div class="game-num" style="color:var(--cyan)">01</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🐢 Turtle — малювання кодом" data-ru="🐢 Turtle — рисование кодом">🐢 Turtle — малювання кодом</div>
-              <div class="game-desc" data-uk="Для наймолодших — черепашка малює зірки, спіралі та цілі картини за командами. Перший «вау-ефект»: написав три рядки — на екрані з'явилося мистецтво." data-ru="Для самых маленьких — черепашка рисует звёзды, спирали и целые картины по командам. Первый «вау-эффект»: написал три строчки — на экране появилось искусство.">Для наймолодших — черепашка малює зірки, спіралі та цілі картини за командами. Перший «вау-ефект»: написав три рядки — на екрані з'явилося мистецтво.</div>
+      <div class="rv">
+        <div class="projects-label" data-uk="5 ігор у програмі" data-ru="5 игр в программе">5 ігор у програмі</div>
+        <div class="games-grid">
+          <div class="game-card">
+            <div class="gn">01</div><div class="ge">🌱</div>
+            <div class="gt" data-uk="3D пригода з нуля" data-ru="3D приключение с нуля">3D пригода з нуля</div>
+            <div class="gd" data-uk="Одразу в 3D — герой рухається, є рівні та перемога. Тут народжується відчуття «я можу робити ігри»." data-ru="Сразу в 3D — герой двигается, есть уровни и победа. Здесь рождается ощущение «я могу делать игры».">Одразу в 3D — герой рухається, є рівні та перемога. Тут народжується відчуття «я можу».</div>
+          </div>
+          <div class="game-card">
+            <div class="gn">02</div><div class="ge">⚡</div>
+            <div class="gt" data-uk="3D з анімаціями" data-ru="3D с анимациями">3D з анімаціями</div>
+            <div class="gd" data-uk="Blend trees, Animator — персонаж рухається як живий. Перший 3D проект з повноцінною анімацією." data-ru="Blend trees, Animator — персонаж двигается как живой. Первый 3D проект с полноценной анимацией.">Blend trees, Animator — персонаж рухається як живий у повноцінній 3D грі.</div>
+          </div>
+          <div class="game-card">
+            <div class="gn">03</div><div class="ge">🌀</div>
+            <div class="gt">2.5D платформер</div>
+            <div class="gd" data-uk="3D світ зі 2D геймплеєм. Паралакс, глибина, кінематографічна камера — жанр, що відрізняє майстра від новачка." data-ru="3D мир с 2D геймплеем. Параллакс, глубина, кинематографическая камера.">3D світ зі 2D геймплеєм. Паралакс, глибина — жанр що відрізняє майстра.</div>
+          </div>
+          <div class="game-card">
+            <div class="gn">04</div><div class="ge">⚔️</div>
+            <div class="gt">2D RPG</div>
+            <div class="gd" data-uk="Інвентар, квести, NPC з діалогами, система бою. Найамбітніший соло-проект — гра для портфоліо або App Store." data-ru="Инвентарь, квесты, NPC с диалогами, система боя. Самый амбициозный проект — игра для портфолио.">Інвентар, квести, NPC, система бою. Гра яку не соромно показати в портфоліо.</div>
+          </div>
+          <div class="game-card">
+            <div class="gn">05</div><div class="ge">🍳</div>
+            <div class="gt" data-uk="Онлайн кулінарна" data-ru="Онлайн кулинарная">Онлайн кулінарна</div>
+            <div class="gd" data-uk="4 гравці в реальному часі, Netcode — власний Overcooked. Фінальний проект, що хочеться запустити з друзями одразу." data-ru="4 игрока в реальном времени, Netcode — собственный Overcooked. Финальный проект.">4 гравці онлайн через Netcode — власний Overcooked. Хочеться запустити одразу.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PYTHON PANEL -->
+    <div class="course-panel" id="panel-python">
+      <div class="course-big rv">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&auto=format&fit=crop&q=80" alt="Python programming">
+        <div class="cb-overlay"></div>
+        <div class="cb-content">
+          <div class="cb-left">
+            <div class="cb-chip chip-cyan">🐍 Python — <span data-uk="Боти та ШІ" data-ru="Боты и ИИ">Боти та ШІ</span></div>
+            <h3 data-uk="Від малювання черепахою до розпізнавання облич" data-ru="От рисования черепахой до распознавания лиц">Від малювання черепахою до розпізнавання облич</h3>
+            <p data-uk="Реальні проекти з першого уроку. Telegram-боти, голосові інтерфейси, комп'ютерний зір — інструменти, якими ви користуватиметесь щодня." data-ru="Реальные проекты с первого урока. Telegram-боты, голосовые интерфейсы, компьютерное зрение — инструменты для каждого дня.">Реальні проекти з першого уроку. Telegram-боти, голосові інтерфейси, комп'ютерний зір — інструменти для щоденного використання.</p>
+            <div class="ctags">
+              <span class="ctag">🐢 Turtle</span><span class="ctag">Telegram Bot API</span><span class="ctag">OpenCV</span><span class="ctag">Голос</span><span class="ctag">SpeechRecognition</span><span class="ctag">Нейромережі</span>
             </div>
           </div>
-          <div class="game-item">
-            <div class="game-num" style="color:var(--cyan)">02</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🎮 Ігровий Telegram-бот" data-ru="🎮 Игровой Telegram-бот">🎮 Ігровий Telegram-бот</div>
-              <div class="game-desc" data-uk="Бот-вікторина, бот з рандомними квестами або текстовий RPG прямо в Telegram. Показуєш другу — він грає, не знаючи, що це твій код." data-ru="Бот-викторина, бот с рандомными квестами или текстовый RPG прямо в Telegram. Показываешь другу — он играет, не зная, что это твой код.">Бот-вікторина, бот з рандомними квестами або текстовий RPG прямо в Telegram. Показуєш другу — він грає, не знаючи, що це твій код.</div>
-            </div>
+        </div>
+      </div>
+
+      <div class="rv">
+        <div class="projects-label cyan-label" data-uk="5 проектів у програмі" data-ru="5 проектов в программе">5 проектів у програмі</div>
+        <div class="games-grid">
+          <div class="game-card cyan-hover">
+            <div class="gn cyan">01</div><div class="ge">🐢</div>
+            <div class="gt" data-uk="Turtle — малювання кодом" data-ru="Turtle — рисование кодом">Turtle — малювання кодом</div>
+            <div class="gd" data-uk="Черепашка малює зірки, спіралі і картини. Три рядки — і на екрані вже мистецтво. Перший вау-ефект." data-ru="Черепашка рисует звёзды, спирали, картины. Три строки — и на экране уже искусство.">Черепашка малює зірки та спіралі. Три рядки коду — і на екрані вже мистецтво.</div>
           </div>
-          <div class="game-item">
-            <div class="game-num" style="color:var(--cyan)">03</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🎙️ Голосовий бот" data-ru="🎙️ Голосовой бот">🎙️ Голосовий бот</div>
-              <div class="game-desc" data-uk="Говориш у мікрофон — бот тебе чує, розуміє і відповідає. Підключаємо SpeechRecognition та синтез мови. Виглядає як магія, але це 40 рядків Python." data-ru="Говоришь в микрофон — бот тебя слышит, понимает и отвечает. Подключаем SpeechRecognition и синтез речи. Выглядит как магия, но это 40 строк Python.">Говориш у мікрофон — бот тебе чує, розуміє і відповідає. Підключаємо SpeechRecognition та синтез мови. Виглядає як магія, але це 40 рядків Python.</div>
-            </div>
+          <div class="game-card cyan-hover">
+            <div class="gn cyan">02</div><div class="ge">🎮</div>
+            <div class="gt" data-uk="Ігровий Telegram-бот" data-ru="Игровой Telegram-бот">Ігровий Telegram-бот</div>
+            <div class="gd" data-uk="Бот-вікторина або текстовий RPG прямо в Telegram. Показуєш другу — він грає, не знаючи, що це твій код." data-ru="Бот-викторина или текстовый RPG прямо в Telegram. Показываешь другу — он играет.">Бот-вікторина або текстовий RPG у Telegram. Друг грає не знаючи що це твій код.</div>
           </div>
-          <div class="game-item">
-            <div class="game-num" style="color:var(--cyan)">04</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="👁️ Бот з розпізнаванням обличчя" data-ru="👁️ Бот с распознаванием лица">👁️ Бот з розпізнаванням обличчя</div>
-              <div class="game-desc" data-uk="Камера бачить обличчя — бот вітає тебе по імені. Або розпізнає предмети на фото. OpenCV + нейромережа: ваш перший проект зі справжнім штучним інтелектом." data-ru="Камера видит лицо — бот приветствует тебя по имени. Или распознаёт предметы на фото. OpenCV + нейросеть: ваш первый проект с настоящим искусственным интеллектом.">Камера бачить обличчя — бот вітає тебе по імені. Або розпізнає предмети на фото. OpenCV + нейромережа: ваш перший проект зі справжнім штучним інтелектом.</div>
-            </div>
+          <div class="game-card cyan-hover">
+            <div class="gn cyan">03</div><div class="ge">🎙️</div>
+            <div class="gt" data-uk="Голосовий бот" data-ru="Голосовой бот">Голосовий бот</div>
+            <div class="gd" data-uk="Говориш у мікрофон — бот чує, розуміє і відповідає. SpeechRecognition + синтез мови. 40 рядків Python." data-ru="Говоришь в микрофон — бот слышит, понимает, отвечает. 40 строк Python.">Говориш — бот чує і відповідає. SpeechRecognition + синтез. Виглядає як магія.</div>
           </div>
-          <div class="game-item">
-            <div class="game-num" style="color:var(--cyan)">05</div>
-            <div class="game-info">
-              <div class="game-title" data-uk="🤖 Розумний асистент-бот" data-ru="🤖 Умный ассистент-бот">🤖 Розумний асистент-бот</div>
-              <div class="game-desc" data-uk="Фінальний проект: бот-помічник, який нагадує про справи, відповідає на питання і автоматизує рутину. Те, чим ви користуватиметесь самі кожен день." data-ru="Финальный проект: бот-помощник, который напоминает о делах, отвечает на вопросы и автоматизирует рутину. То, чем вы будете пользоваться сами каждый день.">Фінальний проект: бот-помічник, який нагадує про справи, відповідає на питання і автоматизує рутину. Те, чим ви користуватиметесь самі кожен день.</div>
-            </div>
+          <div class="game-card cyan-hover">
+            <div class="gn cyan">04</div><div class="ge">👁️</div>
+            <div class="gt" data-uk="Розпізнавання обличчя" data-ru="Распознавание лица">Розпізнавання обличчя</div>
+            <div class="gd" data-uk="Камера бачить обличчя — бот вітає по імені. OpenCV + нейромережа. Перший проект зі справжнім ШІ." data-ru="Камера видит лицо — бот приветствует по имени. OpenCV + нейросеть. Первый ИИ-проект.">Камера бачить обличчя — бот вітає по імені. OpenCV + нейромережа. Справжній ШІ.</div>
+          </div>
+          <div class="game-card cyan-hover">
+            <div class="gn cyan">05</div><div class="ge">🤖</div>
+            <div class="gt" data-uk="Розумний асистент" data-ru="Умный ассистент">Розумний асистент</div>
+            <div class="gd" data-uk="Нагадує, відповідає, автоматизує рутину. Те, чим ви користуватиметесь самі кожен день після курсу." data-ru="Напоминает, отвечает, автоматизирует рутину. То, чем пользуетесь сами каждый день.">Нагадує, відповідає, автоматизує. Те чим ви користуватиметесь щодня після курсу.</div>
           </div>
         </div>
       </div>
@@ -433,103 +794,350 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
 </section>
 
 <!-- FORMATS -->
-<section id="formats">
+<section id="formats"><div class="s-divider"></div>
   <div class="container">
-    <div class="section-head reveal">
-      <div class="section-eyebrow" data-uk="Формати" data-ru="Форматы">Формати</div>
-      <h2 class="section-title" data-uk="Оберіть свій формат" data-ru="Выберите свой формат">Оберіть свій формат</h2>
-      <p class="section-sub" data-uk="Індивідуально — максимальний фокус на вас. У групі — спілкування з однолітками та нижча ціна." data-ru="Индивидуально — максимальный фокус на вас. В группе — общение со сверстниками и ниже цена.">Індивідуально — максимальний фокус на вас. У групі — спілкування з однолітками та нижча ціна.</p>
+    <div class="rv">
+      <div class="sec-eye" data-uk="Формати" data-ru="Форматы">Формати</div>
+      <h2 class="sec-h" data-uk="Оберіть як навчатись" data-ru="Выберите как учиться">Оберіть як навчатись</h2>
+      <p class="sec-sub" data-uk="Індивідуально — максимальний фокус на вас. У групі — спілкування з однолітками та нижча ціна." data-ru="Индивидуально — максимальный фокус на вас. В группе — общение со сверстниками и ниже цена.">Індивідуально — максимальний фокус на вас. У групі — спілкування з однолітками та нижча ціна.</p>
     </div>
     <div class="formats-grid">
-      <div class="format-card featured reveal">
-        <div class="format-badge-wrap">
-          <span class="popular-badge" data-uk="Найпопулярніше" data-ru="Самое популярное">Найпопулярніше</span>
+      <div class="format-card rv">
+        <div class="fc-img">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=700&auto=format&fit=crop&q=80" alt="Individual lesson">
+          <div class="fc-img-fade"></div>
         </div>
-        <h3 data-uk="Індивідуально" data-ru="Индивидуально">Індивідуально</h3>
-        <div class="format-price violet">650 <sub>₴/год</sub></div>
-        <div class="format-per" data-uk="за академічну годину (60 хв)" data-ru="за академический час (60 мин)">за академічну годину (60 хв)</div>
-        <p class="format-desc" data-uk="Програма повністю під вас: темп, задачі та проект обираємо разом." data-ru="Программа полностью под вас: темп, задачи и проект выбираем вместе.">Програма повністю під вас: темп, задачі та проект обираємо разом.</p>
-        <div class="format-features">
-          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Заняття 1 на 1 у зручний час" data-ru="Занятие 1 на 1 в удобное время">Заняття 1 на 1 у зручний час</span></div>
-          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Гнучкий розклад, перенос за 2 год" data-ru="Гибкий расписание, перенос за 2 часа">Гнучкий розклад, перенос за 2 год</span></div>
-          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Домашні завдання та перевірка коду" data-ru="Домашние задания и проверка кода">Домашні завдання та перевірка коду</span></div>
-          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Матеріали після кожного уроку" data-ru="Материалы после каждого урока">Матеріали після кожного уроку</span></div>
-          <div class="ff-item"><div class="ff-check violet">✓</div><span data-uk="Підтримка в Telegram між заняттями" data-ru="Поддержка в Telegram между занятиями">Підтримка в Telegram між заняттями</span></div>
+        <div class="fc-body">
+          <div class="fc-head">
+            <div class="fc-name" data-uk="Індивідуально" data-ru="Индивидуально">Індивідуально</div>
+            <div class="fc-price-wrap"><div class="fc-price lime">650 ₴</div><div class="fc-per" data-uk="за годину" data-ru="за час">за годину</div></div>
+          </div>
+          <p class="fc-desc" data-uk="Програма повністю під вас — темп, задачі та проект обираємо разом. Гнучкий графік, урок коли зручно." data-ru="Программа полностью под вас — темп, задачи и проект выбираем вместе. Гибкий график.">Програма повністю під вас — темп, задачі та проект обираємо разом. Гнучкий графік.</p>
+          <div class="fc-features">
+            <div class="fc-feat"><span class="fc-feat-check lime">✓</span><span data-uk="Заняття 1 на 1 у зручний час" data-ru="Занятие 1 на 1 в удобное время">Заняття 1 на 1 у зручний час</span></div>
+            <div class="fc-feat"><span class="fc-feat-check lime">✓</span><span data-uk="Домашні завдання та перевірка коду" data-ru="Домашние задания и проверка кода">Домашні завдання та перевірка коду</span></div>
+            <div class="fc-feat"><span class="fc-feat-check lime">✓</span><span data-uk="Підтримка в Telegram між заняттями" data-ru="Поддержка в Telegram между занятиями">Підтримка в Telegram між заняттями</span></div>
+            <div class="fc-feat"><span class="fc-feat-check lime">✓</span><span data-uk="Матеріали та записи після кожного уроку" data-ru="Материалы и записи после каждого урока">Матеріали та записи після кожного уроку</span></div>
+          </div>
+          <a href="#booking" class="fc-btn filled" data-uk="Записатись →" data-ru="Записаться →">Записатись →</a>
         </div>
-        <a href="#booking" class="format-cta" data-uk="Записатись" data-ru="Записаться">Записатись</a>
       </div>
 
-      <div class="format-card reveal">
-        <div class="format-badge-wrap">
-          <span class="age-badge" data-uk="Групи за віком" data-ru="Группы по возрасту">Групи за віком</span>
+      <div class="format-card rv rv-delay-1">
+        <div class="fc-img">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&auto=format&fit=crop&q=80" alt="Group lesson">
+          <div class="fc-img-fade"></div>
         </div>
-        <h3 data-uk="Групові заняття" data-ru="Групповые занятия">Групові заняття</h3>
-        <div class="format-price cyan">500 <sub>₴/год</sub></div>
-        <div class="format-per" data-uk="за академічну годину (60 хв)" data-ru="за академический час (60 мин)">за академічну годину (60 хв)</div>
-        <p class="format-desc" data-uk="Групи до 7 дітей одного віку. Навчаємося разом, розбираємо задачі та проекти одне одного." data-ru="Группы до 7 детей одного возраста. Учимся вместе, разбираем задачи и проекты друг друга.">Групи до 7 дітей одного віку. Навчаємося разом, розбираємо задачі та проекти одне одного.</p>
-        <div class="format-features">
-          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="До 7 учнів одного віку" data-ru="До 7 учеников одного возраста">До 7 учнів одного віку</span></div>
-          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Фіксований розклад" data-ru="Фиксированное расписание">Фіксований розклад</span></div>
-          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Командні міні-проекти" data-ru="Командные мини-проекты">Командні міні-проекти</span></div>
-          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Записи занять" data-ru="Записи занятий">Записи занять</span></div>
-          <div class="ff-item"><div class="ff-check cyan">✓</div><span data-uk="Чат групи для запитань" data-ru="Чат группы для вопросов">Чат групи для запитань</span></div>
+        <div class="fc-body">
+          <div class="fc-head">
+            <div class="fc-name" data-uk="Групові" data-ru="Групповые">Групові</div>
+            <div class="fc-price-wrap"><div class="fc-price cyan">500 ₴</div><div class="fc-per" data-uk="за годину" data-ru="за час">за годину</div></div>
+          </div>
+          <div class="age-pills">
+            <span class="age-pill">🌱 8–10 <span data-uk="років" data-ru="лет">років</span></span>
+            <span class="age-pill">⚡ 11–13 <span data-uk="років" data-ru="лет">років</span></span>
+            <span class="age-pill">🚀 14–17 <span data-uk="років" data-ru="лет">років</span></span>
+          </div>
+          <p class="fc-desc" data-uk="До 7 дітей одного віку. Навчаються разом, мотивують одне одного, роблять командні проекти." data-ru="До 7 детей одного возраста. Учатся вместе, мотивируют друг друга, делают командные проекты.">До 7 дітей одного віку. Навчаються разом, мотивують одне одного, роблять командні проекти.</p>
+          <div class="fc-features">
+            <div class="fc-feat"><span class="fc-feat-check cyan">✓</span><span data-uk="До 7 учнів одного вікового діапазону" data-ru="До 7 учеников одного возраста">До 7 учнів одного вікового діапазону</span></div>
+            <div class="fc-feat"><span class="fc-feat-check cyan">✓</span><span data-uk="Командні міні-проекти та змагання" data-ru="Командные мини-проекты и соревнования">Командні міні-проекти та змагання</span></div>
+            <div class="fc-feat"><span class="fc-feat-check cyan">✓</span><span data-uk="Записи занять та чат для запитань" data-ru="Записи занятий и чат для вопросов">Записи занять та чат для запитань</span></div>
+            <div class="fc-feat"><span class="fc-feat-check cyan">✓</span><span data-uk="Фіксований розклад, зрозумілий батькам" data-ru="Фиксированное расписание">Фіксований розклад, зрозумілий батькам</span></div>
+          </div>
+          <a href="#booking" class="fc-btn outline" data-uk="Записатись →" data-ru="Записаться →">Записатись →</a>
         </div>
-        <a href="#booking" class="format-cta" data-uk="Записатись" data-ru="Записаться">Записатись</a>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- AGE GROUPS -->
-    <div class="section-head reveal" style="margin-top:3rem;margin-bottom:1.5rem">
-      <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.25rem" data-uk="Вікові групи" data-ru="Возрастные группы">Вікові групи</h3>
-      <p style="font-size:14px;color:var(--muted2)" data-uk="Діти навчаються з однолітками — так легше спілкуватися та разом розвиватися." data-ru="Дети учатся со сверстниками — так легче общаться и развиваться вместе.">Діти навчаються з однолітками — так легше спілкуватися та разом розвиватися.</p>
+<!-- TESTIMONIALS -->
+<section id="testimonials"><div class="s-divider"></div>
+  <div class="container">
+    <div class="rv" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="sec-eye" data-uk="Відгуки" data-ru="Отзывы">Відгуки</div>
+        <h2 class="sec-h" style="margin-bottom:0" data-uk="Що кажуть учні" data-ru="Что говорят ученики">Що кажуть учні</h2>
+      </div>
+      <div class="rating-summary">
+        <div class="rating-summary-stars">★★★★★</div>
+        <div class="rating-summary-text">
+          <span class="rating-num" data-count-decimal="4.9">4.9</span>
+          <span data-uk="з 27 відгуків" data-ru="из 27 отзывов">з 27 відгуків</span>
+        </div>
+      </div>
     </div>
-    <div class="age-groups reveal">
-      <div class="age-group-card">
-        <span class="age-emoji">🌱</span>
-        <div class="age-range" data-uk="8–10 років" data-ru="8–10 лет">8–10 років</div>
-        <div class="age-label" data-uk="Молодша група" data-ru="Младшая группа">Молодша група</div>
+  </div>
+
+  <!-- ROW 1 — scrolls left -->
+  <div class="test-marquee-wrap rv">
+    <div class="test-marquee-track" id="test-row-1">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="«За 2 місяці дійшов до робочого прототипу мобільної гри на Unity. Богдан пояснює так, що складні речі стають простими.»" data-ru="«За 2 месяца дошёл до рабочего прототипа мобильной игры на Unity. Богдан объясняет так, что сложные вещи становятся простыми.»">«За 2 місяці дійшов до робочого прототипу мобільної гри на Unity. Богдан пояснює так, що складні речі стають простими.»</p>
+        <div class="test-author"><div class="test-av">АК</div><div><div class="test-name">Олексій К.</div><div class="test-meta">Unity — 2D платформер</div></div></div>
       </div>
-      <div class="age-group-card">
-        <span class="age-emoji">⚡</span>
-        <div class="age-range" data-uk="11–13 років" data-ru="11–13 лет">11–13 років</div>
-        <div class="age-label" data-uk="Середня група" data-ru="Средняя группа">Середня група</div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Син (11 років) чекає кожен урок як свято. За місяць зробив свою першу 3D гру — біжить, стрибає, збирає монетки. Я в захваті від терпіння Богдана." data-ru="Сын (11 лет) ждёт каждый урок как праздник. За месяц сделал свою первую 3D игру — бегает, прыгает, собирает монетки. Я в восторге от терпения Богдана.">Син (11 років) чекає кожен урок як свято. За місяць зробив свою першу 3D гру — біжить, стрибає, збирає монетки. Я в захваті від терпіння Богдана.</p>
+        <div class="test-author"><div class="test-av">НВ</div><div><div class="test-name">Наталя В.</div><div class="test-meta" data-uk="Мама учня, Unity, 11 років" data-ru="Мама ученика, Unity, 11 лет">Мама учня, Unity, 11 років</div></div></div>
       </div>
-      <div class="age-group-card">
-        <span class="age-emoji">🚀</span>
-        <div class="age-range" data-uk="14–17 років" data-ru="14–17 лет">14–17 років</div>
-        <div class="age-label" data-uk="Старша група" data-ru="Старшая группа">Старша група</div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="RPG з інвентарем та квестами — це те, про що я мріяв роками. Богдан розклав все по поличках, без нього я б застряг на першому тижні." data-ru="RPG с инвентарём и квестами — это то, о чём я мечтал годами. Богдан разложил всё по полочкам, без него я бы застрял на первой неделе.">RPG з інвентарем та квестами — це те, про що я мріяв роками. Богдан розклав все по поличках, без нього я б застряг на першому тижні.</p>
+        <div class="test-author"><div class="test-av">ІП</div><div><div class="test-name">Ігор П.</div><div class="test-meta">Unity — 2D RPG</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Почала з нуля. Тепер пишу скрипти автоматизації для роботи і заощаджую кілька годин щотижня." data-ru="Начала с абсолютного нуля. Теперь пишу скрипты автоматизации для работы и экономлю несколько часов в неделю.">Почала з нуля. Тепер пишу скрипти автоматизації для роботи і заощаджую кілька годин щотижня.</p>
+        <div class="test-author"><div class="test-av">МС</div><div><div class="test-name">Марія С.</div><div class="test-meta">Python — автоматизація</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="дочка 9 років, боялась комп'ютера взагалі, а тепер сама відкриває Unity без нагадувань 😄 дуже дякую за терпіння!" data-ru="дочка 9 лет, боялась компьютера вообще, а теперь сама открывает Unity без напоминаний 😄 очень благодарна за терпение!">дочка 9 років, боялась комп'ютера взагалі, а тепер сама відкриває Unity без нагадувань 😄 дуже дякую за терпіння!</p>
+        <div class="test-author"><div class="test-av">ОК</div><div><div class="test-name">Оксана К.</div><div class="test-meta" data-uk="Мама учениці, Unity, 9 років" data-ru="Мама ученицы, Unity, 9 лет">Мама учениці, Unity, 9 років</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="2.5D платформер — жанр який я раніше навіть не розумів як робиться. Тепер маю власний проект з паралаксом і повністю розумію камеру та глибину сцени." data-ru="2.5D платформер — жанр который я раньше даже не понимал как делается. Теперь у меня есть свой проект с параллаксом и я полностью понимаю камеру и глубину сцены.">2.5D платформер — жанр який я раніше навіть не розумів як робиться. Тепер маю власний проект з паралаксом і глибиною сцени.</p>
+        <div class="test-author"><div class="test-av">ДЛ</div><div><div class="test-name">Данило Л.</div><div class="test-meta">Unity — 2.5D платформер</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Групові заняття — це вогонь. Розбираємо задачі разом, бачиш як інші думають. Плюс ціна набагато приємніша." data-ru="Групповые занятия — это огонь. Разбираем задачи вместе, видишь как другие думают. Плюс цена намного приятнее.">Групові заняття — це вогонь. Розбираємо задачі разом, бачиш як інші думають. Плюс ціна набагато приємніша.</p>
+        <div class="test-author"><div class="test-av">ДМ</div><div><div class="test-name">Дмитро М.</div><div class="test-meta">Python — групові</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★☆</div>
+        <p class="test-text" data-uk="Гарний виклад матеріалу, іноді хотілось би трохи повільніше по анімаціям, але в цілому дуже задоволений результатом — персонаж рухається як в справжній грі." data-ru="Хорошее изложение материала, иногда хотелось бы чуть медленнее по анимациям, но в целом очень доволен результатом — персонаж двигается как в настоящей игре.">Гарний виклад матеріалу, іноді хотілось би трохи повільніше по анімаціям, але результат — персонаж рухається як в справжній грі.</p>
+        <div class="test-author"><div class="test-av">ВТ</div><div><div class="test-name">Віктор Т.</div><div class="test-meta">Unity — 3D з анімаціями</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Мультиплеєрна кулінарна гра — фінальний проект курсу — це просто вибух емоцій. Запустили з друзями в перший же вечір, сміялися до сліз." data-ru="Мультиплеерная кулинарная игра — финальный проект курса — это просто взрыв эмоций. Запустили с друзьями в тот же вечер, смеялись до слёз.">Мультиплеєрна кулінарна гра — фінальний проект курсу — просто вибух емоцій. Запустили з друзями в перший же вечір, сміялися до сліз.</p>
+        <div class="test-author"><div class="test-av">СР</div><div><div class="test-name">Сергій Р.</div><div class="test-meta">Unity — Multiplayer</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Син зробив бота, який розпізнає моє обличчя і вітає по імені — показав всій родині на дні народження. Всі були в шоці, що це зробив 13-річний хлопчик." data-ru="Сын сделал бота, который распознаёт моё лицо и приветствует по имени — показал всей семье на дне рождения. Все были в шоке, что это сделал 13-летний мальчик.">Син зробив бота, який розпізнає моє обличчя і вітає по імені — показав всій родині на дні народження. Всі були в шоці.</p>
+        <div class="test-author"><div class="test-av">ТБ</div><div><div class="test-name">Тетяна Б.</div><div class="test-meta" data-uk="Мама учня, Python, 13 років" data-ru="Мама ученика, Python, 13 лет">Мама учня, Python, 13 років</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2 — scrolls right -->
+  <div class="test-marquee-wrap rv rv-delay-1" style="margin-top:1.25rem">
+    <div class="test-marquee-track test-marquee-reverse" id="test-row-2">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Найкращий вчитель Unity, з яким я працював. Пояснює не тільки «як», а й «чому саме так» — це рідкість." data-ru="Лучший учитель Unity, с которым я работал. Объясняет не только «как», но и «почему именно так» — это редкость.">Найкращий вчитель Unity, з яким я працював. Пояснює не тільки «як», а й «чому саме так» — це рідкість.</p>
+        <div class="test-author"><div class="test-av">АЛ</div><div><div class="test-name">Андрій Л.</div><div class="test-meta">Unity — індивідуально</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="дитині 8 років, малює черепашкою вже сама. перший урок — і вона вже показує мені свій малюнок з зірочками 🐢⭐️ дуже раджу для наймолодших" data-ru="ребёнку 8 лет, рисует черепашкой уже сама. первый урок — и она уже показывает мне свой рисунок со звёздочками 🐢⭐️ очень рекомендую для самых маленьких">дитині 8 років, малює черепашкою вже сама. перший урок — і вона вже показує мені малюнок з зірочками 🐢⭐️ раджу для наймолодших</p>
+        <div class="test-author"><div class="test-av">ЮК</div><div><div class="test-name">Юлія К.</div><div class="test-meta" data-uk="Мама учениці, Python Turtle, 8 років" data-ru="Мама ученицы, Python Turtle, 8 лет">Мама учениці, Python Turtle, 8 років</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Займаюсь Unity вже 3 місяці, зробив 2D платформер та 3D пригоду — обидві гри реально можна пройти від початку до кінця. Богдан завжди на зв'язку, якщо щось не виходить." data-ru="Занимаюсь Unity уже 3 месяца, сделал 2D платформер и 3D приключение — обе игры реально можно пройти от начала до конца. Богдан всегда на связи, если что-то не получается.">Займаюсь Unity вже 3 місяці, зробив 2D платформер та 3D пригоду — обидві гри реально можна пройти від початку до кінця.</p>
+        <div class="test-author"><div class="test-av">МК</div><div><div class="test-name">Максим К.</div><div class="test-meta">Unity — 2 проекти</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Голосовий бот — це було як магія. Говориш у мікрофон, а він тобі відповідає. Дочка тепер хоче стати «розробником ботів», коли виросте 😊" data-ru="Голосовой бот — это было как магия. Говоришь в микрофон, а он тебе отвечает. Дочь теперь хочет стать «разработчиком ботов», когда вырастет 😊">Голосовий бот — це було як магія. Говориш у мікрофон, а він тобі відповідає. Дочка хоче стати «розробником ботів» коли виросте 😊</p>
+        <div class="test-author"><div class="test-av">КМ</div><div><div class="test-name">Катерина М.</div><div class="test-meta" data-uk="Мама учениці, Python, 12 років" data-ru="Мама ученицы, Python, 12 лет">Мама учениці, Python, 12 років</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Найкраще, що я міг зробити для сина — записати на групу Unity. Тепер він вечорами не в телефоні, а в Unity Editor щось будує. Дякую, Богдане!" data-ru="Лучшее, что я мог сделать для сына — записать на группу Unity. Теперь он вечерами не в телефоне, а в Unity Editor что-то строит. Спасибо, Богдан!">Найкраще, що я міг зробити для сина — записати на групу Unity. Тепер він вечорами не в телефоні, а в Unity Editor щось будує.</p>
+        <div class="test-author"><div class="test-av">ОГ</div><div><div class="test-name">Олег Г.</div><div class="test-meta" data-uk="Тато учня, Unity, група" data-ru="Папа ученика, Unity, группа">Тато учня, Unity, група</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Пройшов усі 5 ігор курсу поспіль — від найпростішої до мультиплеєрної. Кожна наступна складніша за попередню, і це відчувається як реальний прогрес, а не просто «пройдені теми»." data-ru="Прошёл все 5 игр курса подряд — от самой простой до мультиплеерной. Каждая следующая сложнее предыдущей, и это ощущается как реальный прогресс, а не просто «пройденные темы».">Пройшов усі 5 ігор курсу поспіль. Кожна наступна складніша за попередню — це відчувається як реальний прогрес.</p>
+        <div class="test-author"><div class="test-av">РВ</div><div><div class="test-name">Роман В.</div><div class="test-meta">Unity — повний курс</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Дуже подобається що уроки не типові «дивись і повторюй», а справжнє програмування з поясненням логіки. Через 2 місяці вже сама фіксила баги в своїй грі." data-ru="Очень нравится что уроки не типовые «смотри и повторяй», а настоящее программирование с объяснением логики. Через 2 месяца уже сама фиксила баги в своей игре.">Уроки не типові «дивись і повторюй», а справжнє програмування з поясненням логіки. Через 2 місяці вже сама фіксила баги.</p>
+        <div class="test-author"><div class="test-av">ЄЛ</div><div><div class="test-name">Єва Л.</div><div class="test-meta">Unity — 15 років</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★☆</div>
+        <p class="test-text" data-uk="Іноді доводиться чекати слот через популярність вечірнього часу, але воно того варте — якість пояснення на голову вище за відео-курси." data-ru="Иногда приходится ждать слот из-за популярности вечернего времени, но оно того стоит — качество объяснения на голову выше видео-курсов.">Іноді доводиться чекати слот через популярність вечірнього часу, але воно того варте — якість пояснення на голову вище за відео-курси.</p>
+        <div class="test-author"><div class="test-av">ПН</div><div><div class="test-name">Павло Н.</div><div class="test-meta">Python — індивідуально</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="AnyDesk + пояснення на пальцях — все дуже зручно, немає відчуття що дивишся урок «здалеку». Наче Богдан сидить поруч і показує на моєму екрані." data-ru="AnyDesk + объяснение на пальцах — всё очень удобно, нет ощущения что смотришь урок «издалека». Будто Богдан сидит рядом и показывает на моём экране.">AnyDesk + пояснення на пальцях — все дуже зручно. Наче Богдан сидить поруч і показує прямо на моєму екрані.</p>
+        <div class="test-author"><div class="test-av">ІС</div><div><div class="test-name">Іван С.</div><div class="test-meta">Unity — 3D з нуля</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Дочка ходить на групу з однолітками (11-13 років) — каже що це найкраща частина тижня. Дружить з дітьми з групи навіть поза уроками тепер." data-ru="Дочь ходит в группу со сверстниками (11-13 лет) — говорит что это лучшая часть недели. Дружит с детьми из группы даже вне уроков теперь.">Дочка ходить на групу з однолітками (11-13 років) — каже що це найкраща частина тижня. Дружить з дітьми з групи навіть поза уроками.</p>
+        <div class="test-author"><div class="test-av">ЛФ</div><div><div class="test-name">Лариса Ф.</div><div class="test-meta" data-uk="Мама учениці, Unity, група 11-13" data-ru="Мама ученицы, Unity, группа 11-13">Мама учениці, Unity, група 11-13</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3 — scrolls left, remaining reviews -->
+  <div class="test-marquee-wrap rv rv-delay-2" style="margin-top:1.25rem">
+    <div class="test-marquee-track" id="test-row-3">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="RPG система бою — те що я хотів зрозуміти роками через YouTube і ніяк не міг. За 3 заняття Богдан пояснив логіку так, що я нарешті все зібрав докупи." data-ru="RPG система боя — то что я хотел понять годами через YouTube и никак не мог. За 3 занятия Богдан объяснил логику так, что я наконец всё собрал воедино.">RPG система бою — те що я хотів зрозуміти роками через YouTube і не міг. За 3 заняття Богдан пояснив логіку так, що все зібралось докупи.</p>
+        <div class="test-author"><div class="test-av">ЯЗ</div><div><div class="test-name">Ярослав З.</div><div class="test-meta">Unity — система бою</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Син (10 років) досі не вірить що сам зробив гру, яка встановлюється на телефон друзів. Показує всім у школі — почувається справжнім розробником." data-ru="Сын (10 лет) до сих пор не верит что сам сделал игру, которая устанавливается на телефон друзей. Показывает всем в школе — чувствует себя настоящим разработчиком.">Син (10 років) досі не вірить що сам зробив гру, яка встановлюється на телефон друзів. Показує всім у школі.</p>
+        <div class="test-author"><div class="test-av">ВД</div><div><div class="test-name">Валентина Д.</div><div class="test-meta" data-uk="Мама учня, Unity, 10 років" data-ru="Мама ученика, Unity, 10 лет">Мама учня, Unity, 10 років</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Змінюю професію в 34 роки, вибрав Unity. Богдан жодного разу не дав відчути що я «застарий» для цього — навпаки, дуже підтримує." data-ru="Меняю профессию в 34 года, выбрал Unity. Богдан ни разу не дал почувствовать что я «слишком старый» для этого — наоборот, очень поддерживает.">Змінюю професію в 34 роки, вибрав Unity. Богдан жодного разу не дав відчути що я «застарий» для цього — навпаки підтримує.</p>
+        <div class="test-author"><div class="test-av">ОМ</div><div><div class="test-name">Олександр М.</div><div class="test-meta">Unity — зміна професії</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Розпізнавання предметів через камеру — показав на уроці в школі, вчителька інформатики була в захваті і питала хто вчив 😄" data-ru="Распознавание предметов через камеру — показал на уроке в школе, учительница информатики была в восторге и спрашивала кто учил 😄">Розпізнавання предметів через камеру — показав на уроці в школі, вчителька інформатики питала хто вчив 😄</p>
+        <div class="test-author"><div class="test-av">НР</div><div><div class="test-name">Назар Р.</div><div class="test-meta">Python — OpenCV, 14 років</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Довго вибирала між кількома викладачами, зупинилась на Богдані — і не пошкодувала жодного разу. Пояснює терпляче, не поспішає, завжди перевіряє чи все зрозуміло." data-ru="Долго выбирала между несколькими преподавателями, остановилась на Богдане — и не пожалела ни разу. Объясняет терпеливо, не спешит, всегда проверяет всё ли понятно.">Довго вибирала між кількома викладачами, зупинилась на Богдані — і не пошкодувала жодного разу. Пояснює терпляче, не поспішає.</p>
+        <div class="test-author"><div class="test-av">СК</div><div><div class="test-name">Світлана К.</div><div class="test-meta" data-uk="Мама учениці, Python" data-ru="Мама ученицы, Python">Мама учениці, Python</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Анімації персонажа — blend trees, ходьба, біг, стрибок — все виглядає плавно, як у справжніх іграх. Раніше думав що це доступно тільки великим студіям." data-ru="Анимации персонажа — blend trees, ходьба, бег, прыжок — всё выглядит плавно, как в настоящих играх. Раньше думал что это доступно только большим студиям.">Анімації персонажа — blend trees, ходьба, біг, стрибок — все виглядає плавно, як у справжніх іграх.</p>
+        <div class="test-author"><div class="test-av">ТП</div><div><div class="test-name">Тарас П.</div><div class="test-meta">Unity — анімації</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text" data-uk="Записались всією родиною — я на Python, син на Unity. Обом подобається, і навіть змагаємось хто швидше здасть домашку 😅" data-ru="Записались всей семьёй — я на Python, сын на Unity. Обоим нравится, и даже соревнуемся кто быстрее сдаст домашку 😅">Записались всією родиною — я на Python, син на Unity. Обом подобається, навіть змагаємось хто швидше здасть домашку 😅</p>
+        <div class="test-author"><div class="test-av">ГЛ</div><div><div class="test-name">Галина Л.</div><div class="test-meta">Python + Unity, родина</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about">
+<section id="about"><div class="s-divider"></div>
   <div class="container">
-    <div class="about-grid">
-      <div class="about-photo reveal">
-        <div class="photo-placeholder">📷</div>
-        <div class="photo-hint-text" data-uk="Вставте своє фото" data-ru="Вставьте своё фото">Вставте своє фото</div>
-      </div>
-      <div class="about-content reveal">
-        <div class="section-eyebrow" data-uk="Про мене" data-ru="Обо мне">Про мене</div>
-        <h2 data-uk="Привіт, я Богдан" data-ru="Привет, я Богдан">Привіт, я Богдан</h2>
-        <p data-uk="Розробляю на Unity та Python вже 10 років. Навчаю дітей та дорослих онлайн — кожен учень отримує реальний проект у портфоліо, а не просто пройдений курс." data-ru="Разрабатываю на Unity и Python уже 10 лет. Обучаю детей и взрослых онлайн — каждый ученик получает реальный проект в портфолио, а не просто пройденный курс.">Розробляю на Unity та Python вже 10 років. Навчаю дітей та дорослих онлайн — кожен учень отримує реальний проект у портфоліо, а не просто пройдений курс.</p>
-        <p data-uk="Працюю з учнями від 8 років. Умію пояснити складне просто — без зайвої теорії, одразу до практики. Заняття в Zoom або Discord." data-ru="Работаю с учениками от 8 лет. Умею объяснить сложное просто — без лишней теории, сразу к практике. Занятия в Zoom или Discord.">Працюю з учнями від 8 років. Умію пояснити складне просто — без зайвої теорії, одразу до практики. Заняття в Zoom або Discord.</p>
-        <div class="exp-grid">
-          <div class="exp-card"><div class="exp-card-num v">10</div><div class="exp-card-label" data-uk="років досвіду" data-ru="лет опыта">років досвіду</div></div>
-          <div class="exp-card"><div class="exp-card-num c">100+</div><div class="exp-card-label" data-uk="учнів навчив" data-ru="учеников обучил">учнів навчив</div></div>
-          <div class="exp-card"><div class="exp-card-num g" data-uk="від 8 р." data-ru="от 8 лет">від 8 р.</div><div class="exp-card-label" data-uk="вік учнів" data-ru="возраст учеников">вік учнів</div></div>
-          <div class="exp-card"><div class="exp-card-num a">до 7</div><div class="exp-card-label" data-uk="у групі" data-ru="в группе">у групі</div></div>
+    <div class="about-grid-v2">
+      <div class="about-showcase rv-left">
+        <div class="showcase-grid">
+          <div class="showcase-card sc-1">
+            <div class="sc-scene">
+              <div class="sc-hud-corner">LVL 1</div>
+              <div class="sc-sky-glow"></div>
+              <div class="sc-mountains">
+                <div class="sc-mtn sc-mtn-1"></div>
+                <div class="sc-mtn sc-mtn-2"></div>
+                <div class="sc-mtn sc-mtn-3"></div>
+              </div>
+              <div class="sc-ground"></div>
+              <div class="sc-char sc-char-1"></div>
+              <div class="sc-vignette"></div>
+              <div class="sc-scanline"></div>
+            </div>
+            <div class="sc-label">🌱 <span data-uk="3D пригода" data-ru="3D приключение">3D пригода</span></div>
+          </div>
+          <div class="showcase-card sc-2">
+            <div class="sc-scene">
+              <div class="sc-hud-corner">ANIM</div>
+              <div class="sc-rim-light"></div>
+              <div class="sc-grid-floor"></div>
+              <div class="sc-motion-trail"></div>
+              <div class="sc-char sc-char-2"></div>
+              <div class="sc-vignette"></div>
+              <div class="sc-scanline"></div>
+            </div>
+            <div class="sc-label">⚡ <span data-uk="Анімації" data-ru="Анимации">Анімації</span></div>
+          </div>
+          <div class="showcase-card sc-3">
+            <div class="sc-scene">
+              <div class="sc-hud-corner">2.5D</div>
+              <div class="sc-layer sc-layer-back"></div>
+              <div class="sc-layer sc-layer-mid"></div>
+              <div class="sc-coin sc-coin-1"></div>
+              <div class="sc-coin sc-coin-2"></div>
+              <div class="sc-char sc-char-3"></div>
+              <div class="sc-vignette"></div>
+              <div class="sc-scanline"></div>
+            </div>
+            <div class="sc-label">🌀 2.5D</div>
+          </div>
+          <div class="showcase-card sc-4">
+            <div class="sc-scene">
+              <div class="sc-torch-glow"></div>
+              <div class="sc-rpg-top">
+                <div class="sc-hp-bar"><div class="sc-hp-fill"></div></div>
+                <div class="sc-lvl-badge">LV 7</div>
+              </div>
+              <div class="sc-inv-grid">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <div class="sc-vignette"></div>
+              <div class="sc-scanline"></div>
+            </div>
+            <div class="sc-label">⚔️ RPG</div>
+          </div>
+          <div class="showcase-card sc-5">
+            <div class="sc-scene">
+              <div class="sc-split">
+                <span><span class="sc-p-tag">P1</span></span><span><span class="sc-p-tag">P2</span></span><span><span class="sc-p-tag">P3</span></span><span><span class="sc-p-tag">P4</span></span>
+              </div>
+              <div class="sc-split-divider-h"></div>
+              <div class="sc-split-divider-v"></div>
+              <div class="sc-vignette"></div>
+            </div>
+            <div class="sc-label">🎮 <span data-uk="Мультиплеєр" data-ru="Мультиплеер">Мультиплеєр</span></div>
+          </div>
+          <div class="showcase-card sc-6">
+            <div class="sc-scene">
+              <div class="sc-hud-corner">BOT.PY</div>
+              <div class="sc-term-glow"></div>
+              <div class="sc-chat-row">
+                <div class="sc-chat-bubble">🤖</div>
+                <div class="sc-msg-box"><div class="sc-code-lines"><span></span><span></span></div></div>
+              </div>
+              <div class="sc-code-lines"><span></span><span></span><span></span><span class="sc-cursor-blink"></span></div>
+              <div class="sc-vignette"></div>
+              <div class="sc-scanline"></div>
+            </div>
+            <div class="sc-label">🐍 <span data-uk="Python-бот" data-ru="Python-бот">Python-бот</span></div>
+          </div>
         </div>
-        <div class="skills-wrap">
-          <span class="skill-pill">Unity</span>
-          <span class="skill-pill">C#</span>
-          <span class="skill-pill">Python</span>
-          <span class="skill-pill">Pandas</span>
-          <span class="skill-pill">Git</span>
-          <span class="skill-pill">Telegram API</span>
-          <span class="skill-pill">Zoom / Discord</span>
+        <div class="showcase-caption" data-uk="Приклади проектів, які роблять учні на курсі" data-ru="Примеры проектов, которые делают ученики на курсе">Приклади проектів, які роблять учні на курсі</div>
+      </div>
+
+      <div class="about-text-v2 rv-right rv-delay-1">
+        <div class="sec-eye" data-uk="Про мене" data-ru="Обо мне">Про мене</div>
+        <h2 data-uk="Головне — щоб дитині було в кайф" data-ru="Главное — чтобы ребёнку было в кайф">Головне — щоб дитині було в кайф</h2>
+
+        <p class="about-lead" data-uk="Я Богдан, і моя головна мета — не «пройти програму», а щоб дитина чекала кожен урок з нетерпінням і йшла після нього із запаленими очима: «дивись що я зробив!»" data-ru="Я Богдан, и моя главная цель — не «пройти программу», а чтобы ребёнок ждал каждый урок с нетерпением и уходил после него с горящими глазами: «смотри что я сделал!»">Я Богдан, і моя головна мета — не «пройти програму», а щоб дитина чекала кожен урок з нетерпінням і йшла після нього із запаленими очима: «дивись що я зробив!»</p>
+
+        <p data-uk="10 років пишу ігри та автоматизую задачі на Python. За цей час навчив понад 100 учнів — від восьмирічних дітей, які вперше сідають за код, до дорослих, які повністю змінюють професію." data-ru="10 лет пишу игры и автоматизирую задачи на Python. За это время обучил более 100 учеников — от восьмилетних детей, впервые садящихся за код, до взрослых, полностью меняющих профессию.">10 років пишу ігри та автоматизую задачі на Python. За цей час навчив понад 100 учнів — від восьмирічних дітей, які вперше сідають за код, до дорослих, які повністю змінюють професію.</p>
+
+        <p data-uk="Програмування для дітей найчастіше вчать нудно — сухі команди, абстрактні приклади, «навіщо це взагалі треба». Я роблю навпаки: з першої хвилини ми створюємо щось живе — персонажа, який стрибає, бота, який відповідає, гру, в яку хочеться грати ще раз." data-ru="Программированию детей чаще всего учат скучно — сухие команды, абстрактные примеры, «зачем это вообще нужно». Я делаю наоборот: с первой минуты мы создаём что-то живое — персонажа, который прыгает, бота, который отвечает, игру, в которую хочется играть ещё раз.">Програмування для дітей найчастіше вчать нудно — сухі команди, абстрактні приклади. Я роблю навпаки: з першої хвилини ми створюємо щось живе — персонажа, який стрибає, бота, який відповідає, гру, в яку хочеться грати ще раз.</p>
+
+        <p data-uk="Коли дитина бачить результат власних рук за 20 хвилин — вона починає вірити, що може більше. Саме це відчуття «я це зробив сам» я вважаю найважливішим результатом наших занять, важливішим навіть за сам код." data-ru="Когда ребёнок видит результат собственных рук за 20 минут — он начинает верить, что может больше. Именно это ощущение «я сделал это сам» я считаю самым важным результатом наших занятий, важнее даже самого кода.">Коли дитина бачить результат власних рук за 20 хвилин — вона починає вірити, що може більше. Саме це відчуття «я це зробив сам» я вважаю найважливішим результатом наших занять.</p>
+
+        <div class="exp-boxes">
+          <div class="exp-box"><div class="exp-num" style="color:var(--lime)" data-count="10" data-suffix="">10</div><div class="exp-lbl" data-uk="Років досвіду" data-ru="Лет опыта">Років досвіду</div></div>
+          <div class="exp-box"><div class="exp-num" style="color:var(--cyan)" data-count="100" data-suffix="+">100+</div><div class="exp-lbl" data-uk="Учнів навчив" data-ru="Учеников обучил">Учнів навчив</div></div>
+          <div class="exp-box"><div class="exp-num" style="color:var(--violet2)">від 7</div><div class="exp-lbl" data-uk="Мінімальний вік" data-ru="Минимальный возраст">Мінімальний вік</div></div>
+          <div class="exp-box"><div class="exp-num" style="color:var(--muted2)" data-count="7" data-suffix="">7</div><div class="exp-lbl" data-uk="Макс. у групі" data-ru="Макс. в группе">Макс. у групі</div></div>
+        </div>
+
+        <div class="skill-cloud">
+          <span class="skill-tag">Unity</span><span class="skill-tag">C#</span><span class="skill-tag">Python</span>
+          <span class="skill-tag">OpenCV</span><span class="skill-tag">Telegram API</span><span class="skill-tag">Git</span>
+          <span class="skill-tag">Netcode</span><span class="skill-tag">Discord</span><span class="skill-tag">VS 2022</span>
         </div>
       </div>
     </div>
@@ -537,221 +1145,562 @@ footer>p{font-size:14px;color:var(--muted);margin-bottom:2rem}
 </section>
 
 <!-- BOOKING -->
-<section id="booking">
+<section id="booking"><div class="s-divider"></div>
   <div class="container">
-    <div class="booking-grid">
-      <div class="booking-info reveal">
-        <div class="section-eyebrow" data-uk="Запис" data-ru="Запись">Запис</div>
+    <div class="booking-layout">
+      <div class="bl-left rv">
+        <div class="sec-eye" data-uk="Запис" data-ru="Запись">Запис</div>
         <h2 data-uk="Оберіть зручний час" data-ru="Выберите удобное время">Оберіть зручний час</h2>
-        <p data-uk="Оберіть тип заняття, знайдіть вільний слот і одразу забронюйте. Після запису ви побачите інструкцію по підготовці та реквізити для оплати." data-ru="Выберите тип занятия, найдите свободный слот и сразу забронируйте. После записи вы увидите инструкцию по подготовке и реквизиты для оплаты.">Оберіть тип заняття, знайдіть вільний слот і одразу забронюйте. Після запису ви побачите інструкцію по підготовці та реквізити для оплати.</p>
-        <div class="booking-steps">
-          <div class="b-step"><div class="b-step-num">1</div><div><div class="b-step-title" data-uk="Оберіть формат" data-ru="Выберите формат">Оберіть формат</div><div class="b-step-desc" data-uk="Індивідуально або груповий за віком" data-ru="Индивидуально или групповое по возрасту">Індивідуально або груповий за віком</div></div></div>
-          <div class="b-step"><div class="b-step-num">2</div><div><div class="b-step-title" data-uk="Знайдіть вільний час" data-ru="Найдите свободное время">Знайдіть вільний час</div><div class="b-step-desc" data-uk="Календар показує реальні вільні слоти" data-ru="Календарь показывает реальные свободные слоты">Календар показує реальні вільні слоти</div></div></div>
-          <div class="b-step"><div class="b-step-num">3</div><div><div class="b-step-title" data-uk="Підтвердження на пошту" data-ru="Подтверждение на почту">Підтвердження на пошту</div><div class="b-step-desc" data-uk="Реквізити та інструкція по ПО — одразу після запису" data-ru="Реквизиты и инструкция по ПО — сразу после записи">Реквізити та інструкція по ПО — одразу після запису</div></div></div>
-          <div class="b-step"><div class="b-step-num">4</div><div><div class="b-step-title" data-uk="Оплата" data-ru="Оплата">Оплата</div><div class="b-step-desc" data-uk="Переказ на карту (ПриватБанк / Монобанк)" data-ru="Перевод на карту (ПриватБанк / Монобанк)">Переказ на карту (ПриватБанк / Монобанк)</div></div></div>
+        <p data-uk="Обираєте тип уроку, знаходите вільний слот і бронюєте. Після запису — реквізити та інструкція по встановленню ПЗ." data-ru="Выбираете тип урока, находите свободный слот и бронируете. После записи — реквизиты и инструкция по ПО.">Обираєте тип уроку, знаходите вільний слот і бронюєте. Після запису — реквізити та інструкція по ПЗ.</p>
+        <div class="b-steps">
+          <div class="b-step"><div class="b-dot">1</div><div><div class="b-title" data-uk="Оберіть тип заняття" data-ru="Выберите тип занятия">Оберіть тип заняття</div><div class="b-desc" data-uk="Unity або Python, інд. або група за віком" data-ru="Unity или Python, инд. или группа по возрасту">Unity або Python, інд. або група за віком</div></div></div>
+          <div class="b-step"><div class="b-dot">2</div><div><div class="b-title" data-uk="Знайдіть вільний слот" data-ru="Найдите свободный слот">Знайдіть вільний слот</div><div class="b-desc" data-uk="Графік 12:00–22:00, щодня" data-ru="График 12:00–22:00, ежедневно">Графік 12:00–22:00, щодня</div></div></div>
+          <div class="b-step"><div class="b-dot">3</div><div><div class="b-title" data-uk="Підтвердження на пошту" data-ru="Подтверждение на почту">Підтвердження на пошту</div><div class="b-desc" data-uk="Посилання на Discord-зустріч" data-ru="Ссылка на Discord-встречу">Посилання на Discord-зустріч</div></div></div>
+          <div class="b-step"><div class="b-dot">4</div><div><div class="b-title" data-uk="Оплата на картку" data-ru="Оплата на карту">Оплата на картку</div><div class="b-desc">ПриватБанк / Monobank, в гривнях</div></div></div>
         </div>
       </div>
-      <div class="calendly-box reveal" id="cal-embed-wrap" style="min-height:auto;padding:0;display:block;border:1px solid var(--border);background:var(--surface)">
-
-        <!-- LESSON TYPE TABS -->
-        <div class="lesson-tabs">
-          <button class="lesson-tab active" onclick="switchLesson('ind-unity', this)">
-            🎮 <span data-uk="Інд. Unity" data-ru="Инд. Unity">Інд. Unity</span>
-          </button>
-          <button class="lesson-tab" onclick="switchLesson('ind-python', this)">
-            🐍 <span data-uk="Інд. Python" data-ru="Инд. Python">Інд. Python</span>
-          </button>
-          <button class="lesson-tab" onclick="switchLesson('group-unity', this)">
-            🎮 <span data-uk="Група Unity" data-ru="Группа Unity">Група Unity</span>
-          </button>
-          <button class="lesson-tab" onclick="switchLesson('group-python', this)">
-            🐍 <span data-uk="Група Python" data-ru="Группа Python">Група Python</span>
-          </button>
+      <div class="rv rv-delay-1">
+        <div class="cal-tabs">
+          <button class="cal-tab active" onclick="switchCal('ind-unity',this)">🎮 <span data-uk="Інд. Unity" data-ru="Инд. Unity">Інд. Unity</span></button>
+          <button class="cal-tab" onclick="switchCal('ind-python',this)">🐍 <span data-uk="Інд. Python" data-ru="Инд. Python">Інд. Python</span></button>
+          <button class="cal-tab" onclick="switchCal('group-unity',this)">🎮 <span data-uk="Група Unity" data-ru="Группа Unity">Група Unity</span></button>
+          <button class="cal-tab" onclick="switchCal('group-python',this)">🐍 <span data-uk="Група Python" data-ru="Группа Python">Група Python</span></button>
         </div>
-
-        <!-- 4 окремі контейнери — один для кожної вкладки -->
-        <div id="cal-ind-unity"   class="cal-panel active-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px"></div>
-        <div id="cal-ind-python"  class="cal-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px;display:none"></div>
-        <div id="cal-group-unity" class="cal-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px;display:none"></div>
-        <div id="cal-group-python"class="cal-panel" style="width:100%;height:700px;overflow:auto;border-radius:0 0 20px 20px;display:none"></div>
+        <div class="cal-panels">
+          <div id="cal-ind-unity" class="cal-panel-item active"></div>
+          <div id="cal-ind-python" class="cal-panel-item"></div>
+          <div id="cal-group-unity" class="cal-panel-item"></div>
+          <div id="cal-group-python" class="cal-panel-item"></div>
+        </div>
+        <div class="after-book">
+          <div class="ab-ico">✅</div>
+          <div class="ab-txt">
+            <strong data-uk="Забронювали час?" data-ru="Забронировали время?">Забронювали час?</strong>
+            <span data-uk="Перейдіть до оплати та інструкції по ПЗ" data-ru="Перейдите к оплате и инструкции по ПО">Перейдіть до оплати та інструкції по ПЗ</span>
+          </div>
+          <a href="thank-you.html" class="ab-cta" data-uk="Оплата та підготовка →" data-ru="Оплата и подготовка →">Оплата та підготовка →</a>
+        </div>
       </div>
-    </div>
-
-    <!-- AFTER BOOKING NOTICE -->
-    <div class="after-booking-card reveal">
-      <div class="ab-icon">✅</div>
-      <div class="ab-content">
-        <h3 data-uk="Забронювали час?" data-ru="Забронировали время?">Забронювали час?</h3>
-        <p data-uk="Перейдіть на сторінку з реквізитами для оплати та інструкцією по встановленню потрібного ПЗ." data-ru="Перейдите на страницу с реквизитами для оплаты и инструкцией по установке нужного ПО.">Перейдіть на сторінку з реквізитами для оплати та інструкцією по встановленню потрібного ПЗ.</p>
-      </div>
-      <a href="thank-you.html" class="ab-cta">
-        <span data-uk="Оплата та підготовка" data-ru="Оплата и подготовка">Оплата та підготовка</span> →
-      </a>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq">
+<section id="faq"><div class="s-divider"></div>
   <div class="container">
-    <div class="section-head reveal">
-      <div class="section-eyebrow">FAQ</div>
-      <h2 class="section-title" data-uk="Часті запитання" data-ru="Частые вопросы">Часті запитання</h2>
+    <div class="rv" style="text-align:center;margin-bottom:3rem">
+      <div class="sec-eye" style="justify-content:center">FAQ</div>
+      <h2 class="sec-h" style="margin:0 auto 0.75rem" data-uk="Часті запитання" data-ru="Частые вопросы">Часті запитання</h2>
+      <p style="font-size:14px;color:var(--muted2);max-width:480px;margin:0 auto" data-uk="Відповіді на найпопулярніші питання. Якщо не знайшли — пишіть у Telegram." data-ru="Ответы на самые популярные вопросы. Не нашли — пишите в Telegram.">Відповіді на найпопулярніші питання. Якщо не знайшли — пишіть у Telegram.</p>
     </div>
-    <div class="faq-list">
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-uk="Чи потрібен досвід програмування?" data-ru="Нужен ли опыт программирования?">Чи потрібен досвід програмування?</span>
-          <div class="faq-arrow">↓</div>
-        </div>
-        <div class="faq-a" data-uk="Ні, я працюю з учнями з нуля. Єдине що потрібно — бажання навчатися. На першому занятті розбираємося з рівнем і будуємо план під вас." data-ru="Нет, я работаю с учениками с нуля. Единственное что нужно — желание учиться. На первом занятии разбираемся с уровнем и строим план под вас.">Ні, я працюю з учнями з нуля. Єдине що потрібно — бажання навчатися. На першому занятті розбираємося з рівнем і будуємо план під вас.</div>
+    <div class="faq-cards-grid rv">
+
+      <div class="faq-card">
+        <div class="faq-card-icon">🎓</div>
+        <h3 class="faq-card-title" data-uk="Чи потрібен досвід?" data-ru="Нужен ли опыт?">Чи потрібен досвід?</h3>
+        <p class="faq-card-text" data-uk="Зовсім ні. Починаємо з нуля — від встановлення програм до першого рядка коду. Навчаю дітей від 7 років та дорослих будь-якого віку." data-ru="Совсем нет. Начинаем с нуля — от установки программ до первой строки кода. Обучаю детей от 7 лет и взрослых любого возраста.">Зовсім ні. Починаємо з нуля — від встановлення програм до першого рядка коду. Навчаю дітей від 7 років та дорослих будь-якого віку.</p>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-uk="Як проходять заняття?" data-ru="Как проходят занятия?">Як проходять заняття?</span>
-          <div class="faq-arrow">↓</div>
-        </div>
-        <div class="faq-a" data-uk="Онлайн у Zoom або Discord. Я ділюсь екраном, пояснюю матеріал і одразу пишемо код разом. Після уроку — домашнє завдання та запис заняття." data-ru="Онлайн в Zoom или Discord. Я делюсь экраном, объясняю материал и сразу пишем код вместе. После урока — домашнее задание и запись занятия.">Онлайн у Zoom або Discord. Я ділюсь екраном, пояснюю матеріал і одразу пишемо код разом. Після уроку — домашнє завдання та запис заняття.</div>
+
+      <div class="faq-card">
+        <div class="faq-card-icon">🖥️</div>
+        <h3 class="faq-card-title" data-uk="Як проходять заняття?" data-ru="Как проходят занятия?">Як проходять заняття?</h3>
+        <p class="faq-card-text" data-uk="Онлайн через AnyDesk — підключаюсь до вашого комп'ютера, пояснюю матеріал і одразу пишемо код разом. Для голосового зв'язку використовуємо Discord. Запис кожного заняття залишається у вас." data-ru="Онлайн через AnyDesk — подключаюсь к вашему компьютеру, объясняю материал и сразу пишем код вместе. Для голосовой связи используем Discord. Запись каждого занятия остаётся у вас.">Онлайн через AnyDesk — підключаюсь до вашого комп'ютера, пояснюю матеріал і одразу пишемо код разом. Для голосового зв'язку — Discord. Запис залишається у вас.</p>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-uk="Як оплатити урок?" data-ru="Как оплатить урок?">Як оплатити урок?</span>
-          <div class="faq-arrow">↓</div>
-        </div>
-        <div class="faq-a" data-uk="Оплата після запису. Реквізити карти (ПриватБанк або Монобанк) з'являться на сторінці підтвердження одразу після бронювання. Оплата в гривнях." data-ru="Оплата после записи. Реквизиты карты (ПриватБанк или Монобанк) появятся на странице подтверждения сразу после бронирования. Оплата в гривнях.">Оплата після запису. Реквізити карти (ПриватБанк або Монобанк) з'являться на сторінці підтвердження одразу після бронювання. Оплата в гривнях.</div>
+
+      <div class="faq-card">
+        <div class="faq-card-icon">👥</div>
+        <h3 class="faq-card-title" data-uk="Хто може навчатись у групі?" data-ru="Кто может учиться в группе?">Хто може навчатись у групі?</h3>
+        <p class="faq-card-text" data-uk="Групові заняття відкриті для всіх — від 7 років і до будь-якого дорослого віку. До 7 учнів у групі — кожен отримує достатньо уваги та зворотного зв'язку." data-ru="Групповые занятия открыты для всех — от 7 лет и до любого взрослого возраста. До 7 учеников в группе — каждый получает достаточно внимания.">Групові заняття відкриті для всіх — від 7 років і до будь-якого дорослого віку. До 7 учнів у групі — кожен отримує достатньо уваги.</p>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-uk="Як формуються вікові групи?" data-ru="Как формируются возрастные группы?">Як формуються вікові групи?</span>
-          <div class="faq-arrow">↓</div>
-        </div>
-        <div class="faq-a" data-uk="Групи: 8–10 років, 11–13 та 14–17. Діти навчаються з однолітками — їм легше спілкуватися, разом розв'язувати задачі та мотивувати одне одного. До 7 людей у групі." data-ru="Группы: 8–10 лет, 11–13 и 14–17. Дети учатся со сверстниками — им легче общаться, вместе решать задачи и мотивировать друг друга. До 7 человек в группе.">Групи: 8–10 років, 11–13 та 14–17. Діти навчаються з однолітками — їм легше спілкуватися, разом розв'язувати задачі та мотивувати одне одного. До 7 людей у групі.</div>
+
+      <div class="faq-card">
+        <div class="faq-card-icon">💳</div>
+        <h3 class="faq-card-title" data-uk="Як оплатити урок?" data-ru="Как оплатить урок?">Як оплатити урок?</h3>
+        <p class="faq-card-text" data-uk="Після бронювання ви побачите реквізити для переказу (ПриватБанк або Монобанк). Оплата в гривнях: 650 ₴ — індивідуально, 500 ₴ — група. Вкажіть ім'я та дату уроку в призначенні платежу." data-ru="После бронирования увидите реквизиты (ПриватБанк или Монобанк). Оплата в гривнах: 650 ₴ — индивидуально, 500 ₴ — группа. Укажите имя и дату урока в назначении.">Після бронювання побачите реквізити (ПриватБанк або Монобанк). 650 ₴ — індивідуально, 500 ₴ — група. Вкажіть ім'я та дату у призначенні платежу.</p>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-uk="Що встановити перед першим уроком?" data-ru="Что установить перед первым уроком?">Що встановити перед першим уроком?</span>
-          <div class="faq-arrow">↓</div>
-        </div>
-        <div class="faq-a" data-uk="Unity: Unity Hub + Unity LTS, VS Code або Rider, акаунт Unity ID. Python: Python 3.10+, VS Code + розширення Python, акаунт GitHub. Детальна інструкція надійде після запису." data-ru="Unity: Unity Hub + Unity LTS, VS Code или Rider, аккаунт Unity ID. Python: Python 3.10+, VS Code + расширение Python, аккаунт GitHub. Подробная инструкция придёт после записи.">Unity: Unity Hub + Unity LTS, VS Code або Rider, акаунт Unity ID. Python: Python 3.10+, VS Code + розширення Python, акаунт GitHub. Детальна інструкція надійде після запису.</div>
+
+      <div class="faq-card">
+        <div class="faq-card-icon">🔄</div>
+        <h3 class="faq-card-title" data-uk="Можна перенести або скасувати?" data-ru="Можно перенести или отменить?">Можна перенести або скасувати?</h3>
+        <p class="faq-card-text" data-uk="Так — не пізніше ніж за 4 години до початку уроку. Посилання для переносу або скасування є в листі підтвердження. Скасування менш ніж за 4 години — заняття вважається проведеним." data-ru="Да — не позднее чем за 4 часа до начала. Ссылка для переноса или отмены есть в письме подтверждения. Отмена менее чем за 4 часа — занятие считается проведённым.">Так — не пізніше ніж за 4 години до початку. Посилання є в листі підтвердження. Скасування менш ніж за 4 години — заняття вважається проведеним.</p>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-uk="Чи можна перенести або скасувати заняття?" data-ru="Можно ли перенести или отменить занятие?">Чи можна перенести або скасувати заняття?</span>
-          <div class="faq-arrow">↓</div>
-        </div>
-        <div class="faq-a" data-uk="Так, без проблем — за 2 години до початку. У листі підтвердження буде посилання для скасування або переносу." data-ru="Да, без проблем — за 2 часа до начала. В письме подтверждения будет ссылка для отмены или переноса.">Так, без проблем — за 2 години до початку. У листі підтвердження буде посилання для скасування або переносу.</div>
+
+      <div class="faq-card">
+        <div class="faq-card-icon">💻</div>
+        <h3 class="faq-card-title" data-uk="Що встановити заздалегідь?" data-ru="Что установить заранее?">Що встановити заздалегідь?</h3>
+        <p class="faq-card-text" data-uk="Обов'язково: AnyDesk та Discord. Unity: Unity Hub + LTS + Visual Studio 2022 (розширення «Розробка ігор з Unity»). Python: Python 3.10+ + Visual Studio 2022 (розширення «Python»). Покрокова інструкція з посиланнями надійде після бронювання." data-ru="Обязательно: AnyDesk и Discord. Unity: Unity Hub + LTS + Visual Studio 2022 (расширение «Разработка игр с Unity»). Python: Python 3.10+ + VS 2022 (расширение «Python»). Пошаговая инструкция придёт после бронирования.">Обов'язково: AnyDesk та Discord. Unity: Unity Hub + LTS + VS 2022. Python: Python 3.10+ + VS 2022. Покрокова інструкція надійде одразу після бронювання.</p>
       </div>
+
+      <div class="faq-card">
+        <div class="faq-card-icon">⏱️</div>
+        <h3 class="faq-card-title" data-uk="Який графік занять?" data-ru="Какой график занятий?">Який графік занять?</h3>
+        <p class="faq-card-text" data-uk="Щодня з 12:00 до 22:00 за київським часом. Індивідуально — обираєте будь-який вільний слот у календарі. Групові — фіксований розклад, який узгоджується на початку курсу." data-ru="Ежедневно с 12:00 до 22:00 по киевскому времени. Индивидуально — любой свободный слот в календаре. Группа — фиксированное расписание, согласуется в начале курса.">Щодня з 12:00 до 22:00 (Київ). Індивідуально — будь-який вільний слот. Група — фіксований розклад, узгоджується на початку курсу.</p>
+      </div>
+
+      <div class="faq-card faq-card-cta">
+        <div class="faq-card-icon">✈️</div>
+        <h3 class="faq-card-title" data-uk="Залишились питання?" data-ru="Остались вопросы?">Залишились питання?</h3>
+        <p class="faq-card-text" data-uk="Напишіть мені в Telegram — відповім протягом кількох годин і допоможу підібрати оптимальний формат навчання для вас або вашої дитини." data-ru="Напишите мне в Telegram — отвечу в течение нескольких часов и помогу подобрать оптимальный формат обучения для вас или вашего ребёнка.">Напишіть мені в Telegram — відповім протягом кількох годин і допоможу підібрати оптимальний формат навчання.</p>
+        <a href="https://t.me/Bogdaddy_usa" target="_blank" class="btn-lime" style="display:inline-flex;margin-top:1.25rem;font-size:13px;padding:11px 22px">✈️ <span data-uk="Написати в Telegram" data-ru="Написать в Telegram">Написати в Telegram</span></a>
+      </div>
+
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo">Богдан<div class="footer-logo-dot2"></div></a>
-  <p data-uk="Викладач Unity та Python — онлайн-заняття для дітей від 8 років та дорослих" data-ru="Преподаватель Unity и Python — онлайн-занятия для детей от 8 лет и взрослых">Викладач Unity та Python — онлайн-заняття для дітей від 8 років та дорослих</p>
-  <div class="footer-nav">
-    <a href="#courses" data-uk="Курси" data-ru="Курсы">Курси</a>
-    <a href="#formats" data-uk="Формати" data-ru="Форматы">Формати</a>
-    <a href="#about" data-uk="Про мене" data-ru="Обо мне">Про мене</a>
-    <a href="#booking" data-uk="Запис" data-ru="Запись">Запис</a>
-    <a href="#faq">FAQ</a>
+  <div>
+    <a href="#" class="fl-logo">Богдан<span class="logo-acc">.</span></a>
+    <div class="fl-sub" data-uk="Викладач Unity та Python · Онлайн · Від 7 років" data-ru="Преподаватель Unity и Python · Онлайн · От 7 лет">Викладач Unity та Python · Онлайн · Від 7 років</div>
   </div>
-  <a href="https://t.me/Bogdaddy_usa" class="footer-tg" target="_blank">
-    ✈️ <span data-uk="Написати в Telegram" data-ru="Написать в Telegram">Написати в Telegram</span>
-  </a>
-  <div class="footer-copy">© 2025 Богдан. <span data-uk="Всі права захищені." data-ru="Все права защищены.">Всі права захищені.</span></div>
+  <div class="fr">
+    <a href="#courses" class="fr-link" data-uk="Курси" data-ru="Курсы">Курси</a>
+    <a href="#formats" class="fr-link" data-uk="Формати" data-ru="Форматы">Формати</a>
+    <a href="#booking" class="fr-link" data-uk="Запис" data-ru="Запись">Запис</a>
+    <a href="https://t.me/Bogdaddy_usa" target="_blank" class="fr-tg">✈️ <span data-uk="Написати" data-ru="Написать">Написати</span></a>
+  </div>
 </footer>
 
 <script>
-// ── LANG SYSTEM ──
-let currentLang = 'uk';
-
+// LANG
 function setLang(lang) {
-  currentLang = lang;
-  document.getElementById('btn-uk').classList.toggle('active', lang === 'uk');
-  document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
-  document.documentElement.lang = lang === 'uk' ? 'uk' : 'ru';
+  document.getElementById('btn-uk').classList.toggle('active', lang==='uk');
+  document.getElementById('btn-ru').classList.toggle('active', lang==='ru');
+  document.documentElement.lang = lang==='uk'?'uk':'ru';
   document.querySelectorAll('[data-uk]').forEach(el => {
-    el.textContent = lang === 'uk' ? el.getAttribute('data-uk') : el.getAttribute('data-ru');
+    el.textContent = lang==='uk' ? el.getAttribute('data-uk') : el.getAttribute('data-ru');
   });
 }
 
-// ── FAQ ──
-function toggleFaq(el) {
+// COURSE SWITCHER
+function switchCourse(type, btn) {
+  document.querySelectorAll('.cs-btn').forEach(b => b.className='cs-btn');
+  btn.classList.add('active-'+type);
+  document.querySelectorAll('.course-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+type).classList.add('active');
+  // re-trigger reveal for newly visible items
+  document.querySelectorAll('#panel-'+type+' .rv').forEach(el => {
+    el.classList.remove('in');
+    setTimeout(() => el.classList.add('in'), 80);
+  });
+}
+
+// FAQ
+function faq(el) {
   const item = el.parentElement;
   const wasOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
   if (!wasOpen) item.classList.add('open');
 }
 
-// ── CAL.COM OFFICIAL EMBED SCRIPT ──
-(function (C, A, L) {
-  let p = function (a, ar) { a.q.push(ar); };
-  let d = C.document;
-  C.Cal = C.Cal || function () {
-    let cal = C.Cal;
-    let ar = arguments;
-    if (!cal.loaded) {
-      cal.ns = {};
-      cal.q = cal.q || [];
-      d.head.appendChild(d.createElement("script")).src = A;
-      cal.loaded = true;
-    }
-    if (ar[0] === L) {
-      const api = function () { p(api, arguments); };
-      const namespace = ar[1];
-      api.q = api.q || [];
-      if (typeof namespace === "string") {
-        cal.ns[namespace] = cal.ns[namespace] || api;
-        p(cal.ns[namespace], ar);
-        p(cal, ["initNamespace", namespace]);
-      } else p(cal, ar);
-      return;
-    }
-    p(cal, ar);
-  };
-})(window, "https://app.cal.com/embed/embed.js", "init");
+// CAL.COM EMBED
+(function(C,A,L){
+  let p=function(a,ar){a.q.push(ar)};let d=C.document;
+  C.Cal=C.Cal||function(){let cal=C.Cal,ar=arguments;
+    if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}
+    if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];
+      if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,["initNamespace",ns])}else p(cal,ar);return}
+    p(cal,ar)}
+})(window,"https://app.cal.com/embed/embed.js","init");
 
-// Ініціалізуємо кожну вкладку в окремому namespace
-const calConfig = [
-  { ns: 'ind-unity',    link: 'bogdan-bilous-alz10c/individual-lesson-unity',    el: '#cal-ind-unity'   },
-  { ns: 'ind-python',   link: 'bogdan-bilous-alz10c/individual-lessons-python',   el: '#cal-ind-python'  },
-  { ns: 'group-unity',  link: 'bogdan-bilous-alz10c/group-lesson-unity',          el: '#cal-group-unity' },
-  { ns: 'group-python', link: 'bogdan-bilous-alz10c/group-lesson',                el: '#cal-group-python'}
-];
-
-calConfig.forEach(function(cfg) {
-  Cal("init", cfg.ns, { origin: "https://cal.com" });
-  Cal.ns[cfg.ns]("inline", { elementOrSelector: cfg.el, calLink: cfg.link, layout: "month_view" });
-  Cal.ns[cfg.ns]("ui", { theme: "dark", styles: { branding: { brandColor: "#7C6EFA" } } });
+[
+  {ns:'ind-unity',   link:'bogdan-bilous-alz10c/individual-lesson-unity',   el:'#cal-ind-unity'},
+  {ns:'ind-python',  link:'bogdan-bilous-alz10c/individual-lessons-python',  el:'#cal-ind-python'},
+  {ns:'group-unity', link:'bogdan-bilous-alz10c/group-lesson-unity',         el:'#cal-group-unity'},
+  {ns:'group-python',link:'bogdan-bilous-alz10c/group-lesson',               el:'#cal-group-python'}
+].forEach(function(c){
+  Cal("init",c.ns,{origin:"https://cal.com"});
+  Cal.ns[c.ns]("inline",{elementOrSelector:c.el,calLink:c.link,layout:"month_view"});
+  Cal.ns[c.ns]("ui",{theme:"dark",styles:{branding:{brandColor:"#C8FF00"}}});
 });
 
-// ── LESSON TYPE TABS ──
-const tabMap = {
-  'ind-unity':    'cal-ind-unity',
-  'ind-python':   'cal-ind-python',
-  'group-unity':  'cal-group-unity',
-  'group-python': 'cal-group-python'
-};
-
-function switchLesson(key, btn) {
-  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+const calMap={'ind-unity':'cal-ind-unity','ind-python':'cal-ind-python','group-unity':'cal-group-unity','group-python':'cal-group-python'};
+function switchCal(key,btn){
+  document.querySelectorAll('.cal-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.cal-panel').forEach(p => p.style.display = 'none');
-  document.getElementById(tabMap[key]).style.display = 'block';
+  document.querySelectorAll('.cal-panel-item').forEach(p=>p.style.display='none');
+  const p=document.getElementById(calMap[key]);
+  if(p)p.style.display='block';
 }
 
+// ── SMOOTH ANCHOR SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(!target)return;
+    e.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
 // ── SCROLL REVEAL ──
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 60);
-      revealObserver.unobserve(e.target);
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'),i*70);
+      obs.unobserve(e.target);
     }
   });
-}, { threshold: 0.08 });
+},{threshold:0.07});
+document.querySelectorAll('.rv,.rv-left,.rv-right,.rv-scale').forEach(el=>obs.observe(el));
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+// ── GAME CARDS STAGGER ──
+const gridObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('revealed');
+      gridObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.games-grid').forEach(g=>gridObs.observe(g));
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el,target,suffix,duration){
+  let start=0,step=target/60;
+  const tick=()=>{
+    start=Math.min(start+step,target);
+    el.textContent=(Number.isInteger(target)?Math.round(start):start.toFixed(0))+(suffix||'');
+    if(start<target)requestAnimationFrame(tick);
+    else{el.textContent=target+(suffix||'');el.classList.add('counter-done')}
+  };
+  requestAnimationFrame(tick);
+}
+const counterObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const nums=e.target.querySelectorAll('[data-count]');
+    nums.forEach(n=>{
+      const val=parseInt(n.dataset.count);
+      const suf=n.dataset.suffix||'';
+      animateCounter(n,val,suf,1000);
+    });
+    counterObs.unobserve(e.target);
+  });
+},{threshold:0.3});
+document.querySelectorAll('.hero-stats,.exp-boxes').forEach(el=>counterObs.observe(el));
+
+// ── PARTICLES ──
+(function(){
+  const wrap=document.getElementById('particles');
+  if(!wrap)return;
+  const colors=['#C8FF00','#00D4FF','#8B7FFF','rgba(200,255,0,0.4)','rgba(0,212,255,0.4)'];
+  for(let i=0;i<22;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*5+1.5;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:${-10+Math.random()*30}%;background:${colors[Math.floor(Math.random()*colors.length)]};--dx:${(Math.random()-0.5)*100}px;animation-duration:${Math.random()*9+5}s;animation-delay:${Math.random()*6}s;border-radius:50%`;
+    wrap.appendChild(p);
+  }
+})();
+
+// ── TYPING EFFECT ──
+(function(){
+  const el=document.getElementById('typing-word');
+  if(!el)return;
+  const words={uk:['ігри','боти','ШІ','код','світи'],ru:['игры','боты','ИИ','код','миры']};
+  let lang='uk',idx=0,charIdx=0,deleting=false,paused=false;
+  function type(){
+    if(paused)return;
+    const list=words[lang];
+    const word=list[idx];
+    if(!deleting){
+      charIdx++;
+      el.textContent=word.slice(0,charIdx);
+      if(charIdx===word.length){deleting=true;setTimeout(type,2000);return}
+    }else{
+      charIdx--;
+      el.textContent=word.slice(0,charIdx);
+      if(charIdx===0){deleting=false;idx=(idx+1)%list.length}
+    }
+    setTimeout(type,deleting?55:115);
+  }
+  type();
+  const origLang=window.setLang;
+  window.setLang=function(l){
+    lang=l;idx=0;charIdx=0;deleting=false;
+    if(el)el.textContent='';
+    origLang(l);
+    setTimeout(type,300);
+  };
+})();
+
+// ── CURSOR GLOW (desktop only) ──
+if(window.innerWidth>900){
+  const glow=document.createElement('div');
+  glow.style.cssText='position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,0,0.04) 0%,transparent 70%);pointer-events:none;z-index:0;top:-150px;left:-150px';
+  document.body.appendChild(glow);
+  document.addEventListener('mousemove',e=>{
+    glow.style.transform=`translate(${e.clientX-150}px,${e.clientY-150}px)`;
+  },{passive:true});
+}
+
+// ── SCROLL TRAIL ──
+const trail=document.createElement('div');
+trail.id='scroll-trail';
+document.body.appendChild(trail);
+
+// ── PARALLAX HERO PHOTO ──
+const heroPhoto=document.querySelector('.hero-photo');
+
+// ── SCROLL EFFECTS (single merged listener) ──
+let lastScroll=window.scrollY;
+let skewTick;
+const marqueeTrack=document.querySelector('.marquee-track');
+
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const delta=y-lastScroll;
+  lastScroll=y;
+
+  // progress bar
+  const pct=(y/(document.body.scrollHeight-window.innerHeight))*100;
+  const pb=document.getElementById('progress-bar');
+  const trail=document.getElementById('scroll-trail');
+  if(pb)pb.style.width=Math.min(pct,100)+'%';
+  if(trail)trail.style.height=Math.min(pct,100)+'%';
+
+  // marquee speed
+  if(marqueeTrack){
+    const speed=Math.max(6,22-Math.abs(delta)*0.4);
+    marqueeTrack.style.animationDuration=speed+'s';
+  }
+
+  // skew on fast scroll (subtle)
+  clearTimeout(skewTick);
+  const skewAmt=Math.max(-1.2,Math.min(1.2,delta*0.04));
+  document.querySelectorAll('.course-big,.format-card').forEach(el=>{
+    el.style.transform=`skewY(${skewAmt}deg)`;
+  });
+  skewTick=setTimeout(()=>{
+    document.querySelectorAll('.course-big,.format-card').forEach(el=>{
+      el.style.transform='';
+    });
+  },150);
+
+  // parallax hero photo
+  if(heroPhoto&&window.innerWidth>900){
+    heroPhoto.style.transform=`translateY(${y*0.22}px) scale(1.08)`;
+  }
+
+  // snap hint hide
+  const snapHint=document.querySelector('.snap-hint');
+  if(snapHint)snapHint.style.opacity=y>80?'0':'';
+
+  // nav active section
+  let current='';
+  document.querySelectorAll('section[id]').forEach(s=>{
+    if(y>=s.offsetTop-130)current=s.id;
+  });
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a=>{
+    a.style.color=a.getAttribute('href')==='#'+current?'var(--lime)':'';
+  });
+},{passive:true});
+
+
+
+// ── FLOATING TECH ICONS ──
+(function(){
+  const container=document.createElement('div');
+  container.id='float-icons';
+  document.body.appendChild(container);
+  const icons=['🎮','🐍','⚡','🎯','🤖','💡','🔥','🌀','⚔️','🍳','🐢','👁️'];
+  icons.forEach((icon,i)=>{
+    const el=document.createElement('div');
+    el.className='float-icon';
+    el.textContent=icon;
+    el.style.cssText=`
+      left:${5+Math.random()*90}%;
+      animation-duration:${14+Math.random()*16}s;
+      animation-delay:${i*1.8+Math.random()*4}s;
+      font-size:${1.2+Math.random()*1.2}rem;
+    `;
+    container.appendChild(el);
+  });
+})();
+
+// ── SNAP HINT IN HERO ──
+(function(){
+  const hero=document.querySelector('.hero');
+  if(!hero)return;
+  const hint=document.createElement('div');
+  hint.className='snap-hint';
+  hint.innerHTML='<div class="snap-hint-arrow"></div><div class="snap-hint-text">scroll</div>';
+  hero.style.position='relative';
+  hero.appendChild(hint);
+  window.addEventListener('scroll',()=>{
+    hint.style.opacity=window.scrollY>80?'0':'';
+  },{passive:true,once:false});
+})();
+
+// ── HORIZONTAL DRAG SCROLL for games-grid ──
+document.querySelectorAll('.games-grid').forEach(grid=>{
+  if(window.innerWidth>960)return;
+  let isDown=false,startX,scrollLeft;
+  grid.addEventListener('mousedown',e=>{isDown=true;grid.classList.add('grabbing');startX=e.pageX-grid.offsetLeft;scrollLeft=grid.scrollLeft});
+  document.addEventListener('mouseup',()=>{isDown=false;grid.classList.remove('grabbing')});
+  grid.addEventListener('mousemove',e=>{
+    if(!isDown)return;
+    e.preventDefault();
+    const x=e.pageX-grid.offsetLeft;
+    grid.scrollLeft=scrollLeft-(x-startX)*1.5;
+  });
+});
+
+// ── 3D TILT on game cards ──
+if(window.innerWidth>900){
+  document.querySelectorAll('.game-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-0.5)*18;
+      const y=((e.clientY-r.top)/r.height-0.5)*-18;
+      card.style.transform=`perspective(600px) rotateX(${y}deg) rotateY(${x}deg) translateY(-4px) scale(1.04)`;
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform='';
+    });
+  });
+
+  // tilt on faq cards
+  document.querySelectorAll('.faq-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-0.5)*10;
+      const y=((e.clientY-r.top)/r.height-0.5)*-10;
+      card.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateY(-3px)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='';});
+  });
+
+  // tilt on format cards
+  document.querySelectorAll('.format-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-0.5)*8;
+      const y=((e.clientY-r.top)/r.height-0.5)*-8;
+      card.style.transform=`perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) translateY(-3px)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='';});
+  });
+
+  // tilt on testimonial cards
+  document.querySelectorAll('.test-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-0.5)*10;
+      const y=((e.clientY-r.top)/r.height-0.5)*-10;
+      card.style.transform=`perspective(900px) rotateX(${y}deg) rotateY(${x}deg) scale(1.03)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='';});
+  });
+
+  // tilt on showcase cards
+  document.querySelectorAll('.showcase-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width-0.5)*12;
+      const y=((e.clientY-r.top)/r.height-0.5)*-12;
+      card.style.transform=`perspective(700px) rotateX(${y}deg) rotateY(${x}deg) translateY(-3px) scale(1.03)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='';});
+  });
+}
+
+// ── RATING NUMBER COUNT-UP ──
+(function(){
+  const el=document.querySelector('.rating-num');
+  if(!el)return;
+  const target=parseFloat(el.dataset.countDecimal);
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      let cur=0;
+      const step=target/40;
+      const tick=()=>{
+        cur=Math.min(cur+step,target);
+        el.textContent=cur.toFixed(1);
+        if(cur<target)requestAnimationFrame(tick);
+      };
+      tick();
+      obs.unobserve(e.target);
+    });
+  },{threshold:0.5});
+  obs.observe(el);
+})();
+
+// ── STAT BARS IN ABOUT ──
+(function(){
+  const aboutText=document.querySelector('.about-text');
+  if(!aboutText)return;
+  const barsHTML=`
+  <div class="stat-bars">
+    <div class="stat-bar-item">
+      <div class="stat-bar-label"><span>Unity / C#</span><span>10 <span data-uk="років" data-ru="лет">років</span></span></div>
+      <div class="stat-bar-track"><div class="stat-bar-fill" data-width="95"></div></div>
+    </div>
+    <div class="stat-bar-item">
+      <div class="stat-bar-label"><span>Python</span><span>8 <span data-uk="років" data-ru="лет">років</span></span></div>
+      <div class="stat-bar-track"><div class="stat-bar-fill" data-width="82"></div></div>
+    </div>
+    <div class="stat-bar-item">
+      <div class="stat-bar-label"><span data-uk="Викладання" data-ru="Преподавание">Викладання</span><span>10 <span data-uk="років" data-ru="лет">років</span></span></div>
+      <div class="stat-bar-track"><div class="stat-bar-fill" data-width="90"></div></div>
+    </div>
+    <div class="stat-bar-item">
+      <div class="stat-bar-label"><span>OpenCV / AI</span><span>5 <span data-uk="років" data-ru="лет">років</span></span></div>
+      <div class="stat-bar-track"><div class="stat-bar-fill" data-width="65"></div></div>
+    </div>
+  </div>`;
+  aboutText.insertAdjacentHTML('beforeend',barsHTML);
+
+  const barObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      e.target.querySelectorAll('.stat-bar-fill').forEach((bar,i)=>{
+        setTimeout(()=>{bar.style.width=bar.dataset.width+'%';},i*150);
+      });
+      barObs.unobserve(e.target);
+    });
+  },{threshold:0.4});
+  const barsEl=aboutText.querySelector('.stat-bars');
+  if(barsEl)barObs.observe(barsEl);
+})();
+
+// ── TESTIMONIALS MARQUEE — duplicate each row for seamless infinite loop ──
+(function(){
+  ['test-row-1','test-row-2','test-row-3'].forEach(id=>{
+    const row=document.getElementById(id);
+    if(row)row.innerHTML+=row.innerHTML;
+  });
+})();
+
+// ── SECTION ENTRANCE GLOW (subtle box-shadow only, no bg change) ──
+(function(){
+  const glowColors={
+    'courses':'rgba(200,255,0,0.03)',
+    'formats':'rgba(0,212,255,0.03)',
+    'testimonials':'rgba(107,91,255,0.03)',
+    'about':'rgba(200,255,0,0.025)',
+    'booking':'rgba(0,212,255,0.025)',
+    'faq':'rgba(200,255,0,0.03)',
+  };
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const col=glowColors[e.target.id];
+      if(!col)return;
+      if(e.isIntersecting){
+        e.target.style.boxShadow=`inset 0 0 120px -40px ${col}`;
+      } else {
+        e.target.style.boxShadow='';
+      }
+    });
+  },{threshold:0.2});
+  Object.keys(glowColors).forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)obs.observe(el);
+  });
+})();
 </script>
 </body>
 </html>
