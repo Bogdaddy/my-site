@@ -73,6 +73,24 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .price-chip-label{font-size:12px;color:var(--muted);margin-top:3px}
 .pay-note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:1rem;padding:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);border-left:3px solid var(--amber)}
 
+/* ── MONOBANK PAY BUTTON ── */
+.mono-pay-btn{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(16,232,154,0.12),rgba(0,212,255,0.08));border:1px solid rgba(16,232,154,0.3);border-radius:var(--r);padding:16px 18px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;margin:1rem 0}
+.mono-pay-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(16,232,154,0.2);border-color:rgba(16,232,154,0.5)}
+.mono-pay-icon{font-size:1.8rem;flex-shrink:0}
+.mono-pay-text{flex:1;display:flex;flex-direction:column;gap:2px}
+.mono-pay-text strong{font-size:15px;font-weight:700;color:var(--text)}
+.mono-pay-text span{font-size:12px;color:var(--green)}
+.mono-pay-arrow{font-size:1.3rem;color:var(--green);transition:transform 0.2s;flex-shrink:0}
+.mono-pay-btn:hover .mono-pay-arrow{transform:translateX(4px)}
+
+/* ── COLLAPSIBLE ALT PAYMENT ── */
+.alt-pay-toggle{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 0;border-top:1px solid var(--border);margin-top:0.5rem;cursor:pointer;font-size:13px;color:var(--muted2);font-weight:500;user-select:none;transition:color 0.15s}
+.alt-pay-toggle:hover{color:var(--text)}
+.alt-pay-arrow{transition:transform 0.25s;font-size:12px}
+.alt-pay-arrow.open{transform:rotate(180deg)}
+.alt-pay-block{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.alt-pay-block.open{max-height:300px;padding-top:0.75rem}
+
 /* SOFTWARE */
 .sw-tabs{display:flex;gap:8px;margin-bottom:1.5rem}
 .sw-tab{padding:8px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--muted);transition:all 0.2s;font-family:var(--font)}
@@ -143,38 +161,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
     <div class="card-top-line amber"></div>
     <div class="card-eyebrow amber" data-uk="Оплата" data-ru="Оплата">Оплата</div>
     <h2 data-uk="Оплатіть урок до початку" data-ru="Оплатите урок до начала">Оплатіть урок до початку</h2>
-    <p data-uk="Переказ на картку. Після оплати напишіть мені в Telegram — підтверджу отримання." data-ru="Перевод на карту. После оплаты напишите мне в Telegram — подтвержу получение.">Переказ на картку. Після оплати напишіть мені в Telegram — підтверджу отримання.</p>
+    <p data-uk="Найзручніше — оплата через банку Monobank нижче. Після оплати напишіть мені в Telegram — підтверджу отримання." data-ru="Удобнее всего — оплата через банку Monobank ниже. После оплаты напишите мне в Telegram — подтвержу получение.">Найзручніше — оплата через банку Monobank нижче. Після оплати напишіть мені в Telegram — підтверджу отримання.</p>
 
-    <div class="payment-grid">
-      <div class="pay-block">
-        <div class="pay-label" data-uk="Номер картки" data-ru="Номер карты">Номер картки</div>
-        <div class="pay-value">
-          <span id="card-num">5375 4141 XXXX XXXX</span>
-          <button class="copy-btn" onclick="copyText('card-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
-        </div>
-      </div>
-      <div class="pay-block">
-        <div class="pay-label" data-uk="Отримувач" data-ru="Получатель">Отримувач</div>
-        <div class="pay-value">
-          <span id="card-name">Богдан **..</span>
-          <button class="copy-btn" onclick="copyText('card-name', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
-        </div>
-      </div>
-      <div class="pay-block">
-        <div class="pay-label">ПриватБанк</div>
-        <div class="pay-value">
-          <span id="phone-num">+380 9X XXX XX XX</span>
-          <button class="copy-btn" onclick="copyText('phone-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
-        </div>
-      </div>
-      <div class="pay-block">
-        <div class="pay-label">Monobank</div>
-        <div class="pay-value">
-          <span id="mono-num">send.monobank.ua/...</span>
-          <button class="copy-btn" onclick="copyText('mono-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
-        </div>
-      </div>
-    </div>
+    <!-- PRIMARY: Monobank jar button -->
+    <a href="https://send.monobank.ua/jar/ЗАМІНІТЬ_НА_ВАШЕ_ПОСИЛАННЯ" target="_blank" class="mono-pay-btn">
+      <span class="mono-pay-icon">💳</span>
+      <span class="mono-pay-text">
+        <strong data-uk="Оплатити через Monobank" data-ru="Оплатить через Monobank">Оплатити через Monobank</strong>
+        <span data-uk="Безпечно — без передачі номера картки" data-ru="Безопасно — без передачи номера карты">Безпечно — без передачі номера картки</span>
+      </span>
+      <span class="mono-pay-arrow">→</span>
+    </a>
 
     <div class="price-row">
       <div class="price-chip">
@@ -187,7 +184,34 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
       </div>
     </div>
 
-    <div class="pay-note">
+    <!-- ALTERNATIVE: manual card transfer, collapsed -->
+    <div class="alt-pay-toggle" onclick="toggleAltPay()">
+      <span data-uk="Або переказ на картку вручну" data-ru="Или перевод на карту вручную">Або переказ на картку вручну</span>
+      <span class="alt-pay-arrow" id="alt-pay-arrow">↓</span>
+    </div>
+    <div class="alt-pay-block" id="alt-pay-block">
+      <div class="payment-grid">
+        <div class="pay-block">
+          <div class="pay-label" data-uk="Номер картки (ПриватБанк)" data-ru="Номер карты (ПриватБанк)">Номер картки (ПриватБанк)</div>
+          <div class="pay-value">
+            <span id="card-num">ЗАМІНІТЬ_НА_НОМЕР_КАРТКИ</span>
+            <button class="copy-btn" onclick="copyText('card-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+          </div>
+        </div>
+        <div class="pay-block">
+          <div class="pay-label" data-uk="Отримувач" data-ru="Получатель">Отримувач</div>
+          <div class="pay-value">
+            <span id="card-name">ЗАМІНІТЬ_НА_ІМ'Я</span>
+            <button class="copy-btn" onclick="copyText('card-name', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+          </div>
+        </div>
+      </div>
+      <div class="pay-note" style="margin-top:0.75rem">
+        ⚠️ <span data-uk="Ця картка використовується тільки для оплати уроків, не для особистих накопичень." data-ru="Эта карта используется только для оплаты уроков, не для личных накоплений.">Ця картка використовується тільки для оплати уроків, не для особистих накопичень.</span>
+      </div>
+    </div>
+
+    <div class="pay-note" style="margin-top:1rem">
       💡 <span data-uk="У призначенні платежу напишіть своє ім'я та дату уроку. Наприклад: «Іван, урок 25.07»" data-ru="В назначении платежа напишите своё имя и дату урока. Например: «Иван, урок 25.07»">У призначенні платежу напишіть своє ім'я та дату уроку. Наприклад: «Іван, урок 25.07»</span>
     </div>
   </div>
@@ -359,6 +383,14 @@ function copyText(id, btn) {
       btn.classList.remove('copied');
     }, 2000);
   });
+}
+
+// TOGGLE ALT PAYMENT
+function toggleAltPay() {
+  const block = document.getElementById('alt-pay-block');
+  const arrow = document.getElementById('alt-pay-arrow');
+  block.classList.toggle('open');
+  arrow.classList.toggle('open');
 }
 </script>
 </body>
