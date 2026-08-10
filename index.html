@@ -614,8 +614,8 @@ section{position:relative}
 
 <!-- LANG -->
 <div class="lang-bar">
-  <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">🇺🇦 УКР</button>
-  <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">🇷🇺 РУС</button>
+  <button class="lang-btn active" id="btn-uk" onclick="setLang('uk')">УКР</button>
+  <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">РУС</button>
 </div>
 
 <!-- NAV -->
@@ -1400,29 +1400,44 @@ document.querySelectorAll('.hero-stats,.exp-boxes').forEach(el=>counterObs.obser
   const el=document.getElementById('typing-word');
   if(!el)return;
   const words={uk:['ігри','боти','ШІ','код','світи'],ru:['игры','боты','ИИ','код','миры']};
-  let lang='uk',idx=0,charIdx=0,deleting=false,paused=false;
-  function type(){
-    if(paused)return;
+  let lang='uk',idx=0,charIdx=0,deleting=false;
+  let timer=null;
+  let gen=0; // generation token — invalidates any stale loop instantly
+
+  function type(myGen){
+    if(myGen!==gen)return; // a newer loop replaced this one — stop silently
     const list=words[lang];
     const word=list[idx];
     if(!deleting){
       charIdx++;
       el.textContent=word.slice(0,charIdx);
-      if(charIdx===word.length){deleting=true;setTimeout(type,2000);return}
+      if(charIdx===word.length){
+        deleting=true;
+        timer=setTimeout(()=>type(myGen),2400);
+        return;
+      }
     }else{
       charIdx--;
       el.textContent=word.slice(0,charIdx);
       if(charIdx===0){deleting=false;idx=(idx+1)%list.length}
     }
-    setTimeout(type,deleting?55:115);
+    timer=setTimeout(()=>type(myGen),deleting?75:150);
   }
-  type();
+
+  function start(){
+    gen++;
+    clearTimeout(timer);
+    charIdx=0;deleting=false;
+    el.textContent='';
+    type(gen);
+  }
+
+  start();
   const origLang=window.setLang;
   window.setLang=function(l){
-    lang=l;idx=0;charIdx=0;deleting=false;
-    if(el)el.textContent='';
+    lang=l;idx=0;
     origLang(l);
-    setTimeout(type,300);
+    start();
   };
 })();
 
@@ -1460,12 +1475,6 @@ window.addEventListener('scroll',()=>{
   const trail=document.getElementById('scroll-trail');
   if(pb)pb.style.width=Math.min(pct,100)+'%';
   if(trail)trail.style.height=Math.min(pct,100)+'%';
-
-  // marquee speed
-  if(marqueeTrack){
-    const speed=Math.max(6,22-Math.abs(delta)*0.4);
-    marqueeTrack.style.animationDuration=speed+'s';
-  }
 
   // skew on fast scroll (subtle)
   clearTimeout(skewTick);
