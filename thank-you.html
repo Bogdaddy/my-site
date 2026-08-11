@@ -161,17 +161,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
     <div class="card-top-line amber"></div>
     <div class="card-eyebrow amber" data-uk="Оплата" data-ru="Оплата">Оплата</div>
     <h2 data-uk="Оплатіть урок до початку" data-ru="Оплатите урок до начала">Оплатіть урок до початку</h2>
-    <p data-uk="Найзручніше — оплата через банку Monobank нижче. Після оплати напишіть мені в Telegram — підтверджу отримання." data-ru="Удобнее всего — оплата через банку Monobank ниже. После оплаты напишите мне в Telegram — подтвержу получение.">Найзручніше — оплата через банку Monobank нижче. Після оплати напишіть мені в Telegram — підтверджу отримання.</p>
+    <p data-uk="Переказ на картку нижче. Після оплати, будь ласка, надішліть скрін оплати в Telegram і вкажіть за кого оплатили." data-ru="Перевод на карту ниже. После оплаты, пожалуйста, отправьте скрин оплаты в Telegram и укажите за кого оплатили.">Переказ на картку нижче. Після оплати, будь ласка, надішліть скрін оплати в Telegram і вкажіть за кого оплатили.</p>
 
-    <!-- PRIMARY: Monobank jar button -->
-    <a href="https://send.monobank.ua/jar/ЗАМІНІТЬ_НА_ВАШЕ_ПОСИЛАННЯ" target="_blank" class="mono-pay-btn">
-      <span class="mono-pay-icon">💳</span>
-      <span class="mono-pay-text">
-        <strong data-uk="Оплатити через Monobank" data-ru="Оплатить через Monobank">Оплатити через Monobank</strong>
-        <span data-uk="Безпечно — без передачі номера картки" data-ru="Безопасно — без передачи номера карты">Безпечно — без передачі номера картки</span>
-      </span>
-      <span class="mono-pay-arrow">→</span>
-    </a>
+    <div class="payment-grid" style="margin-top:1.25rem">
+      <div class="pay-block" style="grid-column:1/-1">
+        <div class="pay-label" data-uk="Номер картки" data-ru="Номер карты">Номер картки</div>
+        <div class="pay-value">
+          <span id="card-num">4441 1144 2372 5629</span>
+          <button class="copy-btn" onclick="copyText('card-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
+        </div>
+      </div>
+    </div>
 
     <div class="price-row">
       <div class="price-chip">
@@ -184,36 +184,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
       </div>
     </div>
 
-    <!-- ALTERNATIVE: manual card transfer, collapsed -->
-    <div class="alt-pay-toggle" onclick="toggleAltPay()">
-      <span data-uk="Або переказ на картку вручну" data-ru="Или перевод на карту вручную">Або переказ на картку вручну</span>
-      <span class="alt-pay-arrow" id="alt-pay-arrow">↓</span>
-    </div>
-    <div class="alt-pay-block" id="alt-pay-block">
-      <div class="payment-grid">
-        <div class="pay-block">
-          <div class="pay-label" data-uk="Номер картки (ПриватБанк)" data-ru="Номер карты (ПриватБанк)">Номер картки (ПриватБанк)</div>
-          <div class="pay-value">
-            <span id="card-num">ЗАМІНІТЬ_НА_НОМЕР_КАРТКИ</span>
-            <button class="copy-btn" onclick="copyText('card-num', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
-          </div>
-        </div>
-        <div class="pay-block">
-          <div class="pay-label" data-uk="Отримувач" data-ru="Получатель">Отримувач</div>
-          <div class="pay-value">
-            <span id="card-name">ЗАМІНІТЬ_НА_ІМ'Я</span>
-            <button class="copy-btn" onclick="copyText('card-name', this)" data-uk="Копіювати" data-ru="Копировать">Копіювати</button>
-          </div>
-        </div>
-      </div>
-      <div class="pay-note" style="margin-top:0.75rem">
-        ⚠️ <span data-uk="Ця картка використовується тільки для оплати уроків, не для особистих накопичень." data-ru="Эта карта используется только для оплаты уроков, не для личных накоплений.">Ця картка використовується тільки для оплати уроків, не для особистих накопичень.</span>
-      </div>
-    </div>
-
-    <div class="pay-note" style="margin-top:1rem">
-      💡 <span data-uk="У призначенні платежу напишіть своє ім'я та дату уроку. Наприклад: «Іван, урок 25.07»" data-ru="В назначении платежа напишите своё имя и дату урока. Например: «Иван, урок 25.07»">У призначенні платежу напишіть своє ім'я та дату уроку. Наприклад: «Іван, урок 25.07»</span>
-    </div>
+    <a href="https://t.me/Bogdaddy_usa" target="_blank" class="mono-pay-btn">
+      <span class="mono-pay-icon">📸</span>
+      <span class="mono-pay-text">
+        <strong data-uk="Надіслати скрін оплати" data-ru="Отправить скрин оплаты">Надіслати скрін оплати</strong>
+        <span data-uk="Вкажіть за кого оплатили — підтверджу одразу" data-ru="Укажите за кого оплатили — подтвержу сразу">Вкажіть за кого оплатили — підтверджу одразу</span>
+      </span>
+      <span class="mono-pay-arrow">→</span>
+    </a>
   </div>
 
   <!-- SOFTWARE -->
